@@ -15,6 +15,12 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@style': path.resolve(__dirname, './src/style'),
+      '@redux': path.resolve(__dirname, './src/redux'),
+      '@helpers': path.resolve(__dirname, './src/helpers'),
+      '@hooks': path.resolve(__dirname, './src/hooks'),
+      '@types': path.resolve(__dirname, './src/types'),
+      '@components': path.resolve(__dirname, './src/components'),
     },
   },
 });
