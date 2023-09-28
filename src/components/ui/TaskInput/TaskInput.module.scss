@@ -1,0 +1,45 @@
+@import '@style/_variables';
+
+.wrapper {
+  position: relative;
+  margin-bottom: 20px;
+
+  flex: 1;
+
+  &::after {
+    content: attr(data-error);
+
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+
+    font-size: $font_sm;
+    color: $clr_red_primary;
+    font-weight: 500;
+  }
+}
+.input {
+  width: 100%;
+  height: 50px;
+
+  padding: 0px 40px;
+
+  border-radius: 10px;
+
+  font-size: $font_md;
+
+  border: 1px solid $clr_gray_primary;
+
+  fill: $clr_gray_primary;
+
+  &::placeholder {
+    font-size: $font_md;
+    font-style: italic;
+  }
+
+  &:focus {
+    background-color: $clr_blue_secondary;
+    border: 1px solid $clr_blue_primary;
+    fill: $clr_blue_primary;
+  }
+}

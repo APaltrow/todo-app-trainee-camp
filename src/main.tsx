@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom/client';
 
 import { Provider } from 'react-redux';
 
-import { store } from './redux';
+import { store } from '@redux';
 
 import { App } from './App';
 
-import './style/main.scss';
+import '@style/Main.scss';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

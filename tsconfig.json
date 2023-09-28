@@ -2,7 +2,13 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@style/*": ["src/style/*"],
+      "@redux": ["src/redux"],
+      "@helpers": ["src/helpers"],
+      "@hooks": ["src/hooks"],
+      "@types": ["src/types"],
+      "@components": ["src/components"]
     },
 
     "target": "ES2020",
