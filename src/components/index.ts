@@ -5,3 +5,4 @@ export * from './TodoList';
 export * from './ui/TaskInput';
 export * from './ui/Icon';
 export * from './ui/CustomButton';
+export * from './ui/Modal';

@@ -1,19 +1,20 @@
 import { FC } from 'react';
 
-import { useTodoTask } from '@hooks';
+import { useModal, useTodoTask } from '@hooks';
 
-import { CustomButton, Icon, TaskInput, TodoList } from '@components';
+import { CustomButton, Icon, Modal, TaskInput, TodoList } from '@components';
 
 import style from '@style/App.module.scss';
 
 export const App: FC = () => {
+  const { isOpen, onOpen, onClose } = useModal();
   const {
     todo,
     todoList,
     todoInputError,
 
-    onTodoTextChange,
     onTodoEnter,
+    onTodoTextChange,
   } = useTodoTask();
 
   return (
@@ -29,9 +30,15 @@ export const App: FC = () => {
               onChange={onTodoTextChange}
               onKeyUp={onTodoEnter}
             />
-            <CustomButton onClick={() => {}}>
+            <CustomButton onClick={onOpen}>
               <Icon iconName="plus" />
             </CustomButton>
+            <Modal
+              isOpen={isOpen}
+              onClose={onClose}
+            >
+              <div className={style.content}>MODAL CONTENT HERE</div>
+            </Modal>
           </div>
         </section>
 
