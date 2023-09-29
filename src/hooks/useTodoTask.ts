@@ -22,8 +22,8 @@ export const useTodoTask = () => {
   };
 
   const onTodoEnter = (e) => {
-    const isValid = e.key !== 'Enter' || todoInputError || !todo.text;
-    if (isValid) return;
+    const isNotValid = e.key !== 'Enter' || todoInputError || !todo.text;
+    if (isNotValid) return;
 
     const newTodo = {
       id: Date.now(),
