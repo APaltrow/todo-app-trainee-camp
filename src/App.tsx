@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { useTodoTask } from '@hooks';
 
-import { TaskInput, TodoList } from '@components';
+import { CustomButton, Icon, TaskInput, TodoList } from '@components';
 
 import style from '@style/App.module.scss';
 
@@ -29,6 +29,9 @@ export const App: FC = () => {
               onChange={onTodoTextChange}
               onKeyUp={onTodoEnter}
             />
+            <CustomButton onClick={() => {}}>
+              <Icon iconName="plus" />
+            </CustomButton>
           </div>
         </section>
 

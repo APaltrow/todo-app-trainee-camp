@@ -1,0 +1,26 @@
+@import '@style/_variables.scss';
+
+.container {
+  display: flex;
+  padding: 14px;
+
+  border-radius: 10px;
+  border: 1px solid $clr_gray_primary;
+
+  background-color: transparent;
+  fill: $clr_gray_primary;
+  color: $clr_gray_primary;
+
+  &:hover {
+    background-color: $clr_blue_secondary;
+    fill: $clr_blue_primary;
+    color: $clr_blue_primary;
+    border: 1px solid $clr_blue_primary;
+  }
+  &:focus {
+    background-color: $clr_blue_secondary;
+    fill: $clr_blue_primary;
+    color: $clr_blue_primary;
+    border: 1px solid $clr_blue_primary;
+  }
+}
