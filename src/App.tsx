@@ -1,5 +1,6 @@
 import { FC } from 'react';
 
+import { formatDate } from '@helpers';
 import { useTodoTask } from '@hooks';
 
 import { TaskInput } from '@components';
@@ -37,8 +38,9 @@ export const App: FC = () => {
           <ul>
             {todoList.map(({ text, id, creationDate, expirationDate }) => (
               <li key={id}>
-                {id} - {text} - created at {creationDate}, expires at{' '}
-                {expirationDate}
+                {id} - {text} - created at {formatDate(creationDate)}, expires
+                at
+                {formatDate(expirationDate)}
               </li>
             ))}
           </ul>

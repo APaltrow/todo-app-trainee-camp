@@ -1,10 +1,8 @@
-export const formatDate = (date: Date) => {
-  const day = date.getDate();
-  const month = date.getMonth() + 1;
-  const year = date.getFullYear();
+/* Formats a timestamp from '2023-09-29T05:36:51.410Z'  to '29.09.2023 08:36' */
 
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
+export const formatDate = (timestamp: string) => {
+  const date = new Date(timestamp).toLocaleDateString('ru-RU');
+  const time = new Date(timestamp).toLocaleTimeString('ru-RU').slice(0, 5);
 
-  return `${day}.${month}.${year} ${hours}:${minutes}`;
+  return `${date} ${time}`;
 };

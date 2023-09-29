@@ -1,12 +1,11 @@
-import { formatDate } from '@helpers';
+/* Creates timestamps for current date and expiration date => (current date + 1 day) */
 
 export const generateDates = () => {
   const expDate = new Date();
   expDate.setDate(expDate.getDate() + 1);
-  const updatedExpDate = new Date(expDate);
 
-  const creationDate = formatDate(new Date());
-  const expirationDate = formatDate(updatedExpDate);
+  const creationDate = new Date().toISOString();
+  const expirationDate = expDate.toISOString();
 
   return { creationDate, expirationDate };
 };
