@@ -1,0 +1,20 @@
+@import '@style/_variables';
+
+.container {
+  padding: 10px;
+
+  background-color: $clr_orange_secondary;
+
+  border-radius: 10px;
+  border: 1px solid $clr_orange_primary;
+}
+.footer {
+  margin-top: 10px;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+
+  font-style: italic;
+  font-size: $font_xsm;
+}
