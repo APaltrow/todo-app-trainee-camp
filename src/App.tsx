@@ -1,9 +1,8 @@
 import { FC } from 'react';
 
-import { formatDate } from '@helpers';
 import { useTodoTask } from '@hooks';
 
-import { TaskInput } from '@components';
+import { TaskInput, TodoList } from '@components';
 
 import style from '@style/App.module.scss';
 
@@ -35,15 +34,7 @@ export const App: FC = () => {
 
         {/* TASK LIST */}
         <section>
-          <ul>
-            {todoList.map(({ text, id, creationDate, expirationDate }) => (
-              <li key={id}>
-                {id} - {text} - created at {formatDate(creationDate)}, expires
-                at
-                {formatDate(expirationDate)}
-              </li>
-            ))}
-          </ul>
+          <TodoList todoList={todoList} />
         </section>
       </main>
     </div>
