@@ -1,6 +1,8 @@
 import { createStore } from 'redux';
 
-export const store = createStore(() => ({}));
+import { rootReducer } from '../reducers';
+
+export const store = createStore(rootReducer);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

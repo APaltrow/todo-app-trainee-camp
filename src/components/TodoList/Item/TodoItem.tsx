@@ -17,7 +17,7 @@ export const TodoItem: FC<TodoItemProps> = ({
 }) => {
   return (
     <article className={style.container}>
-      <p>{text}</p>
+      <p className={style.text}>{text}</p>
       <div className={style.footer}>
         <span>{`created at ${formatDate(creationDate)}`}</span>
         <span>{`expires at ${formatDate(expirationDate)}`}</span>

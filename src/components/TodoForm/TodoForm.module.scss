@@ -1,0 +1,23 @@
+.todo_form_container {
+  width: 500px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  border-radius: 10px;
+  padding: 15px;
+  background-color: white;
+}
+
+.todo_form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  flex: 1 0 auto;
+}
+.todo_form_footer {
+  display: flex;
+  justify-content: space-between;
+}
