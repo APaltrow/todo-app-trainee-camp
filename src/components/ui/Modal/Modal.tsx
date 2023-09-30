@@ -19,14 +19,8 @@ export const Modal: FC<ModalProps> = ({ children, isOpen, onClose }) => {
   const rootPortal = document.getElementById('portal') as HTMLElement;
 
   return ReactDOM.createPortal(
-    <div
-      className={style.overlay}
-      onClick={onClose}
-    >
-      <div
-        className={style.content}
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div className={style.overlay}>
+      <div className={style.content}>
         <span className={style.close_btn}>
           <CustomButton onClick={onClose}>
             <Icon iconName="close" />

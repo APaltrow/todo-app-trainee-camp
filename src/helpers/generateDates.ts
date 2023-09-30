@@ -4,7 +4,9 @@ export const generateDates = () => {
   const expDate = new Date();
   expDate.setDate(expDate.getDate() + 1);
 
-  const creationDate = new Date().toISOString();
+  const currDate = new Date();
+
+  const creationDate = currDate.toISOString();
   const expirationDate = expDate.toISOString();
 
   return { creationDate, expirationDate };

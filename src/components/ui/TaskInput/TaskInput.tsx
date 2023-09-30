@@ -8,13 +8,14 @@ interface TaskInputProps {
   placeholder: string;
 
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onKeyUp: (e) => void;
+  onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 export const TaskInput: FC<TaskInputProps> = ({
   value,
   error,
   placeholder,
+
   onChange,
   onKeyUp,
 }) => {

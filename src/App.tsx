@@ -2,7 +2,14 @@ import { FC } from 'react';
 
 import { useModal, useTodoTask } from '@hooks';
 
-import { CustomButton, Icon, Modal, TaskInput, TodoList } from '@components';
+import {
+  Icon,
+  Modal,
+  TodoForm,
+  TodoList,
+  TaskInput,
+  CustomButton,
+} from '@components';
 
 import style from '@style/App.module.scss';
 
@@ -10,12 +17,37 @@ export const App: FC = () => {
   const { isOpen, onOpen, onClose } = useModal();
   const {
     todo,
-    todoList,
+    dateError,
     todoInputError,
 
-    onTodoEnter,
+    clearTodo,
+    onAddTodo,
+    onCreateTodo,
+    onDateChange,
     onTodoTextChange,
   } = useTodoTask();
+
+  const handleAddTodo = () => {
+    onAddTodo();
+    onOpen();
+  };
+  const onCreateTodoWithEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key !== 'Enter') return;
+
+    onCreateTodo();
+  };
+
+  const onCancelTodo = () => {
+    const isConfirmed = window.confirm('Would you like to cancel task?');
+    if (!isConfirmed) return;
+
+    clearTodo();
+    onClose();
+  };
+  const onSaveTodo = () => {
+    onCreateTodo();
+    onClose();
+  };
 
   return (
     <div className={style.app}>
@@ -28,23 +60,33 @@ export const App: FC = () => {
               error={todoInputError}
               placeholder="Enter your task..."
               onChange={onTodoTextChange}
-              onKeyUp={onTodoEnter}
+              onKeyUp={onCreateTodoWithEnter}
             />
-            <CustomButton onClick={onOpen}>
+            <CustomButton onClick={handleAddTodo}>
               <Icon iconName="plus" />
             </CustomButton>
+
             <Modal
               isOpen={isOpen}
-              onClose={onClose}
+              onClose={onCancelTodo}
             >
-              <div className={style.content}>MODAL CONTENT HERE</div>
+              <TodoForm
+                todo={todo}
+                title="Create task"
+                dateError={dateError}
+                todoInputError={todoInputError}
+                onSaveTodo={onSaveTodo}
+                onCancelTodo={onCancelTodo}
+                onDateChange={onDateChange}
+                onTodoTextChange={onTodoTextChange}
+              />
             </Modal>
           </div>
         </section>
 
         {/* TASK LIST */}
         <section>
-          <TodoList todoList={todoList} />
+          <TodoList />
         </section>
       </main>
     </div>

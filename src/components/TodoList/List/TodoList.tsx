@@ -1,16 +1,16 @@
 import { FC } from 'react';
 
-import { ITodo } from '@types';
+import { useAppSelector } from '@redux';
 
 import { TodoItem } from '../Item';
 
 import style from './TodoList.module.scss';
 
-interface TodoListProps {
-  todoList: ITodo[];
-}
+export const TodoList: FC = () => {
+  const { todoList } = useAppSelector((state) => state.todo);
 
-export const TodoList: FC<TodoListProps> = ({ todoList }) => {
+  if (!todoList.length) return null;
+
   return (
     <ul className={style.container}>
       {todoList.map(({ text, id, creationDate, expirationDate }) => (
