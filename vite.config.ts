@@ -24,4 +24,9 @@ export default defineConfig({
       '@components': path.resolve(__dirname, './src/components'),
     },
   },
+  css: {
+    modules: {
+      generateScopedName: '[name]__[local]__[hash:base64:5]',
+    },
+  },
 });

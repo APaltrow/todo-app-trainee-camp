@@ -20,10 +20,7 @@ export const TaskInput: FC<TaskInputProps> = ({
   onKeyUp,
 }) => {
   return (
-    <div
-      className={style.wrapper}
-      data-error={error}
-    >
+    <div className={style.container}>
       <input
         className={style.input}
         value={value}
@@ -32,6 +29,8 @@ export const TaskInput: FC<TaskInputProps> = ({
         type="text"
         placeholder={placeholder}
       />
+
+      {error ? <span className={style.error}>{error}</span> : null}
     </div>
   );
 };

@@ -1,34 +1,21 @@
-@import '@style/_variables.scss';
+@import '@style/_variables';
+@import '@style/_mixins';
 
 .container {
   position: relative;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  padding: 0px 10px 0px 50px;
-
-  border-radius: 10px;
-  border: 1px solid $clr_gray_primary;
-
-  &::after {
-    content: attr(data-error);
-
-    position: absolute;
-    bottom: -20px;
-    left: 0;
-
-    font-size: $font_sm;
-    color: $clr_red_primary;
-    font-weight: 500;
-  }
 }
-
 .title {
-  position: absolute;
-  top: -25px;
-  left: 0px;
+  padding-left: 10px;
+  font-weight: 500;
 }
-
 .input {
   width: 100%;
+  height: 50px;
+  padding: 0px 10px 0px 50px;
+
+  @include with-border;
+  @include input-base;
+}
+.error {
+  @include input-error-message;
 }

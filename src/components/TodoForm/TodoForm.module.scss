@@ -1,23 +1,37 @@
-.todo_form_container {
+@import '@style/_media';
+@import '@style/_variables';
+
+.container {
   width: 500px;
 
   display: flex;
   flex-direction: column;
   gap: 20px;
 
-  border-radius: 10px;
+  border-radius: $border_radius;
   padding: 15px;
   background-color: white;
 }
 
-.todo_form {
+.form {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 10px;
 
   flex: 1 0 auto;
 }
-.todo_form_footer {
+.footer {
   display: flex;
   justify-content: space-between;
+}
+
+@include tablet {
+  .todo_form_container {
+    width: 70vw;
+  }
+}
+@include mobile {
+  .todo_form_container {
+    width: 90vw;
+  }
 }

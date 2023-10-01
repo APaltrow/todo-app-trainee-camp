@@ -1,0 +1,27 @@
+@import '@style/_variables';
+
+@mixin input-error-message {
+  padding-left: 10px;
+
+  color: $clr_red_primary;
+  font-size: $font_sm;
+  font-weight: 500;
+}
+
+@mixin input-base {
+  &::placeholder {
+    font-size: $font_md;
+    font-style: italic;
+  }
+
+  &:focus {
+    background-color: $clr_blue_secondary;
+    border: 1px solid $clr_blue_primary;
+    fill: $clr_blue_primary;
+  }
+}
+
+@mixin with-border {
+  border: 1px solid $clr_gray_primary;
+  border-radius: $border_radius;
+}

@@ -22,7 +22,10 @@ export const Modal: FC<ModalProps> = ({ children, isOpen, onClose }) => {
     <div className={style.overlay}>
       <div className={style.content}>
         <span className={style.close_btn}>
-          <CustomButton onClick={onClose}>
+          <CustomButton
+            onClick={onClose}
+            size="sm"
+          >
             <Icon iconName="close" />
           </CustomButton>
         </span>

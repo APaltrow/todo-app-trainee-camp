@@ -12,16 +12,18 @@ export const TodoList: FC = () => {
   if (!todoList.length) return null;
 
   return (
-    <ul className={style.container}>
-      {todoList.map(({ text, id, creationDate, expirationDate }) => (
-        <li key={id}>
-          <TodoItem
-            text={text}
-            creationDate={creationDate}
-            expirationDate={expirationDate}
-          />
-        </li>
-      ))}
-    </ul>
+    <section className={style.container}>
+      <ul className={style.list}>
+        {todoList.map(({ text, id, creationDate, expirationDate }) => (
+          <li key={id}>
+            <TodoItem
+              text={text}
+              creationDate={creationDate}
+              expirationDate={expirationDate}
+            />
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 };
