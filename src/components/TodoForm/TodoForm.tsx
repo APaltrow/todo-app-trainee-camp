@@ -33,10 +33,10 @@ export const TodoForm: FC<TodoFormProps> = ({
     !!dateError || !!todoInputError || !todo?.expirationDate || !todo.text;
 
   return (
-    <div className={style.todo_form_container}>
+    <div className={style.container}>
       <h2>{title}</h2>
       <form
-        className={style.todo_form}
+        className={style.form}
         onSubmit={(e) => e.preventDefault()}
       >
         <TaskInput
@@ -56,11 +56,19 @@ export const TodoForm: FC<TodoFormProps> = ({
           error={dateError}
           onChange={onDateChange}
         />
-        <div className={style.todo_form_footer}>
-          <CustomButton onClick={onCancelTodo}>CANCEL</CustomButton>
+        <div className={style.footer}>
+          <CustomButton
+            onClick={onCancelTodo}
+            size="md"
+            variant="secondary"
+          >
+            CANCEL
+          </CustomButton>
           <CustomButton
             onClick={onSaveTodo}
             isDisabled={isValidTodo}
+            size="md"
+            variant="primary"
           >
             SAVE
           </CustomButton>

@@ -5,9 +5,16 @@
 
   background-color: $clr_orange_secondary;
 
-  border-radius: 10px;
+  border-radius: $border_radius;
   border: 1px solid $clr_orange_primary;
 }
+
+.text {
+  padding-bottom: 10px;
+
+  overflow: auto;
+}
+
 .footer {
   margin-top: 10px;
 
@@ -17,8 +24,4 @@
 
   font-style: italic;
   font-size: $font_xsm;
-}
-
-.text {
-  overflow: auto;
 }

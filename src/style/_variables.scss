@@ -1,4 +1,4 @@
-/* Color scheme */
+/* COLOR scheme */
 
 $clr_blue_primary: #518aff;
 $clr_blue_secondary: #ecf5ff;
@@ -7,10 +7,31 @@ $clr_orange_primary: #ffba6b;
 $clr_orange_secondary: #fffff8;
 
 $clr_gray_primary: #b9b6b6;
+$clr_gray_secondary: #f5f5f5;
 
 $clr_red_primary: red;
 
 /* FONTS */
+
 $font_xsm: 12px;
 $font_sm: 14px;
 $font_md: 16px;
+
+/*  SIZES */
+
+$main_container: 1982px;
+
+/* BORDER RADIUS*/
+
+$border_radius: 10px;
+
+/* BOXSHADOW*/
+
+$box_shadow_main: 0 0 5px $clr_gray_primary;
+
+/* BREAK POINTS */
+
+$breakpoint_desktop: 1200px;
+$breakpoint_laptop: 1024px;
+$breakpoint_tablet: 767px;
+$breakpoint_mobile: 576px;

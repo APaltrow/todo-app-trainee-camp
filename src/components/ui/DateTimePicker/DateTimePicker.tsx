@@ -25,10 +25,7 @@ export const DateTimePicker: FC<DateTimePickerProps> = ({
   const minDate = formatISOTime(new Date().toISOString()).slice(0, 16);
 
   return (
-    <div
-      className={style.container}
-      data-error={error}
-    >
+    <div className={style.container}>
       <label
         htmlFor={title}
         className={style.title}
@@ -44,6 +41,7 @@ export const DateTimePicker: FC<DateTimePickerProps> = ({
         readOnly={isReadonly}
         className={style.input}
       />
+      {error ? <span className={style.error}>{error}</span> : null}
     </div>
   );
 };

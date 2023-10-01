@@ -1,14 +1,12 @@
-@import '@style/variables';
+@import '@style/_variables';
 
-.container {
-  padding: 0px 10px;
-}
-
-.list {
-  padding: 10px;
+.toolbar {
+  position: sticky;
+  top: 0;
+  padding: 25px 10px;
 
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   gap: 20px;
 
   background-color: white;
