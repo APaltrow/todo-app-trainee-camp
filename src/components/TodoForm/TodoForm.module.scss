@@ -26,12 +26,12 @@
 }
 
 @include tablet {
-  .todo_form_container {
+  .container {
     width: 70vw;
   }
 }
 @include mobile {
-  .todo_form_container {
+  .container {
     width: 90vw;
   }
 }
