@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { formatDate } from '@helpers';
+import { getDateTimeFromISO } from '@helpers';
 
 import style from './TodoItem.module.scss';
 
@@ -19,8 +19,8 @@ export const TodoItem: FC<TodoItemProps> = ({
     <article className={style.container}>
       <p className={style.text}>{text}</p>
       <div className={style.footer}>
-        <span>{`created at ${formatDate(creationDate)}`}</span>
-        <span>{`expires at ${formatDate(expirationDate)}`}</span>
+        <span>{`created at ${getDateTimeFromISO(creationDate)}`}</span>
+        <span>{`expires at ${getDateTimeFromISO(expirationDate)}`}</span>
       </div>
     </article>
   );

@@ -1,8 +1,8 @@
 /* Creates timestamps for current date and expiration date => (current date + 1 day) */
 
-export const generateDates = () => {
+export const getCreationExpirationDates = (daysGap: number) => {
   const expDate = new Date();
-  expDate.setDate(expDate.getDate() + 1);
+  expDate.setDate(expDate.getDate() + daysGap);
 
   const currDate = new Date();
 

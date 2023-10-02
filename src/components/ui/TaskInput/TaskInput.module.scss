@@ -19,6 +19,7 @@
   @include with-border;
   @include input-base;
 }
+
 .error {
   @include input-error-message;
 }

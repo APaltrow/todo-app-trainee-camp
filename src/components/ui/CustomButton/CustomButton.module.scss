@@ -8,6 +8,7 @@
     @content;
   }
 }
+
 @mixin with-variant($bg_color, $fill_color) {
   background-color: $bg_color;
   color: $fill_color;
@@ -37,10 +38,12 @@
   padding: 5px 15px;
   max-height: 30px;
 }
+
 .size_sm {
   padding: 5px;
   max-height: 30px;
 }
+
 .size_md {
   padding: 15px;
   max-height: 50px;

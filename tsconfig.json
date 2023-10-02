@@ -6,6 +6,7 @@
       "@style/*": ["src/style/*"],
       "@assets/*": ["src/assets/*"],
       "@redux": ["src/redux"],
+      "@constants": ["src/constants"],
       "@helpers": ["src/helpers"],
       "@hooks": ["src/hooks"],
       "@types": ["src/types"],
