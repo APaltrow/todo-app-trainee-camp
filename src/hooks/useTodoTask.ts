@@ -1,6 +1,10 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
-import { generateDates, validateDates, validateTodoText } from '@helpers';
+import {
+  checkForSpecialCharacters,
+  checkIfDateBigger,
+  getCreationExpirationDates,
+} from '@helpers';
 import { ITodo } from '@types';
 import { useActions } from '@redux';
 
@@ -43,7 +47,7 @@ export const useTodoTask = () => {
     if (!newTodo.creationDate) {
       newTodo = {
         ...newTodo,
-        ...generateDates(),
+        ...getCreationExpirationDates(1),
       };
     }
 
@@ -63,9 +67,8 @@ export const useTodoTask = () => {
   /* Validations */
 
   useEffect(() => {
-    /* Validating text input */
-    const isValidText = validateTodoText(todo.text);
-    if (!isValidText) {
+    const isSpecialCharacter = checkForSpecialCharacters(todo.text);
+    if (isSpecialCharacter) {
       setTodoInputError('Task should not contain special characters');
     } else {
       setTodoInputError('');
@@ -77,10 +80,12 @@ export const useTodoTask = () => {
       setDateError('');
       return;
     }
-    /* Validating dates */
 
-    const isValidDate = validateDates(todo.creationDate, todo.expirationDate);
-    if (!isValidDate) {
+    const isCreationDateBigger = checkIfDateBigger(
+      todo.creationDate,
+      todo.expirationDate,
+    );
+    if (isCreationDateBigger) {
       setDateError('Incorect expiration date');
     } else {
       setDateError('');

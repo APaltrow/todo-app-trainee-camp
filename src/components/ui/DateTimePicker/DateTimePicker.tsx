@@ -1,6 +1,7 @@
 import { FC, ChangeEvent } from 'react';
 
-import { formatISOTime } from '@helpers';
+import { getLocalTimeFromISO } from '@helpers';
+import { DATE_TIME_LENGTH } from '@constants';
 
 import style from './DateTimePicker.module.scss';
 
@@ -21,8 +22,14 @@ export const DateTimePicker: FC<DateTimePickerProps> = ({
 
   onChange,
 }) => {
-  const date = value ? formatISOTime(value).slice(0, 16) : '';
-  const minDate = formatISOTime(new Date().toISOString()).slice(0, 16);
+  const date = value
+    ? getLocalTimeFromISO(value).slice(0, DATE_TIME_LENGTH)
+    : '';
+  const todayISOTimestamp = new Date().toISOString();
+  const minDate = getLocalTimeFromISO(todayISOTimestamp).slice(
+    0,
+    DATE_TIME_LENGTH,
+  );
 
   return (
     <div className={style.container}>

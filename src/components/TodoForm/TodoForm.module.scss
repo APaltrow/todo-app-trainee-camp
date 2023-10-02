@@ -17,9 +17,9 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-
   flex: 1 0 auto;
 }
+
 .footer {
   display: flex;
   justify-content: space-between;
@@ -30,6 +30,7 @@
     width: 70vw;
   }
 }
+
 @include mobile {
   .container {
     width: 90vw;
