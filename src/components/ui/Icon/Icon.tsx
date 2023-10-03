@@ -5,7 +5,7 @@ import sprites from '@assets/sprites.svg';
 import style from './Icon.module.scss';
 
 interface IconProps {
-  iconName: string;
+  iconName: 'plus' | 'delete' | 'close';
 }
 
 export const Icon: FC<IconProps> = ({ iconName }) => {

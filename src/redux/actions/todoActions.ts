@@ -7,3 +7,7 @@ export const addTodo = (newTodo: ITodo) => {
 export const setTodoDone = (todoId: number) => {
   return { type: TodoActions.SET_TODO_DONE, payload: todoId };
 };
+
+export const deleteTodo = (todoId: number) => {
+  return { type: TodoActions.DELETE_TODO, payload: todoId };
+};
