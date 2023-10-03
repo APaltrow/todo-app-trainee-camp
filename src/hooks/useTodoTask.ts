@@ -17,7 +17,7 @@ const DEFAULT_TODO = {
 } as ITodo;
 
 export const useTodoTask = () => {
-  const { addTodo, setTodoDone, deleteTodo } = useActions();
+  const { addTodo, setTodoDone, deleteTodo, editTodo } = useActions();
 
   const [todo, setTodo] = useState<ITodo>(DEFAULT_TODO);
 
@@ -72,6 +72,12 @@ export const useTodoTask = () => {
   const onDeleteTodo = (todoId: number) => {
     deleteTodo(todoId);
   };
+  const onEditTodo = (todoToEdit: ITodo) => {
+    setTodo(todoToEdit);
+  };
+  const onSaveEditTodo = () => {
+    editTodo(todo);
+  };
 
   /* Validations */
 
@@ -110,6 +116,8 @@ export const useTodoTask = () => {
     onAddTodo,
     onSetDone,
     onDeleteTodo,
+    onEditTodo,
+    onSaveEditTodo,
     onCreateTodo,
     onDateChange,
     onTodoTextChange,

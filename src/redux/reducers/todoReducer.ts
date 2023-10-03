@@ -37,6 +37,20 @@ export const todoReducer = (
       return { ...state, todoList: [...updatedList] };
     }
 
+    case TodoActions.EDIT_TODO: {
+      const todo = state.todoList.find(
+        (todoItem) => todoItem.id === action.payload.id,
+      );
+
+      if (!todo) return state;
+
+      const todoIndex = state.todoList.indexOf(todo);
+
+      state.todoList.splice(todoIndex, 1, { ...action.payload });
+
+      return { ...state };
+    }
+
     default:
       return state;
   }
