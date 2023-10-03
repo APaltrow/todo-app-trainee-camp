@@ -10,7 +10,7 @@ export const todoReducer = (
 ): ITodoState => {
   switch (action.type) {
     case TodoActions.ADD_TODO:
-      return { ...state, todoList: [...state.todoList, action.payload] };
+      return { ...state, todoList: [action.payload, ...state.todoList] };
 
     case TodoActions.SET_TODO_DONE: {
       const todo = state.todoList.find(
