@@ -29,6 +29,14 @@ export const todoReducer = (
       return { ...state };
     }
 
+    case TodoActions.DELETE_TODO: {
+      const updatedList = state.todoList.filter(
+        (todo) => todo.id !== action.payload,
+      );
+
+      return { ...state, todoList: [...updatedList] };
+    }
+
     default:
       return state;
   }

@@ -9,6 +9,7 @@ export interface ITodo {
 export enum TodoActions {
   ADD_TODO = 'ADD_TODO',
   SET_TODO_DONE = 'SET_TODO_DONE',
+  DELETE_TODO = 'DELETE_TODO',
 }
 export interface ITodoState {
   todoList: ITodo[];
@@ -21,4 +22,12 @@ interface ISetTodoDoneAction {
   type: TodoActions.SET_TODO_DONE;
   payload: number;
 }
-export type TodoAction = IAddTodoAction | ISetTodoDoneAction;
+interface IDeleteTodoAction {
+  type: TodoActions.DELETE_TODO;
+  payload: number;
+}
+
+export type TodoAction =
+  | IAddTodoAction
+  | ISetTodoDoneAction
+  | IDeleteTodoAction;
