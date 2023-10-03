@@ -1,0 +1,60 @@
+@import '@style/_variables';
+
+.container {
+  position: relative;
+  max-height: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input {
+  position: absolute;
+  z-index: 5;
+  opacity: 0;
+
+  cursor: pointer;
+}
+
+.label {
+  display: flex;
+
+  cursor: pointer;
+  &::before {
+    content: '';
+
+    width: 20px;
+    height: 20px;
+
+    background-color: white;
+    border: 1px solid $clr_orange_primary;
+    border-radius: 50%;
+  }
+}
+
+/* ON HOVER */
+.container label:hover::before,
+.container input[type='checkbox']:hover + label::before {
+  background-color: $clr_orange_primary;
+}
+
+/* ON FOCUS */
+.container label:focus::before,
+.container input[type='checkbox']:focus + label::before {
+  box-shadow: 0 0 5px $clr_red_primary;
+}
+
+/* ON CHECKED */
+.container input[type='checkbox']:checked + label::before {
+  content: '\002714';
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: transparent;
+
+  color: $clr_red_primary;
+  font-size: $font_lg;
+}

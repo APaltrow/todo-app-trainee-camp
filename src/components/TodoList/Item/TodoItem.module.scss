@@ -9,10 +9,23 @@
   border: 1px solid $clr_orange_primary;
 }
 
+.main {
+  display: flex;
+  gap: 10px;
+}
+
 .text {
   padding-bottom: 10px;
 
   overflow: auto;
+}
+
+.text_crossed {
+  padding-bottom: 10px;
+
+  overflow: auto;
+
+  text-decoration: line-through;
 }
 
 .footer {

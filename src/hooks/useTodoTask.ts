@@ -1,4 +1,6 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+
+import { useActions } from '@redux';
 
 import {
   checkForSpecialCharacters,
@@ -6,16 +8,16 @@ import {
   getCreationExpirationDates,
 } from '@helpers';
 import { ITodo } from '@types';
-import { useActions } from '@redux';
 
 const DEFAULT_TODO = {
   text: '',
+  isDone: false,
   creationDate: '',
   expirationDate: '',
 } as ITodo;
 
 export const useTodoTask = () => {
-  const { addTodo } = useActions();
+  const { addTodo, setTodoDone } = useActions();
 
   const [todo, setTodo] = useState<ITodo>(DEFAULT_TODO);
 
@@ -64,6 +66,10 @@ export const useTodoTask = () => {
     setTodo(DEFAULT_TODO);
   };
 
+  const onSetDone = useCallback((todoId: number) => {
+    setTodoDone(todoId);
+  }, []);
+
   /* Validations */
 
   useEffect(() => {
@@ -99,6 +105,7 @@ export const useTodoTask = () => {
 
     clearTodo,
     onAddTodo,
+    onSetDone,
     onCreateTodo,
     onDateChange,
     onTodoTextChange,
