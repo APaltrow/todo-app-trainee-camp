@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, memo } from 'react';
+import { FC, memo } from 'react';
 
 import { getDateTimeFromISO } from '@helpers';
 import { useModal, useTodoTask } from '@hooks';
@@ -11,6 +11,7 @@ import style from './TodoItem.module.scss';
 interface TodoItemProps {
   todo: ITodo;
 }
+
 export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
   const { id, text, isDone, creationDate, expirationDate } = todo;
   const { isOpen, onOpen, onClose } = useModal();
