@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { useActions } from '@redux';
 
@@ -66,9 +66,9 @@ export const useTodoTask = () => {
     setTodo(DEFAULT_TODO);
   };
 
-  const onSetDone = useCallback((todoId: number) => {
+  const onSetDone = (todoId: number) => {
     setTodoDone(todoId);
-  }, []);
+  };
 
   /* Validations */
 

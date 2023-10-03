@@ -19,7 +19,12 @@ export const todoReducer = (
 
       if (!todo) return state;
 
-      todo.isDone = !todo.isDone;
+      const todoIndex = state.todoList.indexOf(todo);
+      const updatedTodo = {
+        ...todo,
+        isDone: !todo.isDone,
+      };
+      state.todoList.splice(todoIndex, 1, updatedTodo);
 
       return { ...state };
     }

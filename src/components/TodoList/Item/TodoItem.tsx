@@ -1,49 +1,37 @@
 import { FC, memo } from 'react';
 
 import { getDateTimeFromISO } from '@helpers';
+import { useTodoTask } from '@hooks';
+import { ITodo } from '@types';
 
 import { Checkbox } from '@components';
 
 import style from './TodoItem.module.scss';
 
 interface TodoItemProps {
-  id: number;
-  text: string;
-  isDone: boolean;
-  creationDate: string;
-  expirationDate: string;
-
-  onSetDone: (id: number) => void;
+  todo: ITodo;
 }
+export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
+  const { id, text, isDone, creationDate, expirationDate } = todo;
+  const { onSetDone } = useTodoTask();
 
-export const TodoItem: FC<TodoItemProps> = memo(
-  ({
-    id,
-    text,
-    isDone,
-    creationDate,
-    expirationDate,
+  const handleSetDone = () => onSetDone(id);
 
-    onSetDone,
-  }) => {
-    const handleSetDone = () => onSetDone(id);
+  return (
+    <article className={style.container}>
+      <div className={style.main}>
+        <Checkbox
+          id={id}
+          isChecked={isDone}
+          onChange={handleSetDone}
+        />
+        <p className={`${style.text} ${isDone ? style.crossed : ''}`}>{text}</p>
+      </div>
 
-    return (
-      <article className={style.container}>
-        <div className={style.main}>
-          <Checkbox
-            id={id}
-            isChecked={isDone}
-            onChange={handleSetDone}
-          />
-          <p className={style[`text${isDone ? '_crossed' : ''}`]}>{text}</p>
-        </div>
-
-        <div className={style.footer}>
-          <span>{`created at ${getDateTimeFromISO(creationDate)}`}</span>
-          <span>{`expires at ${getDateTimeFromISO(expirationDate)}`}</span>
-        </div>
-      </article>
-    );
-  },
-);
+      <div className={style.footer}>
+        <span>{`created at ${getDateTimeFromISO(creationDate)}`}</span>
+        <span>{`expires at ${getDateTimeFromISO(expirationDate)}`}</span>
+      </div>
+    </article>
+  );
+});
