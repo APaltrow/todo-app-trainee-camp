@@ -1,0 +1,15 @@
+@import '@style/_variables';
+
+.container {
+  width: 100%;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.filter_item_active {
+  border-radius: $border_radius;
+  background-color: $clr_blue_secondary;
+  box-shadow: $box_shadow_main;
+}

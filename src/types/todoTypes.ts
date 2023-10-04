@@ -11,9 +11,13 @@ export enum TodoActions {
   SET_TODO_DONE = 'SET_TODO_DONE',
   DELETE_TODO = 'DELETE_TODO',
   EDIT_TODO = 'EDIT_TODO',
+  CLEAR_DONE_TODO = 'CLEAR_DONE_TODO',
+  SET_FILTER_TODO = 'SET_FILTER_TODO',
 }
+export type FilterOptions = 'All' | 'Active' | 'Completed';
 export interface ITodoState {
   todoList: ITodo[];
+  filterValue: FilterOptions;
 }
 interface IAddTodoAction {
   type: TodoActions.ADD_TODO;
@@ -31,9 +35,18 @@ interface IEditTodoAction {
   type: TodoActions.EDIT_TODO;
   payload: ITodo;
 }
+interface IClearDoneTodoAction {
+  type: TodoActions.CLEAR_DONE_TODO;
+}
+interface ISetFilterTodoAction {
+  type: TodoActions.SET_FILTER_TODO;
+  payload: FilterOptions;
+}
 
 export type TodoAction =
   | IAddTodoAction
   | ISetTodoDoneAction
   | IDeleteTodoAction
-  | IEditTodoAction;
+  | IEditTodoAction
+  | IClearDoneTodoAction
+  | ISetFilterTodoAction;
