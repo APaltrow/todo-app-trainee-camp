@@ -2,6 +2,7 @@ import { ITodoState, TodoAction, TodoActions } from '@types';
 
 const initialState: ITodoState = {
   todoList: [],
+  filterValue: 'All',
 };
 
 export const todoReducer = (
@@ -49,6 +50,18 @@ export const todoReducer = (
       state.todoList.splice(todoIndex, 1, { ...action.payload });
 
       return { ...state };
+    }
+
+    case TodoActions.CLEAR_DONE_TODO: {
+      const updatedState = state.todoList.filter(
+        (todoItem) => !todoItem.isDone,
+      );
+
+      return { ...state, todoList: [...updatedState] };
+    }
+
+    case TodoActions.SET_FILTER_TODO: {
+      return { ...state, filterValue: action.payload };
     }
 
     default:
