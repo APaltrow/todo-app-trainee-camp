@@ -1,6 +1,8 @@
 import { FC, ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 
+import { IconsTypes } from '@types';
+
 import { CustomButton } from '../CustomButton';
 import { Icon } from '../Icon';
 
@@ -26,7 +28,7 @@ export const Modal: FC<ModalProps> = ({ children, isOpen, onClose }) => {
             onClick={onClose}
             size="sm"
           >
-            <Icon iconName="close" />
+            <Icon iconName={IconsTypes.CLOSE} />
           </CustomButton>
         </span>
         {children}

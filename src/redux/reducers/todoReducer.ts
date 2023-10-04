@@ -35,21 +35,17 @@ export const todoReducer = (
         (todo) => todo.id !== action.payload,
       );
 
-      return { ...state, todoList: [...updatedList] };
+      return { ...state, todoList: updatedList };
     }
 
     case TodoActions.EDIT_TODO: {
-      const todo = state.todoList.find(
-        (todoItem) => todoItem.id === action.payload.id,
-      );
+      const updatedList = state.todoList.map((todo) => {
+        if (todo.id !== action.payload.id) return todo;
 
-      if (!todo) return state;
+        return { ...action.payload };
+      });
 
-      const todoIndex = state.todoList.indexOf(todo);
-
-      state.todoList.splice(todoIndex, 1, { ...action.payload });
-
-      return { ...state };
+      return { ...state, todoList: updatedList };
     }
 
     case TodoActions.CLEAR_DONE_TODO: {

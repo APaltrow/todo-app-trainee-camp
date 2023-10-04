@@ -2,7 +2,7 @@ import { FC, memo } from 'react';
 
 import { getDateTimeFromISO } from '@helpers';
 import { useModal, useTodoTask } from '@hooks';
-import { ITodo } from '@types';
+import { ITodo, IconsTypes } from '@types';
 
 import { Checkbox, CustomButton, Icon, Modal, TodoForm } from '@components';
 
@@ -70,16 +70,17 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
 
         <CustomButton
           size="sm"
+          isDisabled={todo.isDone}
           onClick={handleEditTodo}
         >
-          <Icon iconName="edit" />
+          <Icon iconName={IconsTypes.EDIT} />
         </CustomButton>
 
         <CustomButton
           size="sm"
           onClick={handleDeleteTodo}
         >
-          <Icon iconName="delete" />
+          <Icon iconName={IconsTypes.DELETE} />
         </CustomButton>
       </div>
 
