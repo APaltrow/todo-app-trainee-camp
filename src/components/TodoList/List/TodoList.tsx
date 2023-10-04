@@ -1,20 +1,30 @@
 import { FC } from 'react';
 
 import { useAppSelector } from '@redux';
+import { FilterOptions } from '@types';
 
 import { TodoItem } from '../Item';
 
 import style from './TodoList.module.scss';
 
 export const TodoList: FC = () => {
-  const { todoList } = useAppSelector((state) => state.todo);
+  const { todoList, filterValue } = useAppSelector((state) => state.todo);
 
-  if (!todoList.length) return null;
+  const filterTodo = (option: FilterOptions) => {
+    if (option === 'Active') {
+      return todoList.filter((todo) => !todo.isDone);
+    }
 
+    return todoList.filter((todo) => todo.isDone);
+  };
+
+  const todos = filterValue !== 'All' ? filterTodo(filterValue) : todoList;
+
+  if (!todos.length) return null;
   return (
     <section className={style.container}>
       <ul className={style.list}>
-        {todoList.map((todoItem) => (
+        {todos.map((todoItem) => (
           <li key={todoItem.id}>
             <TodoItem todo={todoItem} />
           </li>

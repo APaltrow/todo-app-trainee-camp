@@ -7,7 +7,7 @@ import { CustomButton } from '@components';
 
 import style from './FilterTodo.module.scss';
 
-const FILTER_BUTTONS = ['All', 'Active', 'Completed'];
+const FILTER_OPTIONS = ['All', 'Active', 'Completed'];
 
 export const FilterTodo: FC = () => {
   const { filterValue, todoList } = useAppSelector((state) => state.todo);
@@ -29,17 +29,17 @@ export const FilterTodo: FC = () => {
 
   return (
     <ul className={style.container}>
-      {FILTER_BUTTONS.map((button) => (
+      {FILTER_OPTIONS.map((option) => (
         <li
-          key={`filter_btn_${button}`}
-          className={filterValue === button ? style.filter_item_active : ''}
+          key={`filter_btn_${option}`}
+          className={filterValue === option ? style.filter_item_active : ''}
         >
           <CustomButton
-            variant={filterValue === button ? 'default' : 'primary'}
-            onClick={() => handleSetFilter(button as FilterOptions)}
-            isDisabled={filterValue === button}
+            variant={filterValue === option ? 'default' : 'primary'}
+            onClick={() => handleSetFilter(option as FilterOptions)}
+            isDisabled={filterValue === option}
           >
-            {button}
+            {option}
           </CustomButton>
         </li>
       ))}
