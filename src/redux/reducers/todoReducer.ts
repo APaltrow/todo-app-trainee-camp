@@ -34,7 +34,7 @@ export const todoReducer = (
         (todo) => todo.id !== action.payload,
       );
 
-      return { ...state, todoList: [...updatedList] };
+      return { ...state, todoList: updatedList };
     }
 
     default:

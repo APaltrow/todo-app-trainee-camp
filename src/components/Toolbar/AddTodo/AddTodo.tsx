@@ -1,6 +1,7 @@
 import { FC } from 'react';
 
 import { useModal, useTodoTask } from '@hooks';
+import { IconsTypes } from '@types';
 
 import { Icon, Modal, TodoForm, TaskInput, CustomButton } from '@components';
 
@@ -56,7 +57,7 @@ export const AddTodo: FC = () => {
         size="md"
         variant="primary"
       >
-        <Icon iconName="plus" />
+        <Icon iconName={IconsTypes.PLUS} />
       </CustomButton>
 
       <Modal
