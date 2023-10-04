@@ -1,8 +1,8 @@
-import { ITodoState, TodoAction, TodoActions } from '@types';
+import { FilterOptions, ITodoState, TodoAction, TodoActions } from '@types';
 
 const initialState: ITodoState = {
   todoList: [],
-  filterValue: 'All',
+  filterValue: FilterOptions.ALL,
 };
 
 export const todoReducer = (
