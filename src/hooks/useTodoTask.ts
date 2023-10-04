@@ -1,7 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
 import { useActions } from '@redux';
-
 import {
   checkForSpecialCharacters,
   checkIfDateBigger,
@@ -22,6 +21,7 @@ export const useTodoTask = () => {
   const [todo, setTodo] = useState<ITodo>(DEFAULT_TODO);
 
   const [todoInputError, setTodoInputError] = useState('');
+
   const [dateError, setDateError] = useState('');
 
   const onTodoTextChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +29,7 @@ export const useTodoTask = () => {
 
     setTodo((prevTodo) => ({ ...prevTodo, text }));
   };
+
   const onDateChange = (e: ChangeEvent<HTMLInputElement>) => {
     const expirationDate = new Date(e.target.value).toISOString();
 
@@ -62,6 +63,7 @@ export const useTodoTask = () => {
 
     setTodo((prevTodo) => ({ ...prevTodo, creationDate }));
   };
+
   const clearTodo = () => {
     setTodo(DEFAULT_TODO);
   };
@@ -69,12 +71,15 @@ export const useTodoTask = () => {
   const onSetDone = (todoId: number) => {
     setTodoDone(todoId);
   };
+
   const onDeleteTodo = (todoId: number) => {
     deleteTodo(todoId);
   };
+
   const onEditTodo = (todoToEdit: ITodo) => {
     setTodo(todoToEdit);
   };
+
   const onSaveEditTodo = () => {
     editTodo(todo);
   };
@@ -83,6 +88,7 @@ export const useTodoTask = () => {
 
   useEffect(() => {
     const isSpecialCharacter = checkForSpecialCharacters(todo.text);
+
     if (isSpecialCharacter) {
       setTodoInputError('Task should not contain special characters');
     } else {
@@ -100,6 +106,7 @@ export const useTodoTask = () => {
       todo.creationDate,
       todo.expirationDate,
     );
+
     if (isCreationDateBigger) {
       setDateError('Incorect expiration date');
     } else {
