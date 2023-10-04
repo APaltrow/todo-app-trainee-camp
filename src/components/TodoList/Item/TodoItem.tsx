@@ -70,6 +70,7 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
 
         <CustomButton
           size="sm"
+          isDisabled={todo.isDone}
           onClick={handleEditTodo}
         >
           <Icon iconName={IconsTypes.EDIT} />
