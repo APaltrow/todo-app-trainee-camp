@@ -1,4 +1,5 @@
 @import '@style/_variables';
+@import '@style/_media';
 
 .container {
   width: 100%;
@@ -11,4 +12,13 @@
   border-radius: $border_radius;
   background-color: $clr_blue_secondary;
   box-shadow: $box_shadow_main;
+}
+
+@include mobile {
+  .container {
+    padding: 10px 5px;
+    gap: 10px;
+
+    overflow: auto;
+  }
 }

@@ -2,12 +2,11 @@ import { FC } from 'react';
 
 import { FilterOptions } from '@types';
 import { useFilter } from '@hooks';
+import { FILTER_OPTIONS } from '@constants';
 
 import { CustomButton } from '@components';
 
 import style from './FilterTodo.module.scss';
-
-const FILTER_OPTIONS = ['All', 'Active', 'Completed'];
 
 export const FilterTodo: FC = () => {
   const {
