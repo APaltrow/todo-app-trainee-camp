@@ -14,11 +14,18 @@ export enum TodoActions {
   CLEAR_DONE_TODO = 'CLEAR_DONE_TODO',
   SET_FILTER_TODO = 'SET_FILTER_TODO',
 }
-export type FilterOptions = 'All' | 'Active' | 'Completed';
+
+export enum FilterOptions {
+  ALL = 'All',
+  ACTIVE = 'Active',
+  COMPLETED = 'Completed',
+}
+
 export interface ITodoState {
   todoList: ITodo[];
   filterValue: FilterOptions;
 }
+
 interface IAddTodoAction {
   type: TodoActions.ADD_TODO;
   payload: ITodo;
