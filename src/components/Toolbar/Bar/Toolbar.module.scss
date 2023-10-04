@@ -1,4 +1,5 @@
 @import '@style/_variables';
+@import '@style/_media';
 
 .toolbar {
   position: sticky;
@@ -14,4 +15,10 @@
 
   border-radius: $border_radius;
   box-shadow: $box_shadow_main;
+}
+
+@include mobile {
+  .toolbar {
+    gap: 10px;
+  }
 }
