@@ -37,6 +37,16 @@ export const todoReducer = (
       return { ...state, todoList: updatedList };
     }
 
+    case TodoActions.EDIT_TODO: {
+      const updatedList = state.todoList.map((todo) => {
+        if (todo.id !== action.payload.id) return todo;
+
+        return { ...action.payload };
+      });
+
+      return { ...state, todoList: updatedList };
+    }
+
     default:
       return state;
   }

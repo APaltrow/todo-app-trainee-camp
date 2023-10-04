@@ -11,6 +11,10 @@
     <symbol id="delete" viewBox="0 0 48 48">
         <path d="M12 38c0 2.21 1.79 4 4 4h16c2.21 0 4-1.79 4-4V14H12v24zM38 8h-7l-2-2H19l-2 2h-7v4h28V8z"/>
         <path d="M0 0h48v48H0z" fill="none"/>
+    </symbol>
+
+    <symbol id="edit" viewBox="0 0 24 24" >
+        <path d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"/>
     </symbol>   
           
 </svg>    
