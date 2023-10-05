@@ -15,6 +15,10 @@ export const useFilter = () => {
     if (!isConfirmed) return;
 
     clearDoneTodo();
+
+    if (filterValue === FilterOptions.COMPLETED) {
+      setFilterTodo(FilterOptions.ALL);
+    }
   };
 
   const onSetFilter = (filter: FilterOptions) => setFilterTodo(filter);

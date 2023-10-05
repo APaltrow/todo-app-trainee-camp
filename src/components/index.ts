@@ -10,3 +10,4 @@ export * from './ui/CustomButton';
 export * from './ui/Modal';
 export * from './ui/DateTimePicker';
 export * from './ui/Checkbox';
+export * from './ui/Info';
