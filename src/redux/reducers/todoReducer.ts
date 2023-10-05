@@ -3,6 +3,7 @@ import { FilterOptions, ITodoState, TodoAction, TodoActions } from '@types';
 const initialState: ITodoState = {
   todoList: [],
   filterValue: FilterOptions.ALL,
+  searchValue: '',
 };
 
 export const todoReducer = (
@@ -58,6 +59,10 @@ export const todoReducer = (
 
     case TodoActions.SET_FILTER_TODO: {
       return { ...state, filterValue: action.payload };
+    }
+
+    case TodoActions.SET_SEARCH_TODO: {
+      return { ...state, searchValue: action.payload };
     }
 
     default:

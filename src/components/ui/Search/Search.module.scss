@@ -1,0 +1,28 @@
+@import '@style/_variables';
+@import '@style/_media';
+
+@import '@style/_mixins';
+
+.container {
+  position: relative;
+  flex: 1;
+}
+
+.input {
+  width: 100%;
+  height: 50px;
+  padding: 0px 10px 0px 40px;
+
+  font-size: $font_md;
+
+  fill: $clr_gray_primary;
+
+  @include with-border;
+  @include input-base;
+}
+
+.icon {
+  position: absolute;
+  left: 10px;
+  top: 14px;
+}

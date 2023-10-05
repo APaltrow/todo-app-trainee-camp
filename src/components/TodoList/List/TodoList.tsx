@@ -12,13 +12,17 @@ import { TodoItem } from '../Item';
 import style from './TodoList.module.scss';
 
 export const TodoList: FC = () => {
-  const { todos, filterValue } = useFilter();
+  const { todos, filterValue, searchValue } = useFilter();
 
   if (!todos.length) {
+    const message = searchValue
+      ? `Nothing is found for '${searchValue}'`
+      : TODO_LIST_MESSAGES[filterValue.toLowerCase()];
+
     return (
       <Info
-        imgUrl={tasksImg}
-        message={TODO_LIST_MESSAGES[filterValue.toLowerCase()]}
+        imgUrl={searchValue ? '' : tasksImg}
+        message={message}
       />
     );
   }
