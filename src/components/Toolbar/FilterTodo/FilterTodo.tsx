@@ -18,31 +18,31 @@ export const FilterTodo: FC = () => {
   } = useFilter();
 
   return (
-    <ul className={style.container}>
-      {FILTER_OPTIONS.map((option) => (
-        <li
-          key={`filter_btn_${option}`}
-          className={filterValue === option ? style.filter_item_active : ''}
-        >
-          <CustomButton
-            variant={filterValue === option ? 'default' : 'primary'}
-            onClick={() => onSetFilter(option as FilterOptions)}
-            isDisabled={filterValue === option}
+    <div className={style.container}>
+      <ul className={style.list}>
+        {FILTER_OPTIONS.map((option) => (
+          <li
+            key={`filter_btn_${option}`}
+            className={filterValue === option ? style.filter_item_active : ''}
           >
-            {option}
-          </CustomButton>
-        </li>
-      ))}
+            <CustomButton
+              variant={filterValue === option ? 'default' : 'primary'}
+              onClick={() => onSetFilter(option as FilterOptions)}
+              isDisabled={filterValue === option}
+            >
+              {option}
+            </CustomButton>
+          </li>
+        ))}
+      </ul>
 
-      <li>
-        <CustomButton
-          variant="secondary"
-          onClick={onClearDoneTodos}
-          isDisabled={!isAnyTodoDone}
-        >
-          Clear completed
-        </CustomButton>
-      </li>
-    </ul>
+      <CustomButton
+        variant="secondary"
+        onClick={onClearDoneTodos}
+        isDisabled={!isAnyTodoDone}
+      >
+        Clear completed
+      </CustomButton>
+    </div>
   );
 };
