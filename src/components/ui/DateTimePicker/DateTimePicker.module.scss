@@ -22,3 +22,16 @@
 .error {
   @include input-error-message;
 }
+
+.icon {
+  display: block;
+  max-height: 25px;
+  position: absolute;
+  top: 35px;
+  left: 10px;
+
+  & > svg {
+    width: 25px;
+    height: 25px;
+  }
+}
