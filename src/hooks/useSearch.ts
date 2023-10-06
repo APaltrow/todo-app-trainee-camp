@@ -1,14 +1,17 @@
 import { ChangeEvent, useState } from 'react';
 
 import { useDebounce } from '@hooks';
-import { useActions } from '@redux';
+import { useActions, useAppSelector } from '@redux';
 
 const DELAY = 300;
 
 export const useSearch = () => {
+  const { searchValue: initialSearchValue } = useAppSelector(
+    (state) => state.todo,
+  );
   const { setSearchTodo } = useActions();
 
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState(initialSearchValue);
 
   const debouncedSearch = useDebounce(
     (searchText: string) => setSearchTodo(searchText),

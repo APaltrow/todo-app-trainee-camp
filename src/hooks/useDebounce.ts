@@ -1,7 +1,10 @@
 import { useCallback, useRef } from 'react';
 
-export const useDebounce = (callback: (args: any) => void, delay: number) => {
-  const timer = useRef<null | NodeJS.Timer>(null);
+export const useDebounce = (
+  callback: (...args: any) => void,
+  delay: number,
+) => {
+  const timer = useRef<null | NodeJS.Timeout>(null);
 
   const debounced = useCallback(
     (...args: any) => {
