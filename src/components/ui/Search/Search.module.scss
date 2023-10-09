@@ -21,6 +21,10 @@
 
   @include with-border;
   @include input-base;
+
+  &::-webkit-search-cancel-button {
+    cursor: pointer;
+  }
 }
 
 .icon {
