@@ -1,9 +1,11 @@
 import { useActions, useAppSelector } from '@redux';
 
-import { FilterOptions } from '@types';
+import { FilterOptions, ITodo } from '@types';
 
 export const useFilter = () => {
-  const { filterValue, todoList } = useAppSelector((state) => state.todo);
+  const { filterValue, searchValue, todoList } = useAppSelector(
+    (state) => state.todo,
+  );
 
   const { clearDoneTodo, setFilterTodo } = useActions();
 
@@ -23,7 +25,11 @@ export const useFilter = () => {
 
   const onSetFilter = (filter: FilterOptions) => setFilterTodo(filter);
 
-  const filterTodo = (option: FilterOptions) => {
+  const filterTodos = (option: FilterOptions) => {
+    if (option === FilterOptions.ALL) {
+      return todoList;
+    }
+
     if (option === FilterOptions.ACTIVE) {
       return todoList.filter((todo) => !todo.isDone);
     }
@@ -31,14 +37,22 @@ export const useFilter = () => {
     return todoList.filter((todo) => todo.isDone);
   };
 
-  const isAnyTodoDone = !!todoList.find((todo) => todo.isDone);
+  const searchTodos = (filteredList: ITodo[], searchText: string) => {
+    if (!searchText) return filteredList;
 
-  const todos =
-    filterValue !== FilterOptions.ALL ? filterTodo(filterValue) : todoList;
+    return filteredList.filter((todo) =>
+      todo.text.toLowerCase().includes(searchText.toLowerCase()),
+    );
+  };
+
+  const todos = searchTodos(filterTodos(filterValue), searchValue);
+
+  const isAnyTodoDone = !!todoList.find((todo) => todo.isDone);
 
   return {
     todos,
     filterValue,
+    searchValue,
     isAnyTodoDone,
 
     onSetFilter,

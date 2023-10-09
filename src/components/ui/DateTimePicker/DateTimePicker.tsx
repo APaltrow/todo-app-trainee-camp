@@ -1,7 +1,10 @@
 import { FC, ChangeEvent } from 'react';
 
+import { IconsTypes } from '@types';
 import { getLocalTimeFromISO } from '@helpers';
 import { DATE_TIME_LENGTH } from '@constants';
+
+import { Icon } from '@components';
 
 import style from './DateTimePicker.module.scss';
 
@@ -48,6 +51,13 @@ export const DateTimePicker: FC<DateTimePickerProps> = ({
         readOnly={isReadonly}
         className={style.input}
       />
+
+      <span className={style.icon}>
+        <Icon
+          iconName={isReadonly ? IconsTypes.DATE_START : IconsTypes.DATE_END}
+        />
+      </span>
+
       {error ? <span className={style.error}>{error}</span> : null}
     </div>
   );

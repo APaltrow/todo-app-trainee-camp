@@ -13,6 +13,7 @@ export enum TodoActions {
   EDIT_TODO = 'EDIT_TODO',
   CLEAR_DONE_TODO = 'CLEAR_DONE_TODO',
   SET_FILTER_TODO = 'SET_FILTER_TODO',
+  SET_SEARCH_TODO = 'SET_SEARCH_TODO',
 }
 
 export enum FilterOptions {
@@ -24,6 +25,7 @@ export enum FilterOptions {
 export interface ITodoState {
   todoList: ITodo[];
   filterValue: FilterOptions;
+  searchValue: string;
 }
 
 interface IAddTodoAction {
@@ -49,6 +51,10 @@ interface ISetFilterTodoAction {
   type: TodoActions.SET_FILTER_TODO;
   payload: FilterOptions;
 }
+interface ISetSearchTodoAction {
+  type: TodoActions.SET_SEARCH_TODO;
+  payload: string;
+}
 
 export type TodoAction =
   | IAddTodoAction
@@ -56,4 +62,5 @@ export type TodoAction =
   | IDeleteTodoAction
   | IEditTodoAction
   | IClearDoneTodoAction
-  | ISetFilterTodoAction;
+  | ISetFilterTodoAction
+  | ISetSearchTodoAction;

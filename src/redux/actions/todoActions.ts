@@ -15,9 +15,15 @@ export const deleteTodo = (todoId: number) => {
 export const editTodo = (editedTodo: ITodo) => {
   return { type: TodoActions.EDIT_TODO, payload: editedTodo };
 };
+
 export const clearDoneTodo = () => {
   return { type: TodoActions.CLEAR_DONE_TODO };
 };
+
 export const setFilterTodo = (filterValue: FilterOptions) => {
   return { type: TodoActions.SET_FILTER_TODO, payload: filterValue };
+};
+
+export const setSearchTodo = (searchValue: string) => {
+  return { type: TodoActions.SET_SEARCH_TODO, payload: searchValue };
 };

@@ -1,5 +1,9 @@
 import { ChangeEvent, FC } from 'react';
 
+import { IconsTypes } from '@types';
+
+import { Icon } from '@components';
+
 import style from './TaskInput.module.scss';
 
 interface TaskInputProps {
@@ -29,6 +33,10 @@ export const TaskInput: FC<TaskInputProps> = ({
         type="text"
         placeholder={placeholder}
       />
+
+      <span className={style.icon}>
+        <Icon iconName={IconsTypes.PENCIL} />
+      </span>
 
       {error ? <span className={style.error}>{error}</span> : null}
     </div>

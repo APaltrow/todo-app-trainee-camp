@@ -23,3 +23,30 @@
 .error {
   @include input-error-message;
 }
+
+.icon {
+  display: block;
+  max-height: 25px;
+  position: absolute;
+  top: 13px;
+  left: 10px;
+
+  & > svg {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.input:focus + .icon {
+  animation: writing 2s ease-in-out infinite;
+}
+
+@keyframes writing {
+  0% {
+  }
+  50% {
+    transform: translateX(-10px);
+  }
+  100% {
+  }
+}
