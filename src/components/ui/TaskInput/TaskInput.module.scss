@@ -12,9 +12,11 @@
   height: 50px;
   padding: 0px 40px;
 
+  color: var(--text-strong);
   font-size: $font_md;
 
-  fill: $clr_gray_primary;
+  fill: var(--text-weak);
+  background-color: transparent;
 
   @include with-border;
   @include input-base;

@@ -1,38 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800;900&display=swap');
 @import './_reset.scss';
 @import './variables';
-@import './_media';
+@import './_mixins';
+@import './_themes';
 
 * {
   font-family: 'Jost', sans-serif;
+}
+
+html[class='light'] {
+  @include theme-light-scheme;
+}
+
+html[class='dark'] {
+  @include theme-dark-scheme;
 }
 
 .app {
   max-width: $main_container;
   min-height: 100vh;
   margin: 0 auto;
-  background-color: $clr_gray_secondary;
-}
-
-.main_container {
-  width: 50%;
-
-  margin: 0 auto;
-  padding: 25px 0px;
 
   display: flex;
   flex-direction: column;
-  gap: 20px;
-}
 
-@include tablet {
-  .main_container {
-    width: 70vw;
-  }
-}
-
-@include mobile {
-  .main_container {
-    width: 90vw;
-  }
+  color: var(--text-strong);
+  background-color: var(--clr-mid);
 }

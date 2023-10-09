@@ -15,8 +15,24 @@
   height: 50px;
   padding: 0px 10px 0px 50px;
 
+  background-color: transparent;
+  color: var(--text-strong);
+
   @include with-border;
   @include input-base;
+
+  &::-webkit-calendar-picker-indicator {
+    width: 20px;
+    height: 20px;
+
+    background-color: var(--focus);
+    border-radius: 5px;
+    box-shadow: $box_shadow_main;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .error {

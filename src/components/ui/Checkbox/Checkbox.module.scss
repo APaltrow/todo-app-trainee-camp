@@ -27,7 +27,7 @@
     width: 20px;
     height: 20px;
 
-    background-color: white;
+    background-color: transparent;
     border: 1px solid $clr_orange_primary;
     border-radius: 50%;
   }
@@ -36,13 +36,14 @@
 /* ON HOVER */
 .container label:hover::before,
 .container input[type='checkbox']:hover + label::before {
-  background-color: $clr_orange_primary;
+  background-color: $clr_red_primary;
 }
 
 /* ON FOCUS */
 .container label:focus::before,
 .container input[type='checkbox']:focus + label::before {
-  box-shadow: 0 0 5px $clr_red_primary;
+  box-shadow: 0 0 10px var(--text-strong);
+  transform: scale(1.2);
 }
 
 /* ON CHECKED */

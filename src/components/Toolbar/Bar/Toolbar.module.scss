@@ -11,10 +11,10 @@
   flex-direction: column;
   gap: 20px;
 
-  background-color: white;
+  background-color: var(--clr-primary);
 
   border-radius: $border_radius;
-  box-shadow: $box_shadow_main;
+  box-shadow: var(--box-shadow);
 }
 
 @include mobile {

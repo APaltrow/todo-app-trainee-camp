@@ -7,4 +7,6 @@ export enum IconsTypes {
   PENCIL = 'pencil',
   DATE_START = 'date-start',
   DATE_END = 'date-end',
+  SUN = 'sun',
+  MOON = 'moon',
 }
