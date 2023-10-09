@@ -1,0 +1,25 @@
+@import '@style/_media';
+
+.main_container {
+  width: 50%;
+
+  margin: 0 auto;
+  padding: 25px 0px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+}
+
+@include tablet {
+  .main_container {
+    width: 70vw;
+  }
+}
+
+@include mobile {
+  .main_container {
+    width: 90vw;
+  }
+}

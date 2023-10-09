@@ -4,7 +4,7 @@
 .container {
   padding: 10px;
 
-  background-color: $clr_orange_secondary;
+  background-color: transparent;
 
   border-radius: $border_radius;
   border: 1px solid $clr_orange_primary;
@@ -34,6 +34,7 @@
   justify-content: space-between;
   gap: 10px;
 
+  color: var(--text-weak);
   font-style: italic;
   font-size: $font_xsm;
 }

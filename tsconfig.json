@@ -10,7 +10,9 @@
       "@helpers": ["src/helpers"],
       "@hooks": ["src/hooks"],
       "@types": ["src/types"],
-      "@components": ["src/components"]
+      "@components": ["src/components"],
+      "@layouts": ["src/layouts"],
+      "@context": ["src/context"]
     },
 
     "target": "ES2020",

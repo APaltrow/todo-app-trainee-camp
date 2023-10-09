@@ -53,18 +53,18 @@
 /* VARIANTS */
 
 .variant_default {
-  @include with-variant(transparent, black);
+  @include with-variant(transparent, var(--text-strong));
 
   @include with-hover-focus {
-    border: 1px solid black;
+    border: 1px solid var(--text-strong);
   }
 }
 
 .variant_primary {
-  @include with-variant($clr_blue_primary, white);
+  @include with-variant($clr_blue_primary, var(--clr-primary));
 
   @include with-hover-focus {
-    background-color: $clr_blue_secondary;
+    background-color: transparent;
     fill: $clr_blue_primary;
     color: $clr_blue_primary;
     border: 1px solid $clr_blue_primary;
@@ -72,12 +72,12 @@
 }
 
 .variant_secondary {
-  @include with-variant($clr_gray_secondary, black);
+  @include with-variant(var(--text-weak), $clr_theme_light_secondary);
 
   @include with-hover-focus {
-    background-color: black;
-    fill: white;
-    color: white;
-    border: 1px solid black;
+    background-color: $clr_orange_primary;
+    fill: black;
+    color: black;
+    border: 1px solid $clr_orange_primary;
   }
 }

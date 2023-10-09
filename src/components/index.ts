@@ -2,6 +2,8 @@
 export * from './TodoList';
 export * from './TodoForm';
 export * from './Toolbar';
+export * from './Header';
+export * from './Footer';
 
 /* UI components */
 export * from './ui/TaskInput';

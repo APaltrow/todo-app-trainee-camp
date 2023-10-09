@@ -14,7 +14,7 @@
 
 .filter_item_active {
   border-radius: $border_radius;
-  background-color: $clr_blue_secondary;
+  background-color: var(--focus);
   box-shadow: $box_shadow_main;
 }
 
