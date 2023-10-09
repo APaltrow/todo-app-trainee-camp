@@ -14,3 +14,4 @@ export * from './ui/DateTimePicker';
 export * from './ui/Checkbox';
 export * from './ui/Info';
 export * from './ui/Search';
+export * from './ui/Tooltip';
