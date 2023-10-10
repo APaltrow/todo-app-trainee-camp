@@ -14,8 +14,6 @@ export const useTodoTotals = () => {
     Completed: 0,
   };
 
-  if (!todoList.length) return initialTotals;
-
   const totals: Totals = useMemo(
     () =>
       todoList.reduce((todoTotals, todo) => {

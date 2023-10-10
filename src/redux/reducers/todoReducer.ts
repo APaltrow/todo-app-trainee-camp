@@ -47,7 +47,7 @@ export const todoReducer = (
         (todoItem) => !todoItem.isDone,
       );
 
-      return { ...state, todoList: [...updatedState] };
+      return { ...state, todoList: updatedState };
     }
 
     case TodoActions.SET_FILTER_TODO: {
