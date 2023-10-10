@@ -10,12 +10,6 @@ export const useFilter = () => {
   const { clearDoneTodo, setFilterTodo } = useActions();
 
   const onClearDoneTodos = () => {
-    const isConfirmed = window.confirm(
-      'Would you like to clear completed tasks?',
-    );
-
-    if (!isConfirmed) return;
-
     clearDoneTodo();
 
     if (filterValue === FilterOptions.COMPLETED) {
