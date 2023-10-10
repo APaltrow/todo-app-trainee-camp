@@ -1,14 +1,24 @@
 import { FC } from 'react';
 
-import { useModal, useTodoTask } from '@hooks';
+import { useAlert, useModal, useTodoTask } from '@hooks';
 import { IconsTypes } from '@types';
 
-import { Icon, Modal, TodoForm, TaskInput, CustomButton } from '@components';
+import {
+  Icon,
+  Modal,
+  TodoForm,
+  TaskInput,
+  CustomButton,
+  Alert,
+} from '@components';
 
 import style from './AddTodo.module.scss';
 
 export const AddTodo: FC = () => {
-  const { isOpen, onOpen, onClose } = useModal();
+  const [isOpen, onOpen, onClose] = useModal();
+
+  const { alert, onAlertCall, onAlertCancel } = useAlert();
+
   const {
     todo,
     dateError,
@@ -25,22 +35,27 @@ export const AddTodo: FC = () => {
     onAddTodo();
     onOpen();
   };
+
   const onCreateTodoWithEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter') return;
 
     onCreateTodo();
   };
 
-  const onCancelTodo = () => {
-    const isConfirmed = window.confirm('Would you like to cancel task?');
-    if (!isConfirmed) return;
-
-    clearTodo();
-    onClose();
-  };
   const onSaveTodo = () => {
     onCreateTodo();
     onClose();
+  };
+
+  const handleCancelTodo = () => {
+    onAlertCall({
+      text: 'Would you like to cancel the taks?',
+      onConfirm: () => {
+        clearTodo();
+        onClose();
+        onAlertCancel();
+      },
+    });
   };
 
   return (
@@ -62,7 +77,7 @@ export const AddTodo: FC = () => {
 
       <Modal
         isOpen={isOpen}
-        onClose={onCancelTodo}
+        onClose={handleCancelTodo}
       >
         <TodoForm
           todo={todo}
@@ -70,11 +85,18 @@ export const AddTodo: FC = () => {
           dateError={dateError}
           todoInputError={todoInputError}
           onSaveTodo={onSaveTodo}
-          onCancelTodo={onCancelTodo}
+          onCancelTodo={handleCancelTodo}
           onDateChange={onDateChange}
           onTodoTextChange={onTodoTextChange}
         />
       </Modal>
+      {alert ? (
+        <Alert
+          text={alert.text}
+          onCancel={onAlertCancel}
+          onConfirm={alert.onConfirm}
+        />
+      ) : null}
     </div>
   );
 };

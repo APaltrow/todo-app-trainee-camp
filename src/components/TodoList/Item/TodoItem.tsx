@@ -1,10 +1,17 @@
 import { FC, memo } from 'react';
 
 import { getDateTimeFromISO } from '@helpers';
-import { useModal, useTodoTask } from '@hooks';
+import { useAlert, useModal, useTodoTask } from '@hooks';
 import { ITodo, IconsTypes } from '@types';
 
-import { Checkbox, CustomButton, Icon, Modal, TodoForm } from '@components';
+import {
+  Alert,
+  Checkbox,
+  CustomButton,
+  Icon,
+  Modal,
+  TodoForm,
+} from '@components';
 
 import style from './TodoItem.module.scss';
 
@@ -14,7 +21,11 @@ interface TodoItemProps {
 
 export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
   const { id, text, isDone, creationDate, expirationDate } = todo;
-  const { isOpen, onOpen, onClose } = useModal();
+
+  const [isOpen, onOpen, onClose] = useModal();
+
+  const { alert, onAlertCall, onAlertCancel } = useAlert();
+
   const {
     todo: todoEdit,
     dateError,
@@ -32,11 +43,13 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
   const handleSetDone = () => onSetDone(id);
 
   const handleDeleteTodo = () => {
-    const isConfirmed = window.confirm('Would you like to delete the task?');
-
-    if (!isConfirmed) return;
-
-    onDeleteTodo(id);
+    onAlertCall({
+      text: 'Would you like to delete the task?',
+      onConfirm: () => {
+        onDeleteTodo(id);
+        onAlertCancel();
+      },
+    });
   };
 
   const handleEditTodo = () => {
@@ -44,18 +57,20 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
     onOpen();
   };
 
-  const handleCancelEditTodo = () => {
-    const isConfirmed = window.confirm('Would you like to cancel editing?');
-
-    if (!isConfirmed) return;
-
-    clearTodo();
-    onClose();
-  };
-
   const handleSaveEditTodo = () => {
     onSaveEditTodo();
     onClose();
+  };
+
+  const handleCancelEditTodo = () => {
+    onAlertCall({
+      text: 'Would you like to cancel the editing?',
+      onConfirm: () => {
+        clearTodo();
+        onClose();
+        onAlertCancel();
+      },
+    });
   };
 
   return (
@@ -104,6 +119,14 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
           onTodoTextChange={onTodoTextChange}
         />
       </Modal>
+
+      {alert ? (
+        <Alert
+          text={alert.text}
+          onCancel={onAlertCancel}
+          onConfirm={alert.onConfirm}
+        />
+      ) : null}
     </article>
   );
 });

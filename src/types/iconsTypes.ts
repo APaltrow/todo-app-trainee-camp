@@ -9,4 +9,5 @@ export enum IconsTypes {
   DATE_END = 'date-end',
   SUN = 'sun',
   MOON = 'moon',
+  ALERT = 'alert',
 }

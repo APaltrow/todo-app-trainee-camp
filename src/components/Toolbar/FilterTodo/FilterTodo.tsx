@@ -1,20 +1,33 @@
 import { FC } from 'react';
 
-import { useFilter, useTodoTotals } from '@hooks';
+import { useAlert, useFilter, useTodoTotals } from '@hooks';
 import { FILTER_OPTIONS } from '@constants';
 
-import { CustomButton, Tooltip } from '@components';
+import { Alert, CustomButton, Tooltip } from '@components';
 
 import style from './FilterTodo.module.scss';
 
 export const FilterTodo: FC = () => {
   const todoTotals = useTodoTotals();
+
+  const { alert, onAlertCall, onAlertCancel } = useAlert();
+
   const {
     filterValue,
 
     onSetFilter,
     onClearDoneTodos,
   } = useFilter();
+
+  const handleClearCompleted = () => {
+    onAlertCall({
+      text: 'Would you like to clear all completed tasks?',
+      onConfirm: () => {
+        onClearDoneTodos();
+        onAlertCancel();
+      },
+    });
+  };
 
   return (
     <div className={style.container}>
@@ -43,11 +56,19 @@ export const FilterTodo: FC = () => {
 
       <CustomButton
         variant="secondary"
-        onClick={onClearDoneTodos}
+        onClick={handleClearCompleted}
         isDisabled={!todoTotals.Completed}
       >
         Clear completed
       </CustomButton>
+
+      {alert ? (
+        <Alert
+          text={alert.text}
+          onCancel={onAlertCancel}
+          onConfirm={alert.onConfirm}
+        />
+      ) : null}
     </div>
   );
 };
