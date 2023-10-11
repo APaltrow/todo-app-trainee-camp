@@ -1,4 +1,4 @@
-@import '@style/_mixins';
+@import '@style/_variables';
 
 .overlay {
   display: flex;
@@ -10,7 +10,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(127, 127, 127, 0.4);
+  background-color: $clr_modal;
   z-index: 100;
 
   transition: all 0.3s ease-in-out;

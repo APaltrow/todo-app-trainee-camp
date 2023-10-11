@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { useAlert, useModal, useTodoTask } from '@hooks';
-import { IconsTypes } from '@types';
+import { AlertMessages, IconsTypes } from '@types';
 
 import {
   Icon,
@@ -55,7 +55,7 @@ export const AddTodo: FC = () => {
 
   const handleCancelTodo = () => {
     onAlertCall({
-      text: 'Would you like to cancel the taks?',
+      text: AlertMessages.CANCEL_TASK,
       onConfirm: onCancelTodo,
     });
   };

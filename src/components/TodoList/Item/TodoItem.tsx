@@ -1,8 +1,8 @@
 import { FC, memo } from 'react';
 
-import { getDateTimeFromISO } from '@helpers';
+import { checkIfDateBigger, getDateTimeFromISO } from '@helpers';
 import { useAlert, useModal, useTodoTask } from '@hooks';
-import { ITodo, IconsTypes } from '@types';
+import { AlertMessages, ITodo, IconsTypes } from '@types';
 
 import {
   Alert,
@@ -44,7 +44,7 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
 
   const handleDeleteTodo = () => {
     onAlertCall({
-      text: 'Would you like to delete the task?',
+      text: AlertMessages.DELETE_TASK,
       onConfirm: () => {
         onDeleteTodo(id);
         onAlertCancel();
@@ -70,18 +70,21 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
 
   const handleCancelEditTodo = () => {
     onAlertCall({
-      text: 'Would you like to cancel the editing?',
+      text: AlertMessages.CANCEL_EDITING,
       onConfirm: onCancelEditTodo,
     });
   };
 
+  const isExpired = checkIfDateBigger(new Date().toISOString(), expirationDate);
+
   return (
-    <article className={style.container}>
+    <article className={`${style.container} ${isExpired ? style.expired : ''}`}>
       <div className={style.main}>
         <Checkbox
           id={id}
           isChecked={isDone}
           onChange={handleSetDone}
+          isDisabled={isExpired}
         />
         <p className={`${style.text} ${isDone ? style.crossed : ''}`}>{text}</p>
 
@@ -102,8 +105,12 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
       </div>
 
       <div className={style.footer}>
-        <span>{`created at ${getDateTimeFromISO(creationDate)}`}</span>
-        <span>{`expires at ${getDateTimeFromISO(expirationDate)}`}</span>
+        <span>{`created ${getDateTimeFromISO(creationDate)}`}</span>
+        {isExpired ? (
+          <span className={style.expired_text}>EXPIRED</span>
+        ) : (
+          <span>{`expires ${getDateTimeFromISO(expirationDate)}`}</span>
+        )}
       </div>
 
       <Modal

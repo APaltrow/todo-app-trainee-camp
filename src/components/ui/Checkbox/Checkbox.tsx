@@ -5,11 +5,18 @@ import style from './Checkbox.module.scss';
 interface CheckboxProps {
   id: number;
   isChecked: boolean;
+  isDisabled?: boolean;
 
   onChange: () => void;
 }
 
-export const Checkbox: FC<CheckboxProps> = ({ id, isChecked, onChange }) => {
+export const Checkbox: FC<CheckboxProps> = ({
+  id,
+  isChecked,
+  isDisabled = false,
+
+  onChange,
+}) => {
   const inputId = String(id);
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -18,7 +25,7 @@ export const Checkbox: FC<CheckboxProps> = ({ id, isChecked, onChange }) => {
   };
 
   return (
-    <div className={style.container}>
+    <div className={`${style.container} ${isDisabled ? style.disabled : ''}`}>
       <input
         className={style.input}
         type="checkbox"
@@ -26,6 +33,7 @@ export const Checkbox: FC<CheckboxProps> = ({ id, isChecked, onChange }) => {
         onChange={onChange}
         onKeyUp={handleKeyPress}
         checked={isChecked}
+        disabled={isDisabled}
       />
       <label
         className={style.label}
