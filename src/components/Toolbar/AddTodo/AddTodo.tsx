@@ -47,14 +47,16 @@ export const AddTodo: FC = () => {
     onClose();
   };
 
+  const onCancelTodo = () => {
+    clearTodo();
+    onClose();
+    onAlertCancel();
+  };
+
   const handleCancelTodo = () => {
     onAlertCall({
       text: 'Would you like to cancel the taks?',
-      onConfirm: () => {
-        clearTodo();
-        onClose();
-        onAlertCancel();
-      },
+      onConfirm: onCancelTodo,
     });
   };
 
@@ -85,7 +87,7 @@ export const AddTodo: FC = () => {
           dateError={dateError}
           todoInputError={todoInputError}
           onSaveTodo={onSaveTodo}
-          onCancelTodo={handleCancelTodo}
+          onCancelTodo={onCancelTodo}
           onDateChange={onDateChange}
           onTodoTextChange={onTodoTextChange}
         />

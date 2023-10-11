@@ -62,14 +62,16 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
     onClose();
   };
 
+  const onCancelEditTodo = () => {
+    clearTodo();
+    onClose();
+    onAlertCancel();
+  };
+
   const handleCancelEditTodo = () => {
     onAlertCall({
       text: 'Would you like to cancel the editing?',
-      onConfirm: () => {
-        clearTodo();
-        onClose();
-        onAlertCancel();
-      },
+      onConfirm: onCancelEditTodo,
     });
   };
 
@@ -114,7 +116,7 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
           dateError={dateError}
           todoInputError={todoInputError}
           onSaveTodo={handleSaveEditTodo}
-          onCancelTodo={handleCancelEditTodo}
+          onCancelTodo={onCancelEditTodo}
           onDateChange={onDateChange}
           onTodoTextChange={onTodoTextChange}
         />

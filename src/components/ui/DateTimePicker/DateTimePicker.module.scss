@@ -22,6 +22,11 @@
   @include input-base;
 
   &::-webkit-calendar-picker-indicator {
+    position: absolute;
+    right: 0px;
+
+    padding: 15px 30px 15px 90%;
+
     &:hover {
       cursor: pointer;
     }
