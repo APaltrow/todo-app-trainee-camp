@@ -6,7 +6,7 @@ import {
   checkIfDateBigger,
   getCreationExpirationDates,
 } from '@helpers';
-import { ITodo } from '@types';
+import { ErrorMessages, FilterOptions, ITodo } from '@types';
 
 const DEFAULT_TODO = {
   text: '',
@@ -16,7 +16,8 @@ const DEFAULT_TODO = {
 } as ITodo;
 
 export const useTodoTask = () => {
-  const { addTodo, setTodoDone, deleteTodo, editTodo } = useActions();
+  const { addTodo, setTodoDone, deleteTodo, editTodo, setFilterTodo } =
+    useActions();
 
   const [todo, setTodo] = useState<ITodo>(DEFAULT_TODO);
 
@@ -55,6 +56,7 @@ export const useTodoTask = () => {
     }
 
     addTodo(newTodo);
+    setFilterTodo(FilterOptions.ALL);
     setTodo(DEFAULT_TODO);
   };
 
@@ -90,7 +92,7 @@ export const useTodoTask = () => {
     const isSpecialCharacter = checkForSpecialCharacters(todo.text);
 
     if (isSpecialCharacter) {
-      setTodoInputError('Task should not contain special characters');
+      setTodoInputError(ErrorMessages.NO_SPECIAL_CHARACTERS);
     } else {
       setTodoInputError('');
     }
@@ -108,7 +110,7 @@ export const useTodoTask = () => {
     );
 
     if (isCreationDateBigger) {
-      setDateError('Incorect expiration date');
+      setDateError(ErrorMessages.INCORRECT_EXPIRATION_DATE);
     } else {
       setDateError('');
     }

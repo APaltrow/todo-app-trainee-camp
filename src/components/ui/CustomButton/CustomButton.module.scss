@@ -76,8 +76,8 @@
 
   @include with-hover-focus {
     background-color: $clr_orange_primary;
-    fill: black;
-    color: black;
+    fill: $clr_theme_light_secondary;
+    color: $clr_theme_light_secondary;
     border: 1px solid $clr_orange_primary;
   }
 }

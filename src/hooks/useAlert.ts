@@ -1,10 +1,6 @@
 import { useState } from 'react';
 
-interface IAlert {
-  text: string;
-
-  onConfirm: () => void;
-}
+import { IAlert } from '@types';
 
 export const useAlert = () => {
   const [alert, setAlert] = useState<IAlert | null>(null);

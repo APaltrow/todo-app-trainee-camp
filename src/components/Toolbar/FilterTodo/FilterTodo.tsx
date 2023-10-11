@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { useAlert, useFilter, useTodoTotals } from '@hooks';
 import { FILTER_OPTIONS } from '@constants';
-
+import { AlertMessages } from '@types';
 import { Alert, CustomButton, Tooltip } from '@components';
 
 import style from './FilterTodo.module.scss';
@@ -21,7 +21,7 @@ export const FilterTodo: FC = () => {
 
   const handleClearCompleted = () => {
     onAlertCall({
-      text: 'Would you like to clear all completed tasks?',
+      text: AlertMessages.CLEAR_COMPLETED,
       onConfirm: () => {
         onClearDoneTodos();
         onAlertCancel();

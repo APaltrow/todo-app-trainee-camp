@@ -10,6 +10,16 @@
   border: 1px solid $clr_orange_primary;
 }
 
+.expired {
+  box-shadow: 0px 0px 5px $clr_red_primary inset;
+  border: 1px solid transparent;
+}
+
+.expired_text {
+  color: $clr_red_primary;
+  font-weight: bold;
+}
+
 .main {
   display: flex;
   gap: 10px;
@@ -20,7 +30,8 @@
 
   flex: 1;
 
-  overflow: auto;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .crossed {
