@@ -18,8 +18,14 @@ export const Modal: FC<ModalProps> = ({ children, isOpen, onClose }) => {
 
   return (
     <Portal>
-      <div className={style.overlay}>
-        <div className={style.content}>
+      <div
+        className={style.overlay}
+        onClick={onClose}
+      >
+        <div
+          className={style.content}
+          onClick={(e) => e.stopPropagation()}
+        >
           <span className={style.close_btn}>
             <CustomButton
               onClick={onClose}
