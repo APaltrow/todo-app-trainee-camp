@@ -4,3 +4,4 @@ export * from './useFilter';
 export * from './useDebounce';
 export * from './useSearch';
 export * from './useTheme';
+export * from './useTodoTotals';

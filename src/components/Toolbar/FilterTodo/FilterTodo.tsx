@@ -1,17 +1,16 @@
 import { FC } from 'react';
 
-import { FilterOptions } from '@types';
-import { useFilter } from '@hooks';
+import { useFilter, useTodoTotals } from '@hooks';
 import { FILTER_OPTIONS } from '@constants';
 
-import { CustomButton } from '@components';
+import { CustomButton, Tooltip } from '@components';
 
 import style from './FilterTodo.module.scss';
 
 export const FilterTodo: FC = () => {
+  const todoTotals = useTodoTotals();
   const {
     filterValue,
-    isAnyTodoDone,
 
     onSetFilter,
     onClearDoneTodos,
@@ -20,26 +19,32 @@ export const FilterTodo: FC = () => {
   return (
     <div className={style.container}>
       <ul className={style.list}>
-        {FILTER_OPTIONS.map((option) => (
-          <li
-            key={`filter_btn_${option}`}
-            className={filterValue === option ? style.filter_item_active : ''}
-          >
-            <CustomButton
-              variant={filterValue === option ? 'default' : 'primary'}
-              onClick={() => onSetFilter(option as FilterOptions)}
-              isDisabled={filterValue === option}
+        {FILTER_OPTIONS.map((option) => {
+          const isSelected = filterValue === option;
+
+          return (
+            <li
+              key={`filter_btn_${option}`}
+              className={isSelected ? style.filter_item_active : ''}
             >
-              {option}
-            </CustomButton>
-          </li>
-        ))}
+              <Tooltip value={isSelected ? null : todoTotals[option]}>
+                <CustomButton
+                  variant={isSelected ? 'default' : 'primary'}
+                  onClick={() => onSetFilter(option)}
+                  isDisabled={isSelected}
+                >
+                  {option}
+                </CustomButton>
+              </Tooltip>
+            </li>
+          );
+        })}
       </ul>
 
       <CustomButton
         variant="secondary"
         onClick={onClearDoneTodos}
-        isDisabled={!isAnyTodoDone}
+        isDisabled={!todoTotals.Completed}
       >
         Clear completed
       </CustomButton>

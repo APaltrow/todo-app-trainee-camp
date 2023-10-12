@@ -15,20 +15,13 @@ export const todoReducer = (
       return { ...state, todoList: [action.payload, ...state.todoList] };
 
     case TodoActions.SET_TODO_DONE: {
-      const todo = state.todoList.find(
-        (todoItem) => todoItem.id === action.payload,
-      );
+      const updatedList = state.todoList.map((todo) => {
+        if (todo.id !== action.payload) return todo;
 
-      if (!todo) return state;
+        return { ...todo, isDone: !todo.isDone };
+      });
 
-      const todoIndex = state.todoList.indexOf(todo);
-      const updatedTodo = {
-        ...todo,
-        isDone: !todo.isDone,
-      };
-      state.todoList.splice(todoIndex, 1, updatedTodo);
-
-      return { ...state };
+      return { ...state, todoList: updatedList };
     }
 
     case TodoActions.DELETE_TODO: {
@@ -54,7 +47,7 @@ export const todoReducer = (
         (todoItem) => !todoItem.isDone,
       );
 
-      return { ...state, todoList: [...updatedState] };
+      return { ...state, todoList: updatedState };
     }
 
     case TodoActions.SET_FILTER_TODO: {

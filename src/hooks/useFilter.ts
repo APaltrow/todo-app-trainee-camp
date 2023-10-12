@@ -47,13 +47,10 @@ export const useFilter = () => {
 
   const todos = searchTodos(filterTodos(filterValue), searchValue);
 
-  const isAnyTodoDone = !!todoList.find((todo) => todo.isDone);
-
   return {
     todos,
     filterValue,
     searchValue,
-    isAnyTodoDone,
 
     onSetFilter,
     onClearDoneTodos,
