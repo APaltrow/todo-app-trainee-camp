@@ -31,8 +31,8 @@ export const useTodoTask = () => {
     setTodo((prevTodo) => ({ ...prevTodo, text }));
   };
 
-  const onDateChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const expirationDate = new Date(e.target.value).toISOString();
+  const onDateChange = (timestamp: string) => {
+    const expirationDate = new Date(timestamp).toISOString();
 
     setTodo((prevTodo) => ({
       ...prevTodo,
