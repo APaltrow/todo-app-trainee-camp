@@ -1,8 +1,9 @@
-import { FC, ChangeEvent } from 'react';
+import { FC } from 'react';
 
 import { IconsTypes } from '@types';
-import { getLocalTimeFromISO } from '@helpers';
-import { DATE_TIME_LENGTH } from '@constants';
+
+import { DATE_PICKER_MAX_VALUE } from '@constants';
+import { useDateTimePicker } from '@hooks';
 
 import { Icon } from '@components';
 
@@ -14,7 +15,7 @@ interface DateTimePickerProps {
   error?: string;
   isReadonly?: boolean;
 
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (timestamp: string) => void;
 }
 
 export const DateTimePicker: FC<DateTimePickerProps> = ({
@@ -25,14 +26,17 @@ export const DateTimePicker: FC<DateTimePickerProps> = ({
 
   onChange,
 }) => {
-  const date = value
-    ? getLocalTimeFromISO(value).slice(0, DATE_TIME_LENGTH)
-    : '';
-  const todayISOTimestamp = new Date().toISOString();
-  const minDate = getLocalTimeFromISO(todayISOTimestamp).slice(
-    0,
-    DATE_TIME_LENGTH,
-  );
+  const {
+    minDate,
+    pickerValue,
+    pickerError,
+
+    handeBlur,
+    handleFocus,
+    handleChange,
+  } = useDateTimePicker(value, isReadonly, onChange);
+
+  const errorMessage = error || pickerError;
 
   return (
     <div className={style.container}>
@@ -43,12 +47,16 @@ export const DateTimePicker: FC<DateTimePickerProps> = ({
         {title}
       </label>
       <input
-        value={date}
+        value={pickerValue}
         min={minDate}
-        onChange={onChange}
+        max={DATE_PICKER_MAX_VALUE}
+        onFocus={handleFocus}
+        onChange={handleChange}
+        onBlur={handeBlur}
         id={title}
         type="datetime-local"
         readOnly={isReadonly}
+        tabIndex={isReadonly ? -1 : 0}
         className={style.input}
       />
 
@@ -58,7 +66,9 @@ export const DateTimePicker: FC<DateTimePickerProps> = ({
         />
       </span>
 
-      {error ? <span className={style.error}>{error}</span> : null}
+      {errorMessage ? (
+        <span className={style.error}>{errorMessage}</span>
+      ) : null}
     </div>
   );
 };
