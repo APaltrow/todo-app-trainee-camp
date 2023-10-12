@@ -2,7 +2,7 @@ import { FC, memo } from 'react';
 
 import { checkIfDateBigger, getDateTimeFromISO } from '@helpers';
 import { useAlert, useModal, useTodoTask } from '@hooks';
-import { AlertMessages, ITodo, IconsTypes } from '@types';
+import { AlertMessages, ButtonSizes, ITodo, IconsTypes } from '@types';
 
 import {
   Alert,
@@ -89,7 +89,7 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
         <p className={`${style.text} ${isDone ? style.crossed : ''}`}>{text}</p>
 
         <CustomButton
-          size="sm"
+          size={ButtonSizes.SMALL}
           isDisabled={todo.isDone}
           onClick={handleEditTodo}
         >
@@ -97,7 +97,7 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
         </CustomButton>
 
         <CustomButton
-          size="sm"
+          size={ButtonSizes.SMALL}
           onClick={handleDeleteTodo}
         >
           <Icon iconName={IconsTypes.DELETE} />

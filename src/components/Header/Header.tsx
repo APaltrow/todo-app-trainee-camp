@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { useTheme } from '@hooks';
-import { IconsTypes, Theme } from '@types';
+import { ButtonSizes, IconsTypes, Theme } from '@types';
 import { CustomButton, Icon } from '@components';
 
 import style from './Header.module.scss';
@@ -17,7 +17,7 @@ export const Header: FC = () => {
 
       <CustomButton
         onClick={onThemeChange}
-        size="sm"
+        size={ButtonSizes.SMALL}
       >
         {theme === Theme.LIGHT ? (
           <Icon iconName={IconsTypes.MOON} />

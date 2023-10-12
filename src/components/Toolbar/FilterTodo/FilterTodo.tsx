@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { useAlert, useFilter, useTodoTotals } from '@hooks';
 import { FILTER_OPTIONS } from '@constants';
-import { AlertMessages } from '@types';
+import { AlertMessages, ButtonVariants } from '@types';
 import { Alert, CustomButton, Tooltip } from '@components';
 
 import style from './FilterTodo.module.scss';
@@ -42,7 +42,9 @@ export const FilterTodo: FC = () => {
             >
               <Tooltip value={isSelected ? null : todoTotals[option]}>
                 <CustomButton
-                  variant={isSelected ? 'default' : 'primary'}
+                  variant={
+                    isSelected ? ButtonVariants.DEFAULT : ButtonVariants.PRIMARY
+                  }
                   onClick={() => onSetFilter(option)}
                   isDisabled={isSelected}
                 >
@@ -55,7 +57,7 @@ export const FilterTodo: FC = () => {
       </ul>
 
       <CustomButton
-        variant="secondary"
+        variant={ButtonVariants.SECONDARY}
         onClick={handleClearCompleted}
         isDisabled={!todoTotals.Completed}
       >

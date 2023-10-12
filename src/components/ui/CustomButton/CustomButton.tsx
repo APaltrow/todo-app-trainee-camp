@@ -1,12 +1,14 @@
 import { FC, ReactNode } from 'react';
 
+import { ButtonSizes, ButtonVariants } from '@types';
+
 import style from './CustomButton.module.scss';
 
 interface CustomButtonProps {
   children: ReactNode;
   isDisabled?: boolean;
-  size?: 'default' | 'sm' | 'md';
-  variant?: 'default' | 'primary' | 'secondary';
+  size?: ButtonSizes;
+  variant?: ButtonVariants;
 
   onClick: () => void;
 }
@@ -14,8 +16,8 @@ interface CustomButtonProps {
 export const CustomButton: FC<CustomButtonProps> = ({
   children,
   isDisabled = false,
-  size = 'default',
-  variant = 'default',
+  size = ButtonSizes.DEFAULT,
+  variant = ButtonVariants.DEFAULT,
 
   onClick,
 }) => {

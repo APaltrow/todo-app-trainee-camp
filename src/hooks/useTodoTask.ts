@@ -1,6 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
 import { useActions } from '@redux';
+import { DEFAULT_DAYS_GAP } from '@constants';
 import {
   checkForSpecialCharacters,
   checkIfDateBigger,
@@ -51,7 +52,7 @@ export const useTodoTask = () => {
     if (!newTodo.creationDate) {
       newTodo = {
         ...newTodo,
-        ...getCreationExpirationDates(1),
+        ...getCreationExpirationDates(DEFAULT_DAYS_GAP),
       };
     }
 
