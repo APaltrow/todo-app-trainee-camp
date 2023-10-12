@@ -1,6 +1,6 @@
 import { ChangeEvent, FC } from 'react';
 
-import { ITodo } from '@types';
+import { ButtonSizes, ButtonVariants, ITodo } from '@types';
 
 import { CustomButton, DateTimePicker, TaskInput } from '@components';
 
@@ -14,7 +14,7 @@ interface TodoFormProps {
 
   onSaveTodo: () => void;
   onCancelTodo: () => void;
-  onDateChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onDateChange: (timestamp: string) => void;
   onTodoTextChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -59,16 +59,16 @@ export const TodoForm: FC<TodoFormProps> = ({
         <div className={style.footer}>
           <CustomButton
             onClick={onCancelTodo}
-            size="md"
-            variant="secondary"
+            size={ButtonSizes.MID}
+            variant={ButtonVariants.SECONDARY}
           >
             CANCEL
           </CustomButton>
           <CustomButton
             onClick={onSaveTodo}
             isDisabled={isValidTodo}
-            size="md"
-            variant="primary"
+            size={ButtonSizes.MID}
+            variant={ButtonVariants.PRIMARY}
           >
             SAVE
           </CustomButton>

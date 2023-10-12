@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { useAlert, useModal, useTodoTask } from '@hooks';
-import { AlertMessages, IconsTypes } from '@types';
+import { AlertMessages, ButtonSizes, ButtonVariants, IconsTypes } from '@types';
 
 import {
   Icon,
@@ -12,9 +12,9 @@ import {
   Alert,
 } from '@components';
 
-import style from './AddTodo.module.scss';
+import style from './AddTodoBlock.module.scss';
 
-export const AddTodo: FC = () => {
+export const AddTodoBlock: FC = () => {
   const [isOpen, onOpen, onClose] = useModal();
 
   const { alert, onAlertCall, onAlertCancel } = useAlert();
@@ -71,8 +71,8 @@ export const AddTodo: FC = () => {
       />
       <CustomButton
         onClick={handleAddTodo}
-        size="md"
-        variant="primary"
+        size={ButtonSizes.MID}
+        variant={ButtonVariants.PRIMARY}
       >
         <Icon iconName={IconsTypes.PLUS} />
       </CustomButton>

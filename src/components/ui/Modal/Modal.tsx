@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 
-import { IconsTypes } from '@types';
+import { ButtonSizes, IconsTypes } from '@types';
 
 import { CustomButton, Icon, Portal } from '@components';
 
@@ -29,7 +29,7 @@ export const Modal: FC<ModalProps> = ({ children, isOpen, onClose }) => {
           <span className={style.close_btn}>
             <CustomButton
               onClick={onClose}
-              size="sm"
+              size={ButtonSizes.SMALL}
             >
               <Icon iconName={IconsTypes.CLOSE} />
             </CustomButton>

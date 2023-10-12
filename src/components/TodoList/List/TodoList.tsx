@@ -2,6 +2,7 @@ import { FC } from 'react';
 
 import { useFilter } from '@hooks';
 import { TODO_LIST_MESSAGES } from '@constants';
+import { ErrorMessages } from '@types';
 
 import { Info } from '@components';
 
@@ -16,7 +17,7 @@ export const TodoList: FC = () => {
 
   if (!todos.length) {
     const message = searchValue
-      ? `Nothing is found for '${searchValue}'`
+      ? `${ErrorMessages.NOTHING_FOUND} '${searchValue}'`
       : TODO_LIST_MESSAGES[filterValue.toLowerCase()];
 
     return (
