@@ -1,4 +1,5 @@
 @import '@style/_variables';
+@import '@style/_media';
 
 @mixin input-error-message {
   padding-left: 10px;
@@ -6,6 +7,10 @@
   color: $clr_red_primary;
   font-size: $font_sm;
   font-weight: 500;
+
+  @include mobile {
+    font-size: $font_xsm;
+  }
 }
 
 @mixin input-base {
