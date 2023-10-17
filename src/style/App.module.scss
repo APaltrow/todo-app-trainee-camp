@@ -8,6 +8,11 @@
   font-family: 'Jost', sans-serif;
 }
 
+html {
+  margin-right: calc(-1 * (100vw - 100%));
+  overflow-x: hidden;
+}
+
 html[class='light'] {
   @include theme-light-scheme;
 }
@@ -22,6 +27,11 @@ html[class='dark'] {
   input[type='datetime-local']::-webkit-calendar-picker-indicator {
     filter: invert(1);
   }
+}
+
+body[class='no-scroll'] {
+  height: 100vh;
+  overflow-y: hidden;
 }
 
 .app {
