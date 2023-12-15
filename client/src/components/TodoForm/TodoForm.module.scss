@@ -1,0 +1,42 @@
+@import '@style/_media';
+@import '@style/_variables';
+
+.container {
+  width: 500px;
+  padding: 15px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  color: var(--text-strong);
+
+  border-radius: $border_radius;
+  background-color: var(--clr-primary);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1 0 auto;
+}
+
+.footer {
+  padding-top: 20px;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+@include tablet {
+  .container {
+    width: 70vw;
+  }
+}
+
+@include mobile {
+  .container {
+    width: 90vw;
+  }
+}
