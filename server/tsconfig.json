@@ -6,7 +6,8 @@
       "@constants": ["src/constants"],
       "@middlewares": ["src/middlewares"],
       "@utils": ["src/utils"],
-      "@interfaces": ["src/interfaces"]
+      "@interfaces": ["src/interfaces"],
+      "@resources": ["src/resources"]
     },
     "outDir": "dist",
     "sourceMap": true,

@@ -19,6 +19,7 @@
     "project": "**/tsconfig.json"
   },
   "plugins": ["@typescript-eslint", "prettier"],
+
   "rules": {
     "react/jsx-uses-react": ["off"],
     "react/prop-types": ["off"],
@@ -32,6 +33,7 @@
     "jsx-quotes": ["error", "prefer-double"],
     "comma-dangle": ["warn", "always-multiline"],
     "import/prefer-default-export": ["off"],
+    "import/no-extraneous-dependencies": ["off"],
     "import/order": [
       "error",
       {
