@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
-import { TodoList, Toolbar } from '@components';
 import { MainLayout } from '@layouts';
+import { TodoList, Toolbar } from '@components';
 
 import style from '@style/App.module.scss';
 
