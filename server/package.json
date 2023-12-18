@@ -7,7 +7,8 @@
     "start": "ts-node src/index.ts",
     "dev": "nodemon src/index.ts",
     "build:clean": "rimraf dist",
-    "build": "npm run build:clean && tsc",
+    "build": "npm run build:clean && tsc && tsc-alias -p tsconfig.json",
+    "server": "npm run build && node ./dist/index.js",
     "test": "jest"
   },
   "keywords": [],
@@ -50,6 +51,7 @@
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.8",
     "typescript": "^5.3.3"
   },
   "_moduleAliases": {
