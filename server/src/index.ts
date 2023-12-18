@@ -1,17 +1,39 @@
 import 'module-alias/register';
 import express from 'express';
-import dotenv from 'dotenv';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import mongoose from 'mongoose';
 
-import { DEFAULT_PORT } from '@constants';
+import { appConfig, AppPaths, LogMessages } from '@constants';
+import { errorMiddleware, notFoundMiddleware } from '@middlewares';
+
+import { apiRouter } from './apiRouter';
+
+const { HOST, PORT, DB_URI, CLIENT_URI } = appConfig;
 
 const app = express();
 
-dotenv.config();
-
 app.use(express.json());
+app.use(cookieParser());
+app.use(
+  cors({
+    credentials: true,
+    origin: CLIENT_URI,
+  }),
+);
+app.use(AppPaths.BASE, apiRouter);
+app.use(AppPaths.NOT_FOUND, notFoundMiddleware);
+app.use(errorMiddleware);
 
-const PORT = process.env.PORT || DEFAULT_PORT;
+const startServer = async () => {
+  try {
+    await mongoose.connect(DB_URI);
+    app.listen(PORT, () => {
+      console.log(`${LogMessages.SERVER_RUNS} ${HOST}:${PORT}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-app.listen(PORT, () => {
-  console.log(`[server]: Server is running at http://localhost:${PORT}`);
-});
+startServer();

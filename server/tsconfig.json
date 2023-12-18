@@ -3,7 +3,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@constants": ["src/constants"]
+      "@constants": ["src/constants"],
+      "@middlewares": ["src/middlewares"],
+      "@utils": ["src/utils"],
+      "@interfaces": ["src/interfaces"]
     },
     "outDir": "dist",
     "sourceMap": true,
