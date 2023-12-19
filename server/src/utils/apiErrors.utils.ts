@@ -19,4 +19,8 @@ export class ApiError extends Error {
   static BadRequest(message: string, errors: ValidationError[] = []) {
     return new ApiError(Statuses.BAD_REQUEST, message, errors);
   }
+
+  static NotFound(message: string) {
+    return new ApiError(Statuses.NOT_FOUND, message);
+  }
 }

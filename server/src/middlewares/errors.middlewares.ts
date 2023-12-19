@@ -1,15 +1,16 @@
-import { ErrorRequestHandler } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
-import { ResponseErrors, Statuses } from '@constants';
+import { LogMessages, ResponseErrors, Statuses } from '@constants';
 import { ApiError } from '@utils';
 import { IApiError } from '@interfaces';
 
-export const errorMiddleware: ErrorRequestHandler = (
+export const errorMiddleware = (
   err: IApiError,
-  req,
-  res,
+  req: Request,
+  res: Response,
+  next: NextFunction,
 ) => {
-  console.log(err);
+  console.error(LogMessages.ERROR, err);
 
   const { status, message, errors } = err;
 

@@ -3,4 +3,5 @@ export enum DefaultAppConfig {
   DB_URI = 'mongodb://localhost',
   PORT = 6000,
   HOST = 'http://localhost',
+  SALT_ROUNDS = 5,
 }
