@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 15px;
+}
+
+.spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: spin 0.5s infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

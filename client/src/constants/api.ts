@@ -1,1 +1,9 @@
-export const API_URL = import.meta.env.VITE_API_URL;
+const { DEV, VITE_API_URL } = import.meta.env;
+
+const DEV_API_URL = 'http://localhost:7000/api';
+
+export const API_URL = DEV ? DEV_API_URL : VITE_API_URL;
+
+export enum ApiPaths {
+  LOGIN = '/auth/login',
+}

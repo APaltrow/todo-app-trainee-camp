@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "dev": "nodemon src/index.ts",
+    "dev": "SET NODE_ENV=dev && nodemon src/index.ts",
     "build:clean": "rimraf dist",
     "build": "npm run build:clean && tsc && tsc-alias -p tsconfig.json",
     "server": "npm run build && node ./dist/index.js",

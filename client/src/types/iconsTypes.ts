@@ -10,4 +10,7 @@ export enum IconsTypes {
   SUN = 'sun',
   MOON = 'moon',
   ALERT = 'alert',
+  EMAIL = 'email',
+  PASSWORD = 'password',
+  SPINNER = 'spinner',
 }

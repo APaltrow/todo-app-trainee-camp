@@ -1,8 +1,6 @@
-import dotenv from 'dotenv';
+import 'dotenv/config';
 
 import { DefaultAppConfig } from './defaultAppConfig';
-
-dotenv.config();
 
 const {
   PORT = DefaultAppConfig.PORT,
@@ -11,11 +9,14 @@ const {
   JWT_ACCESS_SECRET = '',
   JWT_ACCESS_EXP = '',
   SALT_ROUNDS = DefaultAppConfig.SALT_ROUNDS,
+  NODE_ENV,
 } = process.env;
+
+const isDev = NODE_ENV?.trim() === 'dev';
 
 export const appConfig = {
   HOST: DefaultAppConfig.HOST,
-  CLIENT_URI,
+  CLIENT_URI: isDev ? DefaultAppConfig.CLIENT_URI : CLIENT_URI,
   DB_URI,
   PORT,
   JWT_ACCESS_SECRET,

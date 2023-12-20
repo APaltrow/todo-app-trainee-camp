@@ -1,16 +1,15 @@
 import { FC } from 'react';
 
 import { MainLayout } from '@layouts';
-import { TodoList, Toolbar } from '@components';
 
 import style from '@style/App.module.scss';
+import { Outlet } from 'react-router-dom';
 
 export const App: FC = () => {
   return (
     <div className={style.app}>
       <MainLayout>
-        <Toolbar />
-        <TodoList />
+        <Outlet />
       </MainLayout>
     </div>
   );
