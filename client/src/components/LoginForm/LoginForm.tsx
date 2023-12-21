@@ -1,8 +1,8 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 
 import { ButtonSizes, ButtonVariants, ILoginCredentials } from '@types';
 import { useActions, useAppSelector } from '@redux';
-import { useValidations } from '@hooks';
+import { useDelayedResetError, useValidations } from '@hooks';
 import { CustomButton, CustomInput, Loader, Error } from '@components';
 import {
   LOGIN_FORM_INITIAL_VALUES,
@@ -14,8 +14,11 @@ import {
 import style from './LoginForm.module.scss';
 
 export const LoginForm: FC = () => {
-  const { loginThunk, resetUserError } = useActions();
   const { isLoading, error } = useAppSelector((state) => state.auth);
+
+  const { loginThunk, resetUserError } = useActions();
+
+  useDelayedResetError(resetUserError, error);
 
   const [formValues, setFormValues] = useState<Record<string, string>>(
     LOGIN_FORM_INITIAL_VALUES,
@@ -53,12 +56,6 @@ export const LoginForm: FC = () => {
 
   const isValidForm =
     isLoading || !!Object.values(errors).find((error) => !!error);
-
-  useEffect(() => {
-    return () => {
-      resetUserError();
-    };
-  }, []);
 
   return (
     <div className={style.container}>
