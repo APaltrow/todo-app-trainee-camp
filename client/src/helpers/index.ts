@@ -1,7 +1,7 @@
 export * from './getDateTimeFromISO';
 export * from './getCreationExpirationDates';
 export * from './getLocalTimeFromISO';
-export * from './accessTokenHelpers';
+export * from './tokenHelpers';
 export * from './handleError';
 /* VALIDATORS */
 export * from './validators/checkForSpecialCharacters';

@@ -13,3 +13,7 @@ export const loginUserError = (errorMessage: string): AuthActions => ({
   type: AuthActionTypes.LOGIN_USER_ERROR,
   payload: errorMessage,
 });
+
+export const logoutUser = (): AuthActions => ({
+  type: AuthActionTypes.LOGOUT_USER,
+});

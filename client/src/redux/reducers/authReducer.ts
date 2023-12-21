@@ -33,6 +33,13 @@ export const authReducer = (
         isLoading: false,
         error: action.payload,
       };
+    case AuthActionTypes.LOGOUT_USER:
+      return {
+        user: null,
+        isAuth: false,
+        isLoading: false,
+        error: '',
+      };
 
     default:
       return state;

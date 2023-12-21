@@ -10,24 +10,29 @@
 
   background-color: var(--clr-primary);
   box-shadow: var(--box-shadow);
+}
 
-  & > h3 {
-    display: flex;
+.title {
+  display: flex;
 
-    &:hover {
-      cursor: pointer;
-      .logo {
-        color: var(--text-strong);
-        transition: all 0.3s ease-in-out;
-        transform: rotate(0) scale(0.8) translateY(0px);
+  &:hover {
+    cursor: pointer;
+    .logo {
+      color: var(--text-strong);
+      transition: all 0.3s ease-in-out;
+      transform: rotate(0) scale(0.8) translateY(0px);
 
-        &::after {
-          transition: all 0.2s ease-in;
-          transform: scale(0);
-        }
+      &::after {
+        transition: all 0.2s ease-in;
+        transform: scale(0);
       }
     }
   }
+}
+
+.btns {
+  display: flex;
+  gap: 30px;
 }
 
 .logo {

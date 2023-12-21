@@ -1,30 +1,54 @@
 import { FC } from 'react';
+import { NavLink } from 'react-router-dom';
 
+import { useActions, useAppSelector } from '@redux';
 import { useTheme } from '@hooks';
-import { ButtonSizes, IconsTypes, Theme } from '@types';
+import { RoutesPaths } from '@constants';
+import { removeAccessToken } from '@helpers';
+import { ButtonSizes, ButtonVariants, IconsTypes, Theme } from '@types';
 import { CustomButton, Icon } from '@components';
 
 import style from './Header.module.scss';
 
 export const Header: FC = () => {
+  const { isAuth } = useAppSelector((state) => state.auth);
+
+  const { logoutUser } = useActions();
   const { theme, onThemeChange } = useTheme();
+
+  const iconName = theme === Theme.LIGHT ? IconsTypes.MOON : IconsTypes.SUN;
+
+  const handleLogout = () => {
+    logoutUser();
+    removeAccessToken();
+  };
 
   return (
     <header className={style.header}>
-      <h3>
-        Just <span className={style.logo}>TODO</span> it
-      </h3>
+      <NavLink to={RoutesPaths.MAIN}>
+        <h3 className={style.title}>
+          Just <span className={style.logo}>TODO</span> it
+        </h3>
+      </NavLink>
 
-      <CustomButton
-        onClick={onThemeChange}
-        size={ButtonSizes.SMALL}
-      >
-        {theme === Theme.LIGHT ? (
-          <Icon iconName={IconsTypes.MOON} />
-        ) : (
-          <Icon iconName={IconsTypes.SUN} />
+      <div className={style.btns}>
+        {isAuth && (
+          <CustomButton
+            onClick={handleLogout}
+            size={ButtonSizes.SMALL}
+            variant={ButtonVariants.PRIMARY}
+          >
+            Logout
+          </CustomButton>
         )}
-      </CustomButton>
+
+        <CustomButton
+          onClick={onThemeChange}
+          size={ButtonSizes.SMALL}
+        >
+          <Icon iconName={iconName} />
+        </CustomButton>
+      </div>
     </header>
   );
 };
