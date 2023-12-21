@@ -45,12 +45,12 @@ export const LoginForm: FC = () => {
     revalidate(LOGIN_FORM_INITIAL_VALUES, LOGIN_FORM_VALIDATIONS);
   };
 
-  const isValidForm = !!Object.values(errors).find((error) => !!error);
-
   const handleLogin = () => {
     const credentials = formValues as unknown as ILoginCredentials;
     loginThunk(credentials);
   };
+
+  const isValidForm = !!Object.values(errors).find((error) => !!error);
 
   return (
     <div className={style.container}>
@@ -87,14 +87,19 @@ export const LoginForm: FC = () => {
             onClick={handleReset}
             variant={ButtonVariants.SECONDARY}
             size={ButtonSizes.MID}
+            isLoading={isLoading}
+            withLoader
           >
             Reset
           </CustomButton>
+
           <CustomButton
             onClick={handleLogin}
             isDisabled={isValidForm}
             variant={ButtonVariants.PRIMARY}
             size={ButtonSizes.MID}
+            isLoading={isLoading}
+            withLoader
           >
             Login
           </CustomButton>
