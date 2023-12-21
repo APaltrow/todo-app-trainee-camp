@@ -1,5 +1,5 @@
 export interface ITodo {
-  id: number;
+  id: number | string;
   text: string;
   isDone: boolean;
   creationDate: string;
@@ -14,6 +14,9 @@ export enum TodoActions {
   CLEAR_DONE_TODO = 'CLEAR_DONE_TODO',
   SET_FILTER_TODO = 'SET_FILTER_TODO',
   SET_SEARCH_TODO = 'SET_SEARCH_TODO',
+  FETCH_TODOS = 'FETCH_TODOS',
+  FETCH_TODOS_SUCCESS = 'FETCH_TODOS_SUCCESS',
+  FETCH_TODOS_ERROR = 'FETCH_TODOS_ERROR',
 }
 
 export enum FilterOptions {
@@ -26,20 +29,25 @@ export interface ITodoState {
   todoList: ITodo[];
   filterValue: FilterOptions;
   searchValue: string;
+  isLoading: boolean;
+  error: string;
 }
 
 interface IAddTodoAction {
   type: TodoActions.ADD_TODO;
   payload: ITodo;
 }
+
 interface ISetTodoDoneAction {
   type: TodoActions.SET_TODO_DONE;
   payload: number;
 }
+
 interface IDeleteTodoAction {
   type: TodoActions.DELETE_TODO;
   payload: number;
 }
+
 interface IEditTodoAction {
   type: TodoActions.EDIT_TODO;
   payload: ITodo;
@@ -56,6 +64,20 @@ interface ISetSearchTodoAction {
   payload: string;
 }
 
+interface IFetchTodosAction {
+  type: TodoActions.FETCH_TODOS;
+}
+
+interface IFetchTodosSuccessAction {
+  type: TodoActions.FETCH_TODOS_SUCCESS;
+  payload: ITodo[];
+}
+
+interface IFetchTodosErrorAction {
+  type: TodoActions.FETCH_TODOS_ERROR;
+  payload: string;
+}
+
 export type TodoAction =
   | IAddTodoAction
   | ISetTodoDoneAction
@@ -63,4 +85,7 @@ export type TodoAction =
   | IEditTodoAction
   | IClearDoneTodoAction
   | ISetFilterTodoAction
-  | ISetSearchTodoAction;
+  | ISetSearchTodoAction
+  | IFetchTodosAction
+  | IFetchTodosSuccessAction
+  | IFetchTodosErrorAction;

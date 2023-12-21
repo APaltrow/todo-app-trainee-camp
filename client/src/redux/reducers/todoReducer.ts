@@ -4,6 +4,8 @@ const initialState: ITodoState = {
   todoList: [],
   filterValue: FilterOptions.ALL,
   searchValue: '',
+  isLoading: false,
+  error: '',
 };
 
 export const todoReducer = (
@@ -56,6 +58,28 @@ export const todoReducer = (
 
     case TodoActions.SET_SEARCH_TODO: {
       return { ...state, searchValue: action.payload };
+    }
+
+    case TodoActions.FETCH_TODOS: {
+      return { ...state, todoList: [], isLoading: true, error: '' };
+    }
+
+    case TodoActions.FETCH_TODOS_SUCCESS: {
+      return {
+        ...state,
+        todoList: action.payload,
+        isLoading: false,
+        error: '',
+      };
+    }
+
+    case TodoActions.FETCH_TODOS_ERROR: {
+      return {
+        ...state,
+        todoList: [],
+        isLoading: false,
+        error: action.payload,
+      };
     }
 
     default:

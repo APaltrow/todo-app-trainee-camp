@@ -1,9 +1,8 @@
-import { FC } from 'react';
+import { FC, useId } from 'react';
 
 import style from './Checkbox.module.scss';
 
 interface CheckboxProps {
-  id: number;
   isChecked: boolean;
   isDisabled?: boolean;
 
@@ -11,13 +10,12 @@ interface CheckboxProps {
 }
 
 export const Checkbox: FC<CheckboxProps> = ({
-  id,
   isChecked,
   isDisabled = false,
 
   onChange,
 }) => {
-  const inputId = String(id);
+  const inputId = useId();
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter') return;
