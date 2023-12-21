@@ -81,7 +81,6 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
     <article className={`${style.container} ${isExpired ? style.expired : ''}`}>
       <div className={style.main}>
         <Checkbox
-          id={id}
           isChecked={isDone}
           onChange={handleSetDone}
           isDisabled={isExpired}
@@ -129,13 +128,13 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
         />
       </Modal>
 
-      {alert ? (
+      {!!alert && (
         <Alert
           text={alert.text}
           onCancel={onAlertCancel}
           onConfirm={alert.onConfirm}
         />
-      ) : null}
+      )}
     </article>
   );
 });
