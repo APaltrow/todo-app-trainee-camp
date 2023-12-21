@@ -14,6 +14,7 @@ export enum AuthActionTypes {
   LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS',
   LOGIN_USER_ERROR = 'LOGIN_USER_ERROR',
   LOGOUT_USER = 'LOGOUT_USER',
+  RESET_ERROR = 'RESET_ERROR',
 }
 
 interface LoginAction {
@@ -34,8 +35,13 @@ interface LogoutAction {
   type: AuthActionTypes.LOGOUT_USER;
 }
 
+interface ResetErrorAction {
+  type: AuthActionTypes.RESET_ERROR;
+}
+
 export type AuthActions =
   | LoginAction
   | LoginSuccessAction
   | LoginErrorAction
-  | LogoutAction;
+  | LogoutAction
+  | ResetErrorAction;

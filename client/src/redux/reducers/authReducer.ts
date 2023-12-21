@@ -40,6 +40,11 @@ export const authReducer = (
         isLoading: false,
         error: '',
       };
+    case AuthActionTypes.RESET_ERROR:
+      return {
+        ...state,
+        error: '',
+      };
 
     default:
       return state;
