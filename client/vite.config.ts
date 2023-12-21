@@ -25,6 +25,9 @@ export default defineConfig({
       '@components': path.resolve(__dirname, './src/components'),
       '@layouts': path.resolve(__dirname, './src/layouts'),
       '@context': path.resolve(__dirname, './src/context'),
+      '@pages': path.resolve(__dirname, './src/pages'),
+      '@router': path.resolve(__dirname, './src/router'),
+      '@api': path.resolve(__dirname, './src/api'),
     },
   },
   css: {

@@ -1,0 +1,5 @@
+@import '@style/_mixins';
+
+.error {
+  @include input-error-message;
+}

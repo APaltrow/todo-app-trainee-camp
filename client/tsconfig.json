@@ -12,7 +12,10 @@
       "@types": ["src/types"],
       "@components": ["src/components"],
       "@layouts": ["src/layouts"],
-      "@context": ["src/context"]
+      "@context": ["src/context"],
+      "@pages": ["src/pages"],
+      "@api": ["src/api"],
+      "@router": ["src/router"]
     },
 
     "target": "ES2020",
@@ -31,7 +34,7 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },

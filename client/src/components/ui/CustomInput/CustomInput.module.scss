@@ -1,0 +1,34 @@
+@import '@style/_variables';
+@import '@style/_mixins';
+
+.container {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  height: 50px;
+  padding: 0px 40px;
+
+  color: var(--text-strong);
+  font-size: $font_md;
+
+  fill: var(--text-weak);
+  background-color: transparent;
+
+  @include with-border;
+  @include input-base;
+}
+
+.icon {
+  display: block;
+  max-height: 25px;
+  position: absolute;
+  top: 12px;
+  left: 10px;
+
+  & > svg {
+    width: 25px;
+    height: 25px;
+  }
+}
