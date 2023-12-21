@@ -2,7 +2,7 @@ import { ChangeEvent, FC, useState } from 'react';
 
 import { ButtonSizes, ButtonVariants, ILoginCredentials } from '@types';
 import { useActions, useAppSelector } from '@redux';
-import { useValidations } from '@hooks';
+import { useDelayedResetError, useValidations } from '@hooks';
 import { CustomButton, CustomInput, Loader, Error } from '@components';
 import {
   LOGIN_FORM_INITIAL_VALUES,
@@ -14,8 +14,11 @@ import {
 import style from './LoginForm.module.scss';
 
 export const LoginForm: FC = () => {
-  const { loginThunk } = useActions();
   const { isLoading, error } = useAppSelector((state) => state.auth);
+
+  const { loginThunk, resetUserError } = useActions();
+
+  useDelayedResetError(resetUserError, error);
 
   const [formValues, setFormValues] = useState<Record<string, string>>(
     LOGIN_FORM_INITIAL_VALUES,
@@ -43,6 +46,7 @@ export const LoginForm: FC = () => {
     setFormValues(LOGIN_FORM_INITIAL_VALUES);
 
     revalidate(LOGIN_FORM_INITIAL_VALUES, LOGIN_FORM_VALIDATIONS);
+    resetUserError();
   };
 
   const handleLogin = () => {
@@ -50,7 +54,8 @@ export const LoginForm: FC = () => {
     loginThunk(credentials);
   };
 
-  const isValidForm = !!Object.values(errors).find((error) => !!error);
+  const isValidForm =
+    isLoading || !!Object.values(errors).find((error) => !!error);
 
   return (
     <div className={style.container}>
@@ -87,8 +92,7 @@ export const LoginForm: FC = () => {
             onClick={handleReset}
             variant={ButtonVariants.SECONDARY}
             size={ButtonSizes.MID}
-            isLoading={isLoading}
-            withLoader
+            isDisabled={isLoading}
           >
             Reset
           </CustomButton>
@@ -98,8 +102,6 @@ export const LoginForm: FC = () => {
             isDisabled={isValidForm}
             variant={ButtonVariants.PRIMARY}
             size={ButtonSizes.MID}
-            isLoading={isLoading}
-            withLoader
           >
             Login
           </CustomButton>

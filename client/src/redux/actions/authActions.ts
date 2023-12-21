@@ -17,3 +17,7 @@ export const loginUserError = (errorMessage: string): AuthActions => ({
 export const logoutUser = (): AuthActions => ({
   type: AuthActionTypes.LOGOUT_USER,
 });
+
+export const resetUserError = (): AuthActions => ({
+  type: AuthActionTypes.RESET_ERROR,
+});
