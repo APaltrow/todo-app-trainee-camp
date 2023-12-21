@@ -1,13 +1,14 @@
 import jwt from 'jsonwebtoken';
 
-import { appConfig } from '@constants';
+import { LogMessages, appConfig } from '@constants';
+import { TokenPayload, TokenVerificationResult } from '@interfaces';
 
 class Token {
   accessSecret = appConfig.JWT_ACCESS_SECRET;
 
   accessExp = appConfig.JWT_ACCESS_EXP;
 
-  generateTokens(payload: { id: string }) {
+  generateTokens(payload: TokenPayload) {
     const accessToken = jwt.sign(payload, this.accessSecret, {
       expiresIn: this.accessExp,
     });
@@ -15,6 +16,19 @@ class Token {
     return {
       accessToken,
     };
+  }
+
+  verifyAccessToken(token: string) {
+    try {
+      const decoded = jwt.verify(token, this.accessSecret);
+
+      const { id } = decoded as TokenVerificationResult;
+
+      return id;
+    } catch (error) {
+      console.log(LogMessages.JWT, error);
+      return null;
+    }
   }
 }
 

@@ -1,4 +1,5 @@
 export enum AppPaths {
+  TODOS = '/todos',
   AUTH = '/auth',
   HEALTH = '/health',
   BASE = '/api',
