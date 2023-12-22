@@ -17,7 +17,7 @@ const DEFAULT_TODO = {
 } as ITodo;
 
 export const useTodoTask = () => {
-  const { addTodo, setTodoDone, deleteTodo, editTodo, setFilterTodo } =
+  const { setTodoDone, deleteTodo, editTodo, setFilterTodo, createTodoThunk } =
     useActions();
 
   const [todo, setTodo] = useState<ITodo>(DEFAULT_TODO);
@@ -41,12 +41,11 @@ export const useTodoTask = () => {
     }));
   };
 
-  const onCreateTodo = () => {
+  const onCreateTodo = async (successCb?: () => void) => {
     if (todoInputError || dateError || !todo.text) return;
 
     let newTodo = {
       ...todo,
-      id: Date.now(),
     };
 
     if (!newTodo.creationDate) {
@@ -56,9 +55,16 @@ export const useTodoTask = () => {
       };
     }
 
-    addTodo(newTodo);
+    const isSuccess = await createTodoThunk(newTodo);
+
+    if (!isSuccess) return;
+
     setFilterTodo(FilterOptions.ALL);
     setTodo(DEFAULT_TODO);
+
+    if (successCb) {
+      successCb();
+    }
   };
 
   const onAddTodo = () => {

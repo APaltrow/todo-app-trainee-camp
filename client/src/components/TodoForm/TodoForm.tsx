@@ -2,7 +2,13 @@ import { ChangeEvent, FC } from 'react';
 
 import { ButtonSizes, ButtonVariants, ITodo } from '@types';
 
-import { CustomButton, DateTimePicker, TaskInput } from '@components';
+import {
+  CustomButton,
+  DateTimePicker,
+  Loader,
+  TaskInput,
+  Error,
+} from '@components';
 
 import style from './TodoForm.module.scss';
 
@@ -11,6 +17,8 @@ interface TodoFormProps {
   title: string;
   dateError: string;
   todoInputError: string;
+  isLoading: boolean;
+  error: string;
 
   onSaveTodo: () => void;
   onCancelTodo: () => void;
@@ -23,6 +31,8 @@ export const TodoForm: FC<TodoFormProps> = ({
   title,
   dateError,
   todoInputError,
+  isLoading,
+  error,
 
   onSaveTodo,
   onCancelTodo,
@@ -30,11 +40,18 @@ export const TodoForm: FC<TodoFormProps> = ({
   onTodoTextChange,
 }) => {
   const isValidTodo =
-    !!dateError || !!todoInputError || !todo?.expirationDate || !todo.text;
+    isLoading ||
+    !!dateError ||
+    !!todoInputError ||
+    !todo?.expirationDate ||
+    !todo.text;
 
   return (
     <div className={style.container}>
       <h2>{title}</h2>
+      {isLoading && <Loader />}
+      {!!error && <Error message={error} />}
+
       <form
         className={style.form}
         onSubmit={(e) => e.preventDefault()}
@@ -59,6 +76,7 @@ export const TodoForm: FC<TodoFormProps> = ({
         <div className={style.footer}>
           <CustomButton
             onClick={onCancelTodo}
+            isDisabled={isLoading}
             size={ButtonSizes.MID}
             variant={ButtonVariants.SECONDARY}
           >

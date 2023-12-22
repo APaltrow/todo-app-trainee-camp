@@ -6,6 +6,7 @@ const initialState: ITodoState = {
   searchValue: '',
   isLoading: false,
   error: '',
+  fetchError: '',
 };
 
 export const todoReducer = (
@@ -13,9 +14,6 @@ export const todoReducer = (
   action: TodoAction,
 ): ITodoState => {
   switch (action.type) {
-    case TodoActions.ADD_TODO:
-      return { ...state, todoList: [action.payload, ...state.todoList] };
-
     case TodoActions.SET_TODO_DONE: {
       const updatedList = state.todoList.map((todo) => {
         if (todo.id !== action.payload) return todo;
@@ -78,7 +76,40 @@ export const todoReducer = (
         ...state,
         todoList: [],
         isLoading: false,
+        fetchError: action.payload,
+      };
+    }
+
+    case TodoActions.CREATE_TODO: {
+      return {
+        ...state,
+        isLoading: true,
+        error: '',
+      };
+    }
+
+    case TodoActions.CREATE_TODO_SUCCESS: {
+      return {
+        ...state,
+        todoList: [action.payload, ...state.todoList],
+        isLoading: false,
+        error: '',
+      };
+    }
+
+    case TodoActions.CREATE_TODO_ERROR: {
+      return {
+        ...state,
+        isLoading: false,
         error: action.payload,
+      };
+    }
+
+    case TodoActions.RESET_ERROR: {
+      return {
+        ...state,
+        error: '',
+        fetchError: '',
       };
     }
 

@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
 
-import { useFilter } from '@hooks';
+import { useDelayedResetError, useFilter } from '@hooks';
 import { TODO_LIST_MESSAGES } from '@constants';
 import { ErrorMessages } from '@types';
 import { useActions, useAppSelector } from '@redux';
@@ -13,17 +13,20 @@ import { TodoItem } from '../Item';
 import style from './TodoList.module.scss';
 
 export const TodoList: FC = () => {
-  const { isLoading, error } = useAppSelector((state) => state.todo);
+  const { isLoading, fetchError } = useAppSelector((state) => state.todo);
 
   const { todos, filterValue, searchValue } = useFilter();
-  const { fetchTodosThunk } = useActions();
+
+  const { fetchTodosThunk, resetTodoError } = useActions();
+
+  useDelayedResetError(resetTodoError, fetchError);
 
   useEffect(() => {
     fetchTodosThunk();
   }, []);
 
   if (isLoading) return <Loader />;
-  if (error) return <Error message={error} />;
+  if (fetchError) return <Error message={fetchError} />;
 
   if (!todos.length) {
     const message = searchValue

@@ -8,3 +8,9 @@ export const fetchAllTodos = async () => {
 
   return data;
 };
+
+export const fetchCreateTodo = async (todoDraft: Omit<ITodo, 'id'>) => {
+  const { data } = await $api.post<ITodo>(ApiPaths.TODOS, todoDraft);
+
+  return data;
+};
