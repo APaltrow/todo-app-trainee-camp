@@ -18,7 +18,7 @@ export class TodoDto {
     creationDate,
     expirationDate,
   }: ITodoDocument) {
-    this.id = id as unknown as string;
+    this.id = id;
     this.text = text;
     this.isDone = isDone;
     this.creationDate = creationDate;

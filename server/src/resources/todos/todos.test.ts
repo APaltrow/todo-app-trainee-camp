@@ -1,14 +1,12 @@
 import request from 'supertest';
 
+import {
+  EXPIRED_ACCESS_TOKEN,
+  VALID_ACCESS_TOKEN_USER_1,
+  VALID_ACCESS_TOKEN_USER_2,
+} from '@constants';
+
 import app from '../../app';
-
-const EXPIRED_ACCESS_TOKEN =
-  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODE4NzdkODU3YWQ0MGZkMWM4MWY3MSIsImlhdCI6MTcwMzE1NjU1MywiZXhwIjoxNzAzMTU4MzUzfQ.DujN3iU1Y4hiHPQOTxDgNf166kgX42FnPgrBkqs-Jfk';
-
-const VALID_ACCESS_TOKEN_USER_1 =
-  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODE4NzdkODU3YWQ0MGZkMWM4MWY3MSIsImlhdCI6MTcwMzE2Njk5MiwiZXhwIjoxNzA1NzU4OTkyfQ.6QZbAdDyYBODvUy6K9HULElCirKI8v0FMbLnKwdIsmc';
-const VALID_ACCESS_TOKEN_USER_2 =
-  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODE4NzlkODU3YWQ0MGZkMWM4MWY3MyIsImlhdCI6MTcwMzE2NzAwOCwiZXhwIjoxNzA1NzU5MDA4fQ.8np3L-MP50n_rI0iBrWOnK4tKJCKChGdC7tOkLmpr64';
 
 describe('[auth middleware check]: TODOS', () => {
   it('recognizes unauthorized user with no access token', (done) => {
@@ -80,6 +78,82 @@ describe('[route check]: TODOS /GET', () => {
         expect(res.body).toBeInstanceOf(Array);
         expect(res.body).toHaveLength(3);
         expect(res.body[1].text).toBe('Learn React [user #2]');
+      });
+  });
+});
+
+describe('[request validation check]: TODOS /POST', () => {
+  test('recognizes invalid todo creation / expiration dates', async () => {
+    request(app)
+      .post('/api/todos')
+      .set('Accept', 'application/json')
+      .set('Authorization', VALID_ACCESS_TOKEN_USER_2)
+      .send({
+        text: 'Todo with invalid creation / expiration dates',
+        isDone: false,
+        creationDate: '2023-12-',
+        expirationDate: '2023-12-27',
+      })
+      .expect(400)
+      .then((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body).toHaveProperty('errors');
+        expect(res.body.message).toBe('Invalid credentials');
+        expect(res.body.errors).toBeInstanceOf(Array);
+        expect(res.body.errors).toHaveLength(2);
+        expect(res.body[0].message).toBe('Invalid creation date');
+        expect(res.body[1].message).toBe('Invalid expiration date');
+      });
+  });
+});
+
+describe('[request validation check]: TODOS /POST', () => {
+  test('recognizes invalid todo text', async () => {
+    request(app)
+      .post('/api/todos')
+      .set('Accept', 'application/json')
+      .set('Authorization', VALID_ACCESS_TOKEN_USER_2)
+      .send({
+        text: '',
+        isDone: false,
+        creationDate: '2023-12-24T12:57:00.585Z',
+        expirationDate: '2023-12-27T12:57:00.585Z',
+      })
+      .expect(400)
+      .then((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body).toHaveProperty('errors');
+        expect(res.body.message).toBe('Invalid credentials');
+        expect(res.body.errors).toBeInstanceOf(Array);
+        expect(res.body.errors).toHaveLength(1);
+        expect(res.body[0].message).toBe('Text should not be empty');
+      });
+  });
+});
+
+describe('[route check]: TODOS /POST', () => {
+  test('responds with created todo json message', async () => {
+    request(app)
+      .post('/api/todos')
+      .set('Accept', 'application/json')
+      .set('Authorization', VALID_ACCESS_TOKEN_USER_2)
+      .send({
+        text: 'validation check todo',
+        isDone: false,
+        creationDate: '2023-12-24T12:57:00.585Z',
+        expirationDate: '2023-12-27T12:57:00.585Z',
+      })
+      .expect(200)
+      .then((res) => {
+        expect(res.body).toHaveProperty('id');
+        expect(res.body).toHaveProperty('text');
+        expect(res.body).toHaveProperty('isDone');
+        expect(res.body).toHaveProperty('creationDate');
+        expect(res.body).toHaveProperty('expirationDate');
+        expect(res.body.text).toBe('validation check todo');
+        expect(res.body.isDone).toBe(false);
+        expect(res.body.creationDate).toBe('2023-12-24T12:57:00.585Z');
+        expect(res.body.expirationDate).toBe('2023-12-27T12:57:00.585Z');
       });
   });
 });
