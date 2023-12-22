@@ -157,3 +157,52 @@ describe('[route check]: TODOS /POST', () => {
       });
   });
 });
+
+describe('[route check]: TODOS /PUT', () => {
+  test('responds with updated todo json message', async () => {
+    request(app)
+      .put('/api/todos')
+      .set('Accept', 'application/json')
+      .set('Authorization', VALID_ACCESS_TOKEN_USER_2)
+      .send({
+        id: '6585ae10c8dff419b1afb8b1',
+        text: 'Updated todo for user 2',
+        isDone: true,
+        creationDate: '2023-12-24T12:57:00.585Z',
+        expirationDate: '2023-12-27T12:57:00.585Z',
+      })
+      .expect(200)
+      .then((res) => {
+        expect(res.body).toHaveProperty('id');
+        expect(res.body).toHaveProperty('text');
+        expect(res.body).toHaveProperty('isDone');
+        expect(res.body).toHaveProperty('creationDate');
+        expect(res.body).toHaveProperty('expirationDate');
+        expect(res.body.text).toBe('Updated todo for user 2');
+        expect(res.body.isDone).toBe(true);
+        expect(res.body.creationDate).toBe('2023-12-24T12:57:00.585Z');
+        expect(res.body.expirationDate).toBe('2023-12-27T12:57:00.585Z');
+      });
+  });
+});
+
+describe('[route check]: TODOS /PUT', () => {
+  test('responds with invalid todo id error message', async () => {
+    request(app)
+      .put('/api/todos')
+      .set('Accept', 'application/json')
+      .set('Authorization', VALID_ACCESS_TOKEN_USER_2)
+      .send({
+        id: '65858dff419b1afb8b1',
+        text: 'Updated todo for user 2',
+        isDone: true,
+        creationDate: '2023-12-24T12:57:00.585Z',
+        expirationDate: '2023-12-27T12:57:00.585Z',
+      })
+      .expect(400)
+      .then((res) => {
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Invalid todo id');
+      });
+  });
+});

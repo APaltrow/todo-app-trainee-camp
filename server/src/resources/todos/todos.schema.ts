@@ -2,6 +2,7 @@ import { TypeOf, boolean, object, string } from 'zod';
 
 export const TodoSchema = object({
   body: object({
+    id: string().optional(),
     text: string({
       required_error: 'Todo text is required',
     })

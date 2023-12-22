@@ -39,6 +39,20 @@ class TodosController {
       return next(error);
     }
   }
+
+  async updateTodo(
+    req: Request<{}, {}, UserTodoInput['body']>,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const updatedTodo = await todosService.update(req.body);
+
+      return res.json(updatedTodo);
+    } catch (error) {
+      return next(error);
+    }
+  }
 }
 
 export const todosController = new TodosController();
