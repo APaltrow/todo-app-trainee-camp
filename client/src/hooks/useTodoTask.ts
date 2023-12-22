@@ -71,11 +71,11 @@ export const useTodoTask = () => {
     setTodo(DEFAULT_TODO);
   };
 
-  const onSetDone = (todoId: number) => {
+  const onSetDone = (todoId: number | string) => {
     setTodoDone(todoId);
   };
 
-  const onDeleteTodo = (todoId: number) => {
+  const onDeleteTodo = (todoId: number | string) => {
     deleteTodo(todoId);
   };
 

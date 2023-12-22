@@ -6,4 +6,9 @@ export const API_URL = DEV ? DEV_API_URL : VITE_API_URL;
 
 export enum ApiPaths {
   LOGIN = '/auth/login',
+  TODOS = '/todos',
+}
+
+export enum ApiResStatuses {
+  UNAUTHORIZED = 401,
 }

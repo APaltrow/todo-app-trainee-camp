@@ -12,8 +12,7 @@ export const handleError = (error: IResponseError) => {
 };
 
 export const handleResponseError = (error: unknown, alt: string) => {
-  const err = error as AxiosError;
-  const resError = err?.response?.data as IResponseError;
+  const resError = (error as AxiosError)?.response?.data;
 
-  return resError ? handleError(resError) : alt;
+  return resError ? handleError(resError as IResponseError) : alt;
 };
