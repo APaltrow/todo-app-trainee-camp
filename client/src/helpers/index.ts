@@ -7,3 +7,4 @@ export * from './handleError';
 export * from './validators/checkForSpecialCharacters';
 export * from './validators/checkIfDateBigger';
 export * from './validators/validateEmail';
+export * from './validators/checkIsEmptyString';

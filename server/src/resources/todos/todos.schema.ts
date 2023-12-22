@@ -4,7 +4,9 @@ export const TodoSchema = object({
   body: object({
     text: string({
       required_error: 'Todo text is required',
-    }).min(1, 'Text should not be empty'),
+    })
+      .min(1, 'Text should not be empty')
+      .regex(/\S/, 'Invalid todo text value'),
     isDone: boolean({
       required_error: 'Todo isDone is required',
     }),

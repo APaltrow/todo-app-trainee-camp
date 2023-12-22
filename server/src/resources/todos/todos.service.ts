@@ -8,7 +8,7 @@ class TodosService {
   async getAll(userId: string) {
     const todos = await todosModel.find<ITodoDocument>({ user: userId });
 
-    return todos.map<ITodo>((todo) => new TodoDto(todo));
+    return todos.map<ITodo>((todo) => new TodoDto(todo)).reverse();
   }
 
   async create(userId: UserId, todoInput: UserTodoInput['body']) {

@@ -5,6 +5,7 @@ import { DEFAULT_DAYS_GAP } from '@constants';
 import {
   checkForSpecialCharacters,
   checkIfDateBigger,
+  checkIsEmptyString,
   getCreationExpirationDates,
 } from '@helpers';
 import { ErrorMessages, FilterOptions, ITodo } from '@types';
@@ -97,12 +98,19 @@ export const useTodoTask = () => {
 
   useEffect(() => {
     const isSpecialCharacter = checkForSpecialCharacters(todo.text);
+    const isEmpty = checkIsEmptyString(todo.text);
 
     if (isSpecialCharacter) {
       setTodoInputError(ErrorMessages.NO_SPECIAL_CHARACTERS);
-    } else {
-      setTodoInputError('');
+      return;
     }
+
+    if (isEmpty) {
+      setTodoInputError(ErrorMessages.INVALID_TEXT);
+      return;
+    }
+
+    setTodoInputError('');
   }, [todo.text]);
 
   useEffect(() => {
