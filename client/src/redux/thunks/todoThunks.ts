@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 import { AxiosError } from 'axios';
 
-import { fetchAllTodos, fetchCreateTodo } from '@api';
+import { fetchAllTodos, fetchCreateTodo, fetchUpdateTodo } from '@api';
 import { ApiResStatuses } from '@constants';
 import { handleResponseError } from '@helpers';
 import { AuthActions, ErrorsAlt, ITodo, TodoAction } from '@types';
@@ -14,6 +14,9 @@ import {
   createTodo,
   createTodoSuccess,
   createTodoError,
+  updateTodoSuccess,
+  updateTodo,
+  updateTodoError,
 } from '../actions';
 
 export const fetchTodosThunk = () => {
@@ -60,6 +63,34 @@ export const createTodoThunk = (todoDraft: Omit<ITodo, 'id'>) => {
       dispatch(
         createTodoError(
           handleResponseError(error, ErrorsAlt.FAILED_CREATE_TODO),
+        ),
+      );
+
+      return false;
+    }
+  };
+};
+
+export const updateTodoThunk = (todo: ITodo) => {
+  return async (dispatch: Dispatch<TodoAction | AuthActions>) => {
+    try {
+      dispatch(updateTodo());
+
+      const updatedTodo = await fetchUpdateTodo(todo);
+
+      dispatch(updateTodoSuccess(updatedTodo));
+
+      return true;
+    } catch (error) {
+      const resStatus = (error as AxiosError)?.response?.status;
+
+      if (resStatus && resStatus === ApiResStatuses.UNAUTHORIZED) {
+        dispatch(logoutUser());
+      }
+
+      dispatch(
+        updateTodoError(
+          handleResponseError(error, ErrorsAlt.FAILED_UPDATE_TODO),
         ),
       );
 

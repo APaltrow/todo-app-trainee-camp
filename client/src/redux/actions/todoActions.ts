@@ -8,10 +8,6 @@ export const deleteTodo = (todoId: number | string) => {
   return { type: TodoActions.DELETE_TODO, payload: todoId };
 };
 
-export const editTodo = (editedTodo: ITodo) => {
-  return { type: TodoActions.EDIT_TODO, payload: editedTodo };
-};
-
 export const clearDoneTodo = () => {
   return { type: TodoActions.CLEAR_DONE_TODO };
 };
@@ -50,4 +46,16 @@ export const createTodoError = (errorMessage: string): TodoAction => {
 
 export const resetTodoError = (): TodoAction => {
   return { type: TodoActions.RESET_ERROR };
+};
+
+export const updateTodo = (): TodoAction => {
+  return { type: TodoActions.UPDATE_TODO };
+};
+
+export const updateTodoSuccess = (todo: ITodo): TodoAction => {
+  return { type: TodoActions.UPDATE_TODO_SUCCESS, payload: todo };
+};
+
+export const updateTodoError = (errorMessage: string): TodoAction => {
+  return { type: TodoActions.UPDATE_TODO_ERROR, payload: errorMessage };
 };

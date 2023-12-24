@@ -14,6 +14,7 @@ import {
 } from '@components';
 
 import style from './TodoItem.module.scss';
+import { useAppSelector } from '@/redux';
 
 interface TodoItemProps {
   todo: ITodo;
@@ -21,6 +22,8 @@ interface TodoItemProps {
 
 export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
   const { id, text, isDone, creationDate, expirationDate } = todo;
+
+  const { isLoading, error } = useAppSelector((state) => state.todo);
 
   const [isOpen, onOpen, onClose] = useModal();
 
@@ -57,10 +60,7 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
     onOpen();
   };
 
-  const handleSaveEditTodo = () => {
-    onSaveEditTodo();
-    onClose();
-  };
+  const handleSaveEditTodo = () => onSaveEditTodo(onClose);
 
   const onCancelEditTodo = () => {
     clearTodo();
@@ -117,8 +117,8 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
         onClose={handleCancelEditTodo}
       >
         <TodoForm
-          isLoading={false}
-          error=""
+          isLoading={isLoading}
+          error={error}
           todo={todoEdit}
           title="Edit task"
           dateError={dateError}

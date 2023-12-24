@@ -14,3 +14,9 @@ export const fetchCreateTodo = async (todoDraft: Omit<ITodo, 'id'>) => {
 
   return data;
 };
+
+export const fetchUpdateTodo = async (todo: ITodo) => {
+  const { data } = await $api.put<ITodo>(ApiPaths.TODOS, todo);
+
+  return data;
+};
