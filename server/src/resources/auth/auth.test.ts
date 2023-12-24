@@ -1,124 +1,109 @@
 import request from 'supertest';
 
-import app from '../../app';
+import { createServer } from '../../app';
+
+const app = createServer();
 
 describe('[request validation check]: AUTH-LOGIN', () => {
-  it('recognizes missing email', (done) => {
-    request(app)
+  it('recognizes missing email', async () => {
+    const { statusCode, body } = await request(app)
       .post('/api/auth/login')
       .set('Accept', 'application/json')
       .send({
         password: '123456',
-      })
-      .expect(400)
-      .then((res) => {
-        expect(res.body).toHaveProperty('message');
-        expect(res.body).toHaveProperty('errors');
-        expect(res.body.message).toBe('Invalid credentials');
-        expect(res.body.errors[0].message).toBe('Email is required');
-        done();
       });
+
+    expect(statusCode).toBe(400);
+    expect(body).toHaveProperty('message');
+    expect(body).toHaveProperty('errors');
+    expect(body.message).toBe('Invalid credentials');
+    expect(body.errors[0].message).toBe('Email is required');
   });
 });
 
 describe('[request validation check]: AUTH-LOGIN', () => {
-  it('recognizes invalid email', (done) => {
-    request(app)
+  it('recognizes invalid email', async () => {
+    const { statusCode, body } = await request(app)
       .post('/api/auth/login')
       .set('Accept', 'application/json')
       .send({
         email: 'test@',
         password: '123456',
-      })
-      .expect(400)
-      .then((res) => {
-        expect(res.body).toHaveProperty('message');
-        expect(res.body).toHaveProperty('errors');
-        expect(res.body.message).toBe('Invalid credentials');
-        expect(res.body.errors[0].message).toBe('Invalid email');
-        done();
       });
+
+    expect(statusCode).toBe(400);
+    expect(body).toHaveProperty('message');
+    expect(body).toHaveProperty('errors');
+    expect(body.message).toBe('Invalid credentials');
+    expect(body.errors[0].message).toBe('Invalid email');
   });
 });
 
 describe('[request validation check]: AUTH-LOGIN', () => {
-  it('recognizes missing password', (done) => {
-    request(app)
+  it('recognizes missing password', async () => {
+    const { statusCode, body } = await request(app)
       .post('/api/auth/login')
       .set('Accept', 'application/json')
       .send({
         email: 'test@gmail.com',
-      })
-      .expect(400)
-      .then((res) => {
-        expect(res.body).toHaveProperty('message');
-        expect(res.body).toHaveProperty('errors');
-        expect(res.body.message).toBe('Invalid credentials');
-        expect(res.body.errors[0].message).toBe('Password is required');
-        done();
       });
+
+    expect(statusCode).toBe(400);
+    expect(body).toHaveProperty('message');
+    expect(body).toHaveProperty('errors');
+    expect(body.message).toBe('Invalid credentials');
+    expect(body.errors[0].message).toBe('Password is required');
   });
 });
 
 describe('[request validation check]: AUTH-LOGIN', () => {
-  it('recognizes invalid password', (done) => {
-    request(app)
+  it('recognizes invalid password', async () => {
+    const { statusCode, body } = await request(app)
       .post('/api/auth/login')
       .set('Accept', 'application/json')
       .send({
         email: 'test@gmail.com',
         password: '123',
-      })
-      .expect(400)
-      .then((res) => {
-        expect(res.body).toHaveProperty('message');
-        expect(res.body).toHaveProperty('errors');
-        expect(res.body.message).toBe('Invalid credentials');
-        expect(res.body.errors[0].message).toBe(
-          'Password should be at least 6 chars',
-        );
-        done();
       });
+
+    expect(statusCode).toBe(400);
+    expect(body).toHaveProperty('message');
+    expect(body).toHaveProperty('errors');
+    expect(body.message).toBe('Invalid credentials');
+    expect(body.errors[0].message).toBe('Password should be at least 6 chars');
   });
 });
 
 describe('[request validation check]: AUTH-LOGIN', () => {
-  it('recognizes invalid password type', (done) => {
-    request(app)
+  it('recognizes invalid password type', async () => {
+    const { statusCode, body } = await request(app)
       .post('/api/auth/login')
       .set('Accept', 'application/json')
       .send({
         email: 'test@gmail.com',
         password: 123456,
-      })
-      .expect(400)
-      .then((res) => {
-        expect(res.body).toHaveProperty('message');
-        expect(res.body).toHaveProperty('errors');
-        expect(res.body.message).toBe('Invalid credentials');
-        expect(res.body.errors[0].message).toBe(
-          'Expected string, received number',
-        );
-        done();
       });
+
+    expect(statusCode).toBe(400);
+    expect(body).toHaveProperty('message');
+    expect(body).toHaveProperty('errors');
+    expect(body.message).toBe('Invalid credentials');
+    expect(body.errors[0].message).toBe('Expected string, received number');
   });
 });
 
 describe('[rote check]: AUTH-LOGIN', () => {
-  test('responds with login successful json', async () => {
-    request(app)
+  it('recognizes unexisting user credentials', async () => {
+    const { statusCode, body } = await request(app)
       .post('/api/auth/login')
       .set('Accept', 'application/json')
       .send({
         email: 'test@gmail.com',
         password: '123456',
-      })
-      .expect(200)
-      .then((res) => {
-        expect(res.body).toHaveProperty('email');
-        expect(res.body).toHaveProperty('accessToken');
-        expect(res.body.email).toBe('test@gmail.com');
-        expect(res.body.accessToken.length).toBeGreaterThan(0);
       });
+
+    expect(statusCode).toBe(400);
+    expect(body).toHaveProperty('message');
+    expect(body.message).toBe('Incorrect email or password');
   });
 });

@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
+import { connectMongoMemoryServer, disconnectMongoDB } from '@utils';
 
-global.afterAll(async () => {
-  await mongoose.connection.close();
-});
+global.beforeAll(connectMongoMemoryServer);
+global.afterAll(disconnectMongoDB);
