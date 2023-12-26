@@ -1,8 +1,13 @@
 import { Dispatch } from 'react';
 import { AxiosError } from 'axios';
 
-import { fetchAllTodos, fetchCreateTodo, fetchUpdateTodo } from '@api';
-import { ApiResStatuses } from '@constants';
+import {
+  fetchAllTodos,
+  fetchCreateTodo,
+  fetchDeleteTodo,
+  fetchUpdateTodo,
+} from '@api';
+import { ALL_COMPLETED, ApiResStatuses } from '@constants';
 import { handleResponseError } from '@helpers';
 import { AuthActions, ErrorsAlt, ITodo, TodoAction } from '@types';
 
@@ -17,6 +22,10 @@ import {
   updateTodoSuccess,
   updateTodo,
   updateTodoError,
+  deleteTodo,
+  deleteTodoError,
+  deleteTodoSuccess,
+  clearDoneTodo,
 } from '../actions';
 
 export const fetchTodosThunk = () => {
@@ -90,6 +99,38 @@ export const updateTodoThunk = (todo: ITodo) => {
 
       dispatch(
         updateTodoError(
+          handleResponseError(error, ErrorsAlt.FAILED_UPDATE_TODO),
+        ),
+      );
+
+      return false;
+    }
+  };
+};
+
+export const deleteTodoThunk = (todoId: string) => {
+  return async (dispatch: Dispatch<TodoAction | AuthActions>) => {
+    try {
+      dispatch(deleteTodo());
+
+      await fetchDeleteTodo(todoId);
+
+      if (todoId === ALL_COMPLETED) {
+        dispatch(clearDoneTodo());
+      } else {
+        dispatch(deleteTodoSuccess(todoId));
+      }
+
+      return true;
+    } catch (error) {
+      const resStatus = (error as AxiosError)?.response?.status;
+
+      if (resStatus && resStatus === ApiResStatuses.UNAUTHORIZED) {
+        dispatch(logoutUser());
+      }
+
+      dispatch(
+        deleteTodoError(
           handleResponseError(error, ErrorsAlt.FAILED_UPDATE_TODO),
         ),
       );
