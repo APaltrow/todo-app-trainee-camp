@@ -16,7 +16,7 @@ todosRouter.post(
   todosController.createTodo,
 );
 todosRouter.put(
-  AppPaths.ROOT,
+  AppPaths.WITH_ID,
   authMiddleware,
   validateResource(TodoSchema),
   todosController.updateTodo,
