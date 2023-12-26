@@ -14,6 +14,7 @@ import {
 } from '@components';
 
 import style from './TodoItem.module.scss';
+import { useAppSelector } from '@/redux';
 
 interface TodoItemProps {
   todo: ITodo;
@@ -21,6 +22,8 @@ interface TodoItemProps {
 
 export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
   const { id, text, isDone, creationDate, expirationDate } = todo;
+
+  const { isLoading, error } = useAppSelector((state) => state.todo);
 
   const [isOpen, onOpen, onClose] = useModal();
 
@@ -40,7 +43,9 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
     onTodoTextChange,
   } = useTodoTask();
 
-  const handleSetDone = () => onSetDone(id);
+  const handleSetDone = () => {
+    onSetDone(todo);
+  };
 
   const handleDeleteTodo = () => {
     onAlertCall({
@@ -57,10 +62,7 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
     onOpen();
   };
 
-  const handleSaveEditTodo = () => {
-    onSaveEditTodo();
-    onClose();
-  };
+  const handleSaveEditTodo = () => onSaveEditTodo(onClose);
 
   const onCancelEditTodo = () => {
     clearTodo();
@@ -83,13 +85,13 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
         <Checkbox
           isChecked={isDone}
           onChange={handleSetDone}
-          isDisabled={isExpired}
+          isDisabled={isExpired || isLoading}
         />
         <p className={`${style.text} ${isDone ? style.crossed : ''}`}>{text}</p>
 
         <CustomButton
           size={ButtonSizes.SMALL}
-          isDisabled={todo.isDone}
+          isDisabled={todo.isDone || isLoading}
           onClick={handleEditTodo}
         >
           <Icon iconName={IconsTypes.EDIT} />
@@ -98,6 +100,7 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
         <CustomButton
           size={ButtonSizes.SMALL}
           onClick={handleDeleteTodo}
+          isDisabled={isLoading}
         >
           <Icon iconName={IconsTypes.DELETE} />
         </CustomButton>
@@ -117,8 +120,8 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
         onClose={handleCancelEditTodo}
       >
         <TodoForm
-          isLoading={false}
-          error=""
+          isLoading={isLoading}
+          error={error}
           todo={todoEdit}
           title="Edit task"
           dateError={dateError}

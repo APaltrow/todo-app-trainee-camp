@@ -15,3 +15,9 @@ todosRouter.post(
   validateResource(TodoSchema),
   todosController.createTodo,
 );
+todosRouter.put(
+  AppPaths.WITH_ID,
+  authMiddleware,
+  validateResource(TodoSchema),
+  todosController.updateTodo,
+);

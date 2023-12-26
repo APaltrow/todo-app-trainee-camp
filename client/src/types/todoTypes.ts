@@ -1,5 +1,5 @@
 export interface ITodo {
-  id: number | string;
+  id: string;
   text: string;
   isDone: boolean;
   creationDate: string;
@@ -7,9 +7,7 @@ export interface ITodo {
 }
 
 export enum TodoActions {
-  SET_TODO_DONE = 'SET_TODO_DONE',
   DELETE_TODO = 'DELETE_TODO',
-  EDIT_TODO = 'EDIT_TODO',
   CLEAR_DONE_TODO = 'CLEAR_DONE_TODO',
   SET_FILTER_TODO = 'SET_FILTER_TODO',
   SET_SEARCH_TODO = 'SET_SEARCH_TODO',
@@ -20,6 +18,9 @@ export enum TodoActions {
   CREATE_TODO_SUCCESS = 'CREATE_TODO_SUCCESS',
   CREATE_TODO_ERROR = 'CREATE_TODO_ERROR',
   RESET_ERROR = 'RESET_ERROR',
+  UPDATE_TODO = 'UPDATE_TODO',
+  UPDATE_TODO_SUCCESS = 'UPDATE_TODO_SUCCESS',
+  UPDATE_TODO_ERROR = 'UPDATE_TODO_ERROR',
 }
 
 export enum FilterOptions {
@@ -37,27 +38,20 @@ export interface ITodoState {
   fetchError: string;
 }
 
-interface ISetTodoDoneAction {
-  type: TodoActions.SET_TODO_DONE;
-  payload: number;
-}
-
 interface IDeleteTodoAction {
   type: TodoActions.DELETE_TODO;
-  payload: number;
+  payload: string;
 }
 
-interface IEditTodoAction {
-  type: TodoActions.EDIT_TODO;
-  payload: ITodo;
-}
 interface IClearDoneTodoAction {
   type: TodoActions.CLEAR_DONE_TODO;
 }
+
 interface ISetFilterTodoAction {
   type: TodoActions.SET_FILTER_TODO;
   payload: FilterOptions;
 }
+
 interface ISetSearchTodoAction {
   type: TodoActions.SET_SEARCH_TODO;
   payload: string;
@@ -95,10 +89,22 @@ interface IResetTodoErrorAction {
   type: TodoActions.RESET_ERROR;
 }
 
+interface IUpdateTodoAction {
+  type: TodoActions.UPDATE_TODO;
+}
+
+interface IUpdateTodoSuccessAction {
+  type: TodoActions.UPDATE_TODO_SUCCESS;
+  payload: ITodo;
+}
+
+interface IUpdateTodoErrorAction {
+  type: TodoActions.UPDATE_TODO_ERROR;
+  payload: string;
+}
+
 export type TodoAction =
-  | ISetTodoDoneAction
   | IDeleteTodoAction
-  | IEditTodoAction
   | IClearDoneTodoAction
   | ISetFilterTodoAction
   | ISetSearchTodoAction
@@ -108,4 +114,7 @@ export type TodoAction =
   | ICreateTodoAction
   | ICreateTodoSuccessAction
   | ICreateTodoErrorAction
-  | IResetTodoErrorAction;
+  | IResetTodoErrorAction
+  | IUpdateTodoAction
+  | IUpdateTodoSuccessAction
+  | IUpdateTodoErrorAction;

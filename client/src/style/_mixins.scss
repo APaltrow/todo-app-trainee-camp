@@ -32,3 +32,23 @@
   border: 1px solid var(--border);
   border-radius: $border_radius;
 }
+
+@mixin with-scrollbar($width, $radius) {
+  &::-webkit-scrollbar {
+    width: $width;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--clr-primary);
+    border-radius: $radius;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $clr_blue_primary;
+    border-radius: $radius;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: $clr_blue_primary;
+  }
+}

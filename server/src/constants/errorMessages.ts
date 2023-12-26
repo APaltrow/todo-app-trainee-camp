@@ -10,4 +10,6 @@ export enum AuthErrors {
 
 export enum ValidationErrors {
   INVALID_CREDENTIALS = 'Invalid credentials',
+  TODO_NOT_FOUND_BY_ID = 'Todo with such id is not found',
+  INVALID_TODO_ID = 'Invalid todo id',
 }

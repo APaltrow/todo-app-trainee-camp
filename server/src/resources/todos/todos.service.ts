@@ -1,4 +1,6 @@
 import { ITodo, ITodoDocument, UserId } from '@interfaces';
+import { ApiError } from '@utils';
+import { ValidationErrors } from '@constants';
 
 import { todosModel } from './todos.model';
 import { TodoDto } from './todos.dto';
@@ -20,6 +22,30 @@ class TodosService {
     const newTodo = await todosModel.create<ITodoDocument>(todoCandidate);
 
     return new TodoDto(newTodo) as ITodo;
+  }
+
+  async update(todoInput: Omit<UserTodoInput['body'], 'id'>, id: string) {
+    if (!id) {
+      throw ApiError.BadRequest(ValidationErrors.INVALID_TODO_ID);
+    }
+
+    try {
+      const updatedTodo = await todosModel.findByIdAndUpdate<ITodoDocument>(
+        id,
+        todoInput,
+        {
+          new: true,
+        },
+      );
+
+      if (!updatedTodo) {
+        throw ApiError.BadRequest(ValidationErrors.TODO_NOT_FOUND_BY_ID);
+      }
+
+      return new TodoDto(updatedTodo) as ITodo;
+    } catch (error) {
+      throw ApiError.BadRequest(ValidationErrors.INVALID_TODO_ID);
+    }
   }
 }
 

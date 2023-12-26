@@ -14,30 +14,10 @@ export const todoReducer = (
   action: TodoAction,
 ): ITodoState => {
   switch (action.type) {
-    case TodoActions.SET_TODO_DONE: {
-      const updatedList = state.todoList.map((todo) => {
-        if (todo.id !== action.payload) return todo;
-
-        return { ...todo, isDone: !todo.isDone };
-      });
-
-      return { ...state, todoList: updatedList };
-    }
-
     case TodoActions.DELETE_TODO: {
       const updatedList = state.todoList.filter(
         (todo) => todo.id !== action.payload,
       );
-
-      return { ...state, todoList: updatedList };
-    }
-
-    case TodoActions.EDIT_TODO: {
-      const updatedList = state.todoList.map((todo) => {
-        if (todo.id !== action.payload.id) return todo;
-
-        return { ...action.payload };
-      });
 
       return { ...state, todoList: updatedList };
     }
@@ -59,7 +39,13 @@ export const todoReducer = (
     }
 
     case TodoActions.FETCH_TODOS: {
-      return { ...state, todoList: [], isLoading: true, error: '' };
+      return {
+        ...state,
+        todoList: [],
+        isLoading: true,
+        error: '',
+        fetchError: '',
+      };
     }
 
     case TodoActions.FETCH_TODOS_SUCCESS: {
@@ -68,6 +54,7 @@ export const todoReducer = (
         todoList: action.payload,
         isLoading: false,
         error: '',
+        fetchError: '',
       };
     }
 
@@ -85,6 +72,7 @@ export const todoReducer = (
         ...state,
         isLoading: true,
         error: '',
+        fetchError: '',
       };
     }
 
@@ -94,6 +82,7 @@ export const todoReducer = (
         todoList: [action.payload, ...state.todoList],
         isLoading: false,
         error: '',
+        fetchError: '',
       };
     }
 
@@ -110,6 +99,37 @@ export const todoReducer = (
         ...state,
         error: '',
         fetchError: '',
+      };
+    }
+
+    case TodoActions.UPDATE_TODO: {
+      return {
+        ...state,
+        isLoading: true,
+        error: '',
+        fetchError: '',
+      };
+    }
+
+    case TodoActions.UPDATE_TODO_SUCCESS: {
+      return {
+        ...state,
+        todoList: state.todoList.map((todo) => {
+          if (todo.id !== action.payload.id) return todo;
+
+          return { ...action.payload };
+        }),
+        isLoading: false,
+        error: '',
+        fetchError: '',
+      };
+    }
+
+    case TodoActions.UPDATE_TODO_ERROR: {
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
       };
     }
 
