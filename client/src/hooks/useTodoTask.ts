@@ -79,7 +79,7 @@ export const useTodoTask = () => {
     setTodo(DEFAULT_TODO);
   };
 
-  const onDeleteTodo = (todoId: number | string) => {
+  const onDeleteTodo = (todoId: string) => {
     deleteTodo(todoId);
   };
 
@@ -88,7 +88,10 @@ export const useTodoTask = () => {
   };
 
   const onSaveEditTodo = async (onSuccessCb: () => void) => {
-    const isSuccess = await updateTodoThunk(todo);
+    const isSuccess = await updateTodoThunk({
+      ...todo,
+      text: todo.text.trim(),
+    });
 
     if (!isSuccess) return;
 

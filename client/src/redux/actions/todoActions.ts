@@ -1,6 +1,6 @@
 import { FilterOptions, ITodo, TodoAction, TodoActions } from '@types';
 
-export const deleteTodo = (todoId: number | string) => {
+export const deleteTodo = (todoId: string) => {
   return { type: TodoActions.DELETE_TODO, payload: todoId };
 };
 
