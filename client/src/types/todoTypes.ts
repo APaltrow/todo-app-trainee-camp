@@ -7,7 +7,6 @@ export interface ITodo {
 }
 
 export enum TodoActions {
-  SET_TODO_DONE = 'SET_TODO_DONE',
   DELETE_TODO = 'DELETE_TODO',
   CLEAR_DONE_TODO = 'CLEAR_DONE_TODO',
   SET_FILTER_TODO = 'SET_FILTER_TODO',
@@ -37,11 +36,6 @@ export interface ITodoState {
   isLoading: boolean;
   error: string;
   fetchError: string;
-}
-
-interface ISetTodoDoneAction {
-  type: TodoActions.SET_TODO_DONE;
-  payload: number;
 }
 
 interface IDeleteTodoAction {
@@ -110,7 +104,6 @@ interface IUpdateTodoErrorAction {
 }
 
 export type TodoAction =
-  | ISetTodoDoneAction
   | IDeleteTodoAction
   | IClearDoneTodoAction
   | ISetFilterTodoAction

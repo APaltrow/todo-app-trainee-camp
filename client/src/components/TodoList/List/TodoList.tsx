@@ -25,7 +25,7 @@ export const TodoList: FC = () => {
     fetchTodosThunk();
   }, []);
 
-  if (!todos.length) {
+  if (!todos.length && !isLoading) {
     const message = searchValue
       ? `${ErrorMessages.NOTHING_FOUND} '${searchValue}'`
       : TODO_LIST_MESSAGES[filterValue.toLowerCase()];
@@ -40,15 +40,20 @@ export const TodoList: FC = () => {
 
   return (
     <section className={style.container}>
-      {isLoading && <Loader />}
-      {!!fetchError && <Error message={fetchError} />}
-      <ul className={style.list}>
-        {todos.map((todoItem) => (
-          <li key={todoItem.id}>
-            <TodoItem todo={todoItem} />
-          </li>
-        ))}
-      </ul>
+      <div className={style.info}>
+        {isLoading && <Loader />}
+        {!!fetchError && <Error message={fetchError} />}
+      </div>
+
+      {!!todos.length && (
+        <ul className={style.list}>
+          {todos.map((todoItem) => (
+            <li key={todoItem.id}>
+              <TodoItem todo={todoItem} />
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
   );
 };

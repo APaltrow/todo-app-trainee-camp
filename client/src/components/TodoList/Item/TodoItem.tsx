@@ -43,7 +43,9 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
     onTodoTextChange,
   } = useTodoTask();
 
-  const handleSetDone = () => onSetDone(id);
+  const handleSetDone = () => {
+    onSetDone(todo);
+  };
 
   const handleDeleteTodo = () => {
     onAlertCall({
@@ -83,13 +85,13 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
         <Checkbox
           isChecked={isDone}
           onChange={handleSetDone}
-          isDisabled={isExpired}
+          isDisabled={isExpired || isLoading}
         />
         <p className={`${style.text} ${isDone ? style.crossed : ''}`}>{text}</p>
 
         <CustomButton
           size={ButtonSizes.SMALL}
-          isDisabled={todo.isDone}
+          isDisabled={todo.isDone || isLoading}
           onClick={handleEditTodo}
         >
           <Icon iconName={IconsTypes.EDIT} />
@@ -98,6 +100,7 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
         <CustomButton
           size={ButtonSizes.SMALL}
           onClick={handleDeleteTodo}
+          isDisabled={isLoading}
         >
           <Icon iconName={IconsTypes.DELETE} />
         </CustomButton>

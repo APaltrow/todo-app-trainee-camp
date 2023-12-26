@@ -14,16 +14,6 @@ export const todoReducer = (
   action: TodoAction,
 ): ITodoState => {
   switch (action.type) {
-    case TodoActions.SET_TODO_DONE: {
-      const updatedList = state.todoList.map((todo) => {
-        if (todo.id !== action.payload) return todo;
-
-        return { ...todo, isDone: !todo.isDone };
-      });
-
-      return { ...state, todoList: updatedList };
-    }
-
     case TodoActions.DELETE_TODO: {
       const updatedList = state.todoList.filter(
         (todo) => todo.id !== action.payload,

@@ -1,11 +1,28 @@
 @import '@style/variables';
+@import '@style/_mixins';
 
 .container {
-  padding: 0px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.info {
+  padding: 5px;
+  min-height: 35px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .list {
   padding: 10px;
+  max-height: 45vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  @include with-scrollbar(10px, 15px);
 
   display: flex;
   flex-direction: column;
