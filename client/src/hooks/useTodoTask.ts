@@ -47,6 +47,7 @@ export const useTodoTask = () => {
 
     let newTodo = {
       ...todo,
+      text: todo.text.trim(),
     };
 
     if (!newTodo.creationDate) {
