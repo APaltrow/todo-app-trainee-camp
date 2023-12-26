@@ -53,6 +53,21 @@ class TodosController {
       return next(error);
     }
   }
+
+  async deleteTodo(req: Request, res: Response, next: NextFunction) {
+    const { params, headers } = req;
+
+    const todoId = params.id || '';
+    const userId = headers.authorization || '';
+
+    try {
+      await todosService.delete(todoId, userId);
+
+      return res.json({ message: 'success' });
+    } catch (error) {
+      return next(error);
+    }
+  }
 }
 
 export const todosController = new TodosController();

@@ -21,3 +21,8 @@ todosRouter.put(
   validateResource(TodoSchema),
   todosController.updateTodo,
 );
+todosRouter.delete(
+  AppPaths.WITH_ID,
+  authMiddleware,
+  todosController.deleteTodo,
+);

@@ -1,6 +1,6 @@
 import { ITodo, ITodoDocument, UserId } from '@interfaces';
 import { ApiError } from '@utils';
-import { ValidationErrors } from '@constants';
+import { ALL_COMPLETED, ValidationErrors } from '@constants';
 
 import { todosModel } from './todos.model';
 import { TodoDto } from './todos.dto';
@@ -45,6 +45,23 @@ class TodosService {
       }
 
       return new TodoDto(updatedTodo) as ITodo;
+    } catch (error) {
+      throw ApiError.BadRequest(ValidationErrors.INVALID_TODO_ID);
+    }
+  }
+
+  async delete(todoId: string, userId: string) {
+    try {
+      if (!todoId) {
+        throw ApiError.BadRequest(ValidationErrors.INVALID_TODO_ID);
+      }
+
+      if (todoId === ALL_COMPLETED) {
+        await todosModel.deleteMany({ isDone: true, user: userId });
+        return;
+      }
+
+      await todosModel.deleteOne({ _id: todoId, user: userId });
     } catch (error) {
       throw ApiError.BadRequest(ValidationErrors.INVALID_TODO_ID);
     }
