@@ -17,3 +17,7 @@ export interface ITodoDocument extends Document {
   expirationDate: string;
   user: UserId;
 }
+
+export interface ParamsWithId {
+  id: string;
+}
