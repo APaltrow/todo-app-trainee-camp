@@ -117,6 +117,8 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
         onClose={handleCancelEditTodo}
       >
         <TodoForm
+          isLoading={false}
+          error=""
           todo={todoEdit}
           title="Edit task"
           dateError={dateError}

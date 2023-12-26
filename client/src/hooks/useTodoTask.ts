@@ -5,6 +5,7 @@ import { DEFAULT_DAYS_GAP } from '@constants';
 import {
   checkForSpecialCharacters,
   checkIfDateBigger,
+  checkIsEmptyString,
   getCreationExpirationDates,
 } from '@helpers';
 import { ErrorMessages, FilterOptions, ITodo } from '@types';
@@ -17,7 +18,7 @@ const DEFAULT_TODO = {
 } as ITodo;
 
 export const useTodoTask = () => {
-  const { addTodo, setTodoDone, deleteTodo, editTodo, setFilterTodo } =
+  const { setTodoDone, deleteTodo, editTodo, setFilterTodo, createTodoThunk } =
     useActions();
 
   const [todo, setTodo] = useState<ITodo>(DEFAULT_TODO);
@@ -41,12 +42,12 @@ export const useTodoTask = () => {
     }));
   };
 
-  const onCreateTodo = () => {
+  const onCreateTodo = async (successCb?: () => void) => {
     if (todoInputError || dateError || !todo.text) return;
 
     let newTodo = {
       ...todo,
-      id: Date.now(),
+      text: todo.text.trim(),
     };
 
     if (!newTodo.creationDate) {
@@ -56,9 +57,16 @@ export const useTodoTask = () => {
       };
     }
 
-    addTodo(newTodo);
+    const isSuccess = await createTodoThunk(newTodo);
+
+    if (!isSuccess) return;
+
     setFilterTodo(FilterOptions.ALL);
     setTodo(DEFAULT_TODO);
+
+    if (successCb) {
+      successCb();
+    }
   };
 
   const onAddTodo = () => {
@@ -91,12 +99,19 @@ export const useTodoTask = () => {
 
   useEffect(() => {
     const isSpecialCharacter = checkForSpecialCharacters(todo.text);
+    const isEmpty = checkIsEmptyString(todo.text);
 
     if (isSpecialCharacter) {
       setTodoInputError(ErrorMessages.NO_SPECIAL_CHARACTERS);
-    } else {
-      setTodoInputError('');
+      return;
     }
+
+    if (isEmpty) {
+      setTodoInputError(ErrorMessages.INVALID_TEXT);
+      return;
+    }
+
+    setTodoInputError('');
   }, [todo.text]);
 
   useEffect(() => {

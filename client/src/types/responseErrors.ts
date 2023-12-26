@@ -10,4 +10,5 @@ export interface IResponseError {
 export enum ErrorsAlt {
   FAILED_LOGIN = 'Login failed',
   FAILED_FETCH_TODOS = 'Could not fetch todos ...',
+  FAILED_CREATE_TODO = 'Could not create todo ...',
 }

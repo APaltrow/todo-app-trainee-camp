@@ -1,9 +1,5 @@
 import { FilterOptions, ITodo, TodoAction, TodoActions } from '@types';
 
-export const addTodo = (newTodo: ITodo) => {
-  return { type: TodoActions.ADD_TODO, payload: newTodo };
-};
-
 export const setTodoDone = (todoId: number | string) => {
   return { type: TodoActions.SET_TODO_DONE, payload: todoId };
 };
@@ -38,4 +34,20 @@ export const fetchTodosSuccess = (todos: ITodo[]): TodoAction => {
 
 export const fetchTodosError = (errorMessage: string): TodoAction => {
   return { type: TodoActions.FETCH_TODOS_ERROR, payload: errorMessage };
+};
+
+export const createTodo = (): TodoAction => {
+  return { type: TodoActions.CREATE_TODO };
+};
+
+export const createTodoSuccess = (todo: ITodo): TodoAction => {
+  return { type: TodoActions.CREATE_TODO_SUCCESS, payload: todo };
+};
+
+export const createTodoError = (errorMessage: string): TodoAction => {
+  return { type: TodoActions.CREATE_TODO_ERROR, payload: errorMessage };
+};
+
+export const resetTodoError = (): TodoAction => {
+  return { type: TodoActions.RESET_ERROR };
 };

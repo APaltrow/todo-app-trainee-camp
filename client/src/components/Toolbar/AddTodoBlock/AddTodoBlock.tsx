@@ -1,8 +1,8 @@
 import { FC } from 'react';
 
-import { useAlert, useModal, useTodoTask } from '@hooks';
+import { useAlert, useDelayedResetError, useModal, useTodoTask } from '@hooks';
 import { AlertMessages, ButtonSizes, ButtonVariants, IconsTypes } from '@types';
-
+import { useActions, useAppSelector } from '@redux';
 import {
   Icon,
   Modal,
@@ -15,7 +15,11 @@ import {
 import style from './AddTodoBlock.module.scss';
 
 export const AddTodoBlock: FC = () => {
+  const { error, isLoading } = useAppSelector((state) => state.todo);
+
   const [isOpen, onOpen, onClose] = useModal();
+
+  const { resetTodoError } = useActions();
 
   const { alert, onAlertCall, onAlertCancel } = useAlert();
 
@@ -31,6 +35,8 @@ export const AddTodoBlock: FC = () => {
     onTodoTextChange,
   } = useTodoTask();
 
+  useDelayedResetError(resetTodoError, error);
+
   const handleAddTodo = () => {
     onAddTodo();
     onOpen();
@@ -43,8 +49,7 @@ export const AddTodoBlock: FC = () => {
   };
 
   const onSaveTodo = () => {
-    onCreateTodo();
-    onClose();
+    onCreateTodo(onClose);
   };
 
   const onCancelTodo = () => {
@@ -64,11 +69,12 @@ export const AddTodoBlock: FC = () => {
     <div className={style.container}>
       <TaskInput
         value={todo.text}
-        error={todoInputError}
+        error={error || todoInputError}
         placeholder="Enter your task..."
         onChange={onTodoTextChange}
         onKeyUp={onCreateTodoWithEnter}
       />
+
       <CustomButton
         onClick={handleAddTodo}
         size={ButtonSizes.MID}
@@ -83,6 +89,8 @@ export const AddTodoBlock: FC = () => {
       >
         <TodoForm
           todo={todo}
+          isLoading={isLoading}
+          error={error}
           title="Create task"
           dateError={dateError}
           todoInputError={todoInputError}
@@ -92,13 +100,14 @@ export const AddTodoBlock: FC = () => {
           onTodoTextChange={onTodoTextChange}
         />
       </Modal>
-      {alert ? (
+
+      {!!alert && (
         <Alert
           text={alert.text}
           onCancel={onAlertCancel}
           onConfirm={alert.onConfirm}
         />
-      ) : null}
+      )}
     </div>
   );
 };

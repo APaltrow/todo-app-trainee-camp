@@ -1,4 +1,6 @@
-import { Schema } from 'mongoose';
+import { Schema, Document } from 'mongoose';
+
+export type UserId = Schema.Types.ObjectId;
 
 export interface ITodo {
   id: string;
@@ -9,10 +11,9 @@ export interface ITodo {
 }
 
 export interface ITodoDocument extends Document {
-  _id: Schema.Types.ObjectId;
   text: string;
   isDone: boolean;
   creationDate: string;
   expirationDate: string;
-  user: Schema.Types.ObjectId;
+  user: UserId;
 }
