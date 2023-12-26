@@ -17,3 +17,5 @@ export interface ITodoDocument extends Document {
   expirationDate: string;
   user: UserId;
 }
+
+export type QueryParams = Record<string, string | boolean>;
