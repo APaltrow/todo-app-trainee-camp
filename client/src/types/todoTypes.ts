@@ -40,7 +40,7 @@ export interface ITodoState {
 
 interface IDeleteTodoAction {
   type: TodoActions.DELETE_TODO;
-  payload: number;
+  payload: string;
 }
 
 interface IClearDoneTodoAction {
