@@ -9,8 +9,10 @@ export const useFilter = () => {
 
   const { deleteTodoThunk, setFilterTodo } = useActions();
 
-  const onClearDoneTodos = () => {
-    deleteTodoThunk(ALL_COMPLETED);
+  const onClearDoneTodos = async () => {
+    const isSuccess = await deleteTodoThunk(ALL_COMPLETED);
+
+    if (!isSuccess) return;
 
     if (filterValue === FilterOptions.COMPLETED) {
       setFilterTodo(FilterOptions.ALL);
