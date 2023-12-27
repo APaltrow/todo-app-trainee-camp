@@ -68,6 +68,7 @@ export const AddTodoBlock: FC = () => {
   return (
     <div className={style.container}>
       <TaskInput
+        isDisabled={isLoading}
         value={todo.text}
         error={error || todoInputError}
         placeholder="Enter your task..."
