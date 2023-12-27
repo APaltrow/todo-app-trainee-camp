@@ -1,13 +1,5 @@
 import { FilterOptions, ITodo, TodoAction, TodoActions } from '@types';
 
-export const deleteTodo = (todoId: string) => {
-  return { type: TodoActions.DELETE_TODO, payload: todoId };
-};
-
-export const clearDoneTodo = () => {
-  return { type: TodoActions.CLEAR_DONE_TODO };
-};
-
 export const setFilterTodo = (filterValue: FilterOptions) => {
   return { type: TodoActions.SET_FILTER_TODO, payload: filterValue };
 };
@@ -54,4 +46,20 @@ export const updateTodoSuccess = (todo: ITodo): TodoAction => {
 
 export const updateTodoError = (errorMessage: string): TodoAction => {
   return { type: TodoActions.UPDATE_TODO_ERROR, payload: errorMessage };
+};
+
+export const deleteTodo = (): TodoAction => {
+  return { type: TodoActions.DELETE_TODO };
+};
+
+export const deleteTodoSuccess = (todoId: string): TodoAction => {
+  return { type: TodoActions.DELETE_TODO_SUCCESS, payload: todoId };
+};
+
+export const deleteTodoError = (errorMessage: string): TodoAction => {
+  return { type: TodoActions.DELETE_TODO_ERROR, payload: errorMessage };
+};
+
+export const clearDoneTodo = (): TodoAction => {
+  return { type: TodoActions.CLEAR_DONE_TODO };
 };

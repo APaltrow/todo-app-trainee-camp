@@ -14,22 +14,6 @@ export const todoReducer = (
   action: TodoAction,
 ): ITodoState => {
   switch (action.type) {
-    case TodoActions.DELETE_TODO: {
-      const updatedList = state.todoList.filter(
-        (todo) => todo.id !== action.payload,
-      );
-
-      return { ...state, todoList: updatedList };
-    }
-
-    case TodoActions.CLEAR_DONE_TODO: {
-      const updatedState = state.todoList.filter(
-        (todoItem) => !todoItem.isDone,
-      );
-
-      return { ...state, todoList: updatedState };
-    }
-
     case TodoActions.SET_FILTER_TODO: {
       return { ...state, filterValue: action.payload };
     }
@@ -130,6 +114,47 @@ export const todoReducer = (
         ...state,
         isLoading: false,
         error: action.payload,
+      };
+    }
+
+    case TodoActions.DELETE_TODO: {
+      return {
+        ...state,
+        isLoading: true,
+        error: '',
+        fetchError: '',
+      };
+    }
+
+    case TodoActions.DELETE_TODO_SUCCESS: {
+      return {
+        ...state,
+        todoList: state.todoList.filter(({ id }) => id !== action.payload),
+        isLoading: false,
+        error: '',
+        fetchError: '',
+      };
+    }
+
+    case TodoActions.DELETE_TODO_ERROR: {
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+      };
+    }
+
+    case TodoActions.CLEAR_DONE_TODO: {
+      const updatedState = state.todoList.filter(
+        (todoItem) => !todoItem.isDone,
+      );
+
+      return {
+        ...state,
+        todoList: updatedState,
+        isLoading: false,
+        error: '',
+        fetchError: '',
       };
     }
 

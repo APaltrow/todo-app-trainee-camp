@@ -1,5 +1,5 @@
+import { ALL_COMPLETED } from '@constants';
 import { useActions, useAppSelector } from '@redux';
-
 import { FilterOptions, ITodo } from '@types';
 
 export const useFilter = () => {
@@ -7,10 +7,12 @@ export const useFilter = () => {
     (state) => state.todo,
   );
 
-  const { clearDoneTodo, setFilterTodo } = useActions();
+  const { deleteTodoThunk, setFilterTodo } = useActions();
 
-  const onClearDoneTodos = () => {
-    clearDoneTodo();
+  const onClearDoneTodos = async () => {
+    const isSuccess = await deleteTodoThunk(ALL_COMPLETED);
+
+    if (!isSuccess) return;
 
     if (filterValue === FilterOptions.COMPLETED) {
       setFilterTodo(FilterOptions.ALL);

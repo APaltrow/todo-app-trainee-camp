@@ -18,7 +18,7 @@ const DEFAULT_TODO = {
 } as ITodo;
 
 export const useTodoTask = () => {
-  const { deleteTodo, setFilterTodo, createTodoThunk, updateTodoThunk } =
+  const { setFilterTodo, createTodoThunk, updateTodoThunk, deleteTodoThunk } =
     useActions();
 
   const [todo, setTodo] = useState<ITodo>(DEFAULT_TODO);
@@ -79,10 +79,6 @@ export const useTodoTask = () => {
     setTodo(DEFAULT_TODO);
   };
 
-  const onDeleteTodo = (todoId: string) => {
-    deleteTodo(todoId);
-  };
-
   const onEditTodo = (todoToEdit: ITodo) => {
     setTodo(todoToEdit);
   };
@@ -100,6 +96,10 @@ export const useTodoTask = () => {
 
   const onSetDone = (todoToEdit: ITodo) => {
     updateTodoThunk({ ...todoToEdit, isDone: !todoToEdit.isDone });
+  };
+
+  const onDeleteTodo = (todoId: string) => {
+    deleteTodoThunk(todoId);
   };
 
   /* Validations */

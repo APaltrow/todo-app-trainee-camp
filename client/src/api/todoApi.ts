@@ -20,3 +20,9 @@ export const fetchUpdateTodo = async ({ id, ...todo }: ITodo) => {
 
   return data;
 };
+
+export const fetchDeleteTodo = async (todoId: string) => {
+  const { data } = await $api.delete<ITodo>(`${ApiPaths.TODOS}/${todoId}`);
+
+  return data;
+};

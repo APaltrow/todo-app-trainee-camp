@@ -155,4 +155,32 @@ describe('[TEST FOR RESOURCE]: todos', () => {
       expect(body.message).toBe('Invalid todo id');
     });
   });
+
+  describe('[route check]: TODOS /DELETE', () => {
+    test('responds with invalid todo id error message', async () => {
+      const { statusCode, body } = await request(app)
+        .delete('/api/todos/not-existing-todo-id')
+        .set('Accept', 'application/json')
+        .set('Authorization', VALID_ACCESS_TOKEN_USER_1)
+        .send();
+
+      expect(statusCode).toBe(400);
+      expect(body).toHaveProperty('message');
+      expect(body.message).toBe('Invalid todo id');
+    });
+  });
+
+  describe('[route check]: TODOS /DELETE', () => {
+    test('responds with success message for deleting all completed todos', async () => {
+      const { statusCode, body } = await request(app)
+        .delete('/api/todos/all-completed')
+        .set('Accept', 'application/json')
+        .set('Authorization', VALID_ACCESS_TOKEN_USER_1)
+        .send();
+
+      expect(statusCode).toBe(200);
+      expect(body).toHaveProperty('message');
+      expect(body.message).toBe('success');
+    });
+  });
 });
