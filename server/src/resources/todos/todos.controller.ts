@@ -12,14 +12,14 @@ class TodosController {
 
     const userId = headers.authorization;
 
-    const { search } = getQueryParams(query as QueryParams);
+    const queryParams = getQueryParams(query as QueryParams);
 
     if (!userId) {
       return next(ApiError.Unauthorized());
     }
 
     try {
-      const todos = await todosService.getAll(userId, search);
+      const todos = await todosService.getAll(userId, queryParams);
 
       return res.json(todos);
     } catch (error) {
