@@ -51,7 +51,7 @@ export const TodoItem: FC<TodoItemProps> = memo(({ todo }) => {
     onAlertCall({
       text: AlertMessages.DELETE_TASK,
       onConfirm: () => {
-        onDeleteTodo(id);
+        onDeleteTodo(id, isDone);
         onAlertCancel();
       },
     });

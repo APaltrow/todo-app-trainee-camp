@@ -1,32 +1,62 @@
-import { useMemo } from 'react';
-
+import { ONE_TODO_ITEM, ZERO_TODOS } from '@constants';
 import { useAppSelector } from '@redux';
-import { FilterOptions } from '@types';
-
-type Totals = Record<FilterOptions, number>;
 
 export const useTodoTotals = () => {
-  const { todoList } = useAppSelector((state) => state.todo);
+  const { totals } = useAppSelector((state) => state.todo);
 
-  const initialTotals: Totals = {
-    All: todoList.length,
-    Active: 0,
-    Completed: 0,
+  const getTotalsOnCreate = () => {
+    const { all, active } = totals;
+    return {
+      all: all + ONE_TODO_ITEM,
+      active: active + ONE_TODO_ITEM,
+    };
   };
 
-  const totals: Totals = useMemo(
-    () =>
-      todoList.reduce((todoTotals, todo) => {
-        if (todo.isDone) {
-          todoTotals.Completed += 1;
-        } else {
-          todoTotals.Active += 1;
-        }
+  const getTotalsOnUpdate = (isDone: boolean) => {
+    const { active, completed } = totals;
 
-        return todoTotals;
-      }, initialTotals),
-    [todoList],
-  );
+    if (isDone) {
+      return {
+        active: active + ONE_TODO_ITEM,
+        completed: completed - ONE_TODO_ITEM,
+      };
+    }
 
-  return totals;
+    return {
+      active: active - ONE_TODO_ITEM,
+      completed: completed + ONE_TODO_ITEM,
+    };
+  };
+
+  const getTotalsOnDeleteOne = (isDone: boolean): Record<string, number> => {
+    const { all, active, completed } = totals;
+
+    if (isDone) {
+      return {
+        all: all - ONE_TODO_ITEM,
+        completed: completed - ONE_TODO_ITEM,
+      };
+    }
+
+    return {
+      all: all - ONE_TODO_ITEM,
+      active: active - ONE_TODO_ITEM,
+    };
+  };
+
+  const getTotalsOnDeleteAll = () => {
+    const { all, completed } = totals;
+
+    return {
+      all: all - completed,
+      completed: ZERO_TODOS,
+    };
+  };
+
+  return {
+    getTotalsOnCreate,
+    getTotalsOnUpdate,
+    getTotalsOnDeleteOne,
+    getTotalsOnDeleteAll,
+  };
 };

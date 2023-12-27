@@ -2,6 +2,11 @@ import { FilterOptions, ITodoState, TodoAction, TodoActions } from '@types';
 
 const initialState: ITodoState = {
   todoList: [],
+  totals: {
+    all: 0,
+    active: 0,
+    completed: 0,
+  },
   filterValue: FilterOptions.ALL,
   searchValue: '',
   isLoading: false,
@@ -35,7 +40,8 @@ export const todoReducer = (
     case TodoActions.FETCH_TODOS_SUCCESS: {
       return {
         ...state,
-        todoList: action.payload,
+        todoList: action.payload.todos,
+        totals: action.payload.totals,
         isLoading: false,
         error: '',
         fetchError: '',
@@ -155,6 +161,16 @@ export const todoReducer = (
         isLoading: false,
         error: '',
         fetchError: '',
+      };
+    }
+
+    case TodoActions.SET_TOTALS: {
+      return {
+        ...state,
+        totals: {
+          ...state.totals,
+          ...action.payload,
+        },
       };
     }
 

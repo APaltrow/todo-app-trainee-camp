@@ -6,6 +6,11 @@ export interface ITodo {
   expirationDate: string;
 }
 
+export interface ITodoResponse {
+  todos: ITodo[];
+  totals: Record<string, number>;
+}
+
 export enum TodoActions {
   CLEAR_DONE_TODO = 'CLEAR_DONE_TODO',
   SET_FILTER_TODO = 'SET_FILTER_TODO',
@@ -23,16 +28,18 @@ export enum TodoActions {
   DELETE_TODO = 'DELETE_TODO',
   DELETE_TODO_SUCCESS = 'DELETE_TODO_SUCCESS',
   DELETE_TODO_ERROR = 'DELETE_TODO_ERROR',
+  SET_TOTALS = 'SET_TOTALS',
 }
 
 export enum FilterOptions {
-  ALL = 'All',
-  ACTIVE = 'Active',
-  COMPLETED = 'Completed',
+  ALL = 'all',
+  ACTIVE = 'active',
+  COMPLETED = 'completed',
 }
 
 export interface ITodoState {
   todoList: ITodo[];
+  totals: Record<string, number>;
   filterValue: FilterOptions;
   searchValue: string;
   isLoading: boolean;
@@ -60,7 +67,7 @@ interface IFetchTodosAction {
 
 interface IFetchTodosSuccessAction {
   type: TodoActions.FETCH_TODOS_SUCCESS;
-  payload: ITodo[];
+  payload: ITodoResponse;
 }
 
 interface IFetchTodosErrorAction {
@@ -114,6 +121,11 @@ interface IDeleteTodoErrorAction {
   payload: string;
 }
 
+interface ISetTotalsAction {
+  type: TodoActions.SET_TOTALS;
+  payload: Record<string, number>;
+}
+
 export type TodoAction =
   | IClearDoneTodoAction
   | ISetFilterTodoAction
@@ -130,4 +142,5 @@ export type TodoAction =
   | IUpdateTodoErrorAction
   | IDeleteTodoAction
   | IDeleteTodoSuccessAction
-  | IDeleteTodoErrorAction;
+  | IDeleteTodoErrorAction
+  | ISetTotalsAction;

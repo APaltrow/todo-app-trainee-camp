@@ -1,4 +1,10 @@
-import { FilterOptions, ITodo, TodoAction, TodoActions } from '@types';
+import {
+  FilterOptions,
+  ITodo,
+  ITodoResponse,
+  TodoAction,
+  TodoActions,
+} from '@types';
 
 export const setFilterTodo = (filterValue: FilterOptions) => {
   return { type: TodoActions.SET_FILTER_TODO, payload: filterValue };
@@ -12,7 +18,7 @@ export const fetchTodos = (): TodoAction => {
   return { type: TodoActions.FETCH_TODOS };
 };
 
-export const fetchTodosSuccess = (todos: ITodo[]): TodoAction => {
+export const fetchTodosSuccess = (todos: ITodoResponse): TodoAction => {
   return { type: TodoActions.FETCH_TODOS_SUCCESS, payload: todos };
 };
 
@@ -62,4 +68,8 @@ export const deleteTodoError = (errorMessage: string): TodoAction => {
 
 export const clearDoneTodo = (): TodoAction => {
   return { type: TodoActions.CLEAR_DONE_TODO };
+};
+
+export const setTodoTotals = (totals: Record<string, number>): TodoAction => {
+  return { type: TodoActions.SET_TOTALS, payload: totals };
 };

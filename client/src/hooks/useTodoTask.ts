@@ -9,6 +9,7 @@ import {
   getCreationExpirationDates,
 } from '@helpers';
 import { ErrorMessages, FilterOptions, ITodo } from '@types';
+import { useTodoTotals } from '@hooks';
 
 const DEFAULT_TODO = {
   text: '',
@@ -18,8 +19,16 @@ const DEFAULT_TODO = {
 } as ITodo;
 
 export const useTodoTask = () => {
-  const { setFilterTodo, createTodoThunk, updateTodoThunk, deleteTodoThunk } =
-    useActions();
+  const {
+    setTodoTotals,
+    setFilterTodo,
+    createTodoThunk,
+    updateTodoThunk,
+    deleteTodoThunk,
+  } = useActions();
+
+  const { getTotalsOnCreate, getTotalsOnUpdate, getTotalsOnDeleteOne } =
+    useTodoTotals();
 
   const [todo, setTodo] = useState<ITodo>(DEFAULT_TODO);
 
@@ -63,6 +72,7 @@ export const useTodoTask = () => {
 
     setFilterTodo(FilterOptions.ALL);
     setTodo(DEFAULT_TODO);
+    setTodoTotals(getTotalsOnCreate());
 
     if (successCb) {
       successCb();
@@ -94,12 +104,24 @@ export const useTodoTask = () => {
     onSuccessCb();
   };
 
-  const onSetDone = (todoToEdit: ITodo) => {
-    updateTodoThunk({ ...todoToEdit, isDone: !todoToEdit.isDone });
+  const onSetDone = async (todoToEdit: ITodo) => {
+    const isDoneEdit = todoToEdit.isDone;
+    const isSuccess = await updateTodoThunk({
+      ...todoToEdit,
+      isDone: !todoToEdit.isDone,
+    });
+
+    if (!isSuccess) return;
+
+    setTodoTotals(getTotalsOnUpdate(isDoneEdit));
   };
 
-  const onDeleteTodo = (todoId: string) => {
-    deleteTodoThunk(todoId);
+  const onDeleteTodo = async (todoId: string, isDone: boolean) => {
+    const isSuccess = await deleteTodoThunk(todoId);
+
+    if (!isSuccess) return;
+
+    setTodoTotals(getTotalsOnDeleteOne(isDone));
   };
 
   /* Validations */
