@@ -23,8 +23,10 @@ export const TodoList: FC = () => {
   useDelayedResetError(resetTodoError, fetchError);
 
   useEffect(() => {
-    fetchTodosThunk(getQueryParams({ search: searchValue }));
-  }, [searchValue]);
+    fetchTodosThunk(
+      getQueryParams({ search: searchValue, category: filterValue }),
+    );
+  }, [searchValue, filterValue]);
 
   if (!todos.length && !isLoading) {
     const message = searchValue
