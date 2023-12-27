@@ -1,5 +1,5 @@
 import { ITodo, ITodoDocument, QueryParams, UserId } from '@interfaces';
-import { ApiError, getTodoFilterQuery } from '@utils';
+import { ApiError, getTodoFilterQuery, getTodoTotals } from '@utils';
 import { ALL_COMPLETED, ValidationErrors } from '@constants';
 
 import { todosModel } from './todos.model';
@@ -10,10 +10,17 @@ class TodosService {
   async getAll(userId: string, queryParams: QueryParams) {
     const todos = await todosModel.find<ITodoDocument>({
       user: userId,
+    });
+
+    const filteredTodos = await todosModel.find<ITodoDocument>({
+      user: userId,
       ...getTodoFilterQuery(queryParams),
     });
 
-    return todos.map<ITodo>((todo) => new TodoDto(todo)).reverse();
+    return {
+      todos: filteredTodos.map<ITodo>((todo) => new TodoDto(todo)).reverse(),
+      totals: getTodoTotals(todos),
+    };
   }
 
   async create(userId: UserId, todoInput: UserTodoInput['body']) {
