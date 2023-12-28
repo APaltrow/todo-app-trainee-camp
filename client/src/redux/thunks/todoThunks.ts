@@ -28,12 +28,12 @@ import {
   clearDoneTodo,
 } from '../actions';
 
-export const fetchTodosThunk = () => {
+export const fetchTodosThunk = (params: string) => {
   return async (dispatch: Dispatch<TodoAction | AuthActions>) => {
     try {
       dispatch(fetchTodos());
 
-      const todos = await fetchAllTodos();
+      const todos = await fetchAllTodos(params);
 
       dispatch(fetchTodosSuccess(todos));
     } catch (error) {

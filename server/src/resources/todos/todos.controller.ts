@@ -1,21 +1,25 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { ApiError } from '@utils';
-import { ParamsWithId, UserId } from '@interfaces';
+import { ApiError, getQueryParams } from '@utils';
+import { ParamsWithId, QueryParams, UserId } from '@interfaces';
 
 import { todosService } from './todos.service';
 import { UserTodoInput } from './todos.schema';
 
 class TodosController {
   async getAllTodos(req: Request, res: Response, next: NextFunction) {
-    const userId = req.headers.authorization;
+    const { headers, query } = req;
+
+    const userId = headers.authorization;
+
+    const { search } = getQueryParams(query as QueryParams);
 
     if (!userId) {
       return next(ApiError.Unauthorized());
     }
 
     try {
-      const todos = await todosService.getAll(userId);
+      const todos = await todosService.getAll(userId, search);
 
       return res.json(todos);
     } catch (error) {

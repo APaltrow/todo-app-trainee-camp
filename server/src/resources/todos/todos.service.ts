@@ -7,8 +7,16 @@ import { TodoDto } from './todos.dto';
 import { UserTodoInput } from './todos.schema';
 
 class TodosService {
-  async getAll(userId: string) {
-    const todos = await todosModel.find<ITodoDocument>({ user: userId });
+  async getAll(userId: string, search: string) {
+    const todoParams = {
+      user: userId,
+      text: {
+        $regex: search,
+        $options: 'i',
+      },
+    };
+
+    const todos = await todosModel.find<ITodoDocument>(todoParams);
 
     return todos.map<ITodo>((todo) => new TodoDto(todo)).reverse();
   }

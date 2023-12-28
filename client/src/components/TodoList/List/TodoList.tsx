@@ -2,6 +2,7 @@ import { FC, useEffect } from 'react';
 
 import { useDelayedResetError, useFilter } from '@hooks';
 import { TODO_LIST_MESSAGES } from '@constants';
+import { getQueryParams } from '@helpers';
 import { ErrorMessages } from '@types';
 import { useActions, useAppSelector } from '@redux';
 import { Info, Loader, Error } from '@components';
@@ -22,8 +23,8 @@ export const TodoList: FC = () => {
   useDelayedResetError(resetTodoError, fetchError);
 
   useEffect(() => {
-    fetchTodosThunk();
-  }, []);
+    fetchTodosThunk(getQueryParams({ search: searchValue }));
+  }, [searchValue]);
 
   if (!todos.length && !isLoading) {
     const message = searchValue
