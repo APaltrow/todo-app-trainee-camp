@@ -1,5 +1,5 @@
-import { ITodo, ITodoDocument, UserId } from '@interfaces';
-import { ApiError } from '@utils';
+import { ITodo, ITodoDocument, QueryParams, UserId } from '@interfaces';
+import { ApiError, getTodoFilterQuery, getTodoTotals } from '@utils';
 import { ALL_COMPLETED, ValidationErrors } from '@constants';
 
 import { todosModel } from './todos.model';
@@ -7,18 +7,20 @@ import { TodoDto } from './todos.dto';
 import { UserTodoInput } from './todos.schema';
 
 class TodosService {
-  async getAll(userId: string, search: string) {
-    const todoParams = {
+  async getAll(userId: string, queryParams: QueryParams) {
+    const todos = await todosModel.find<ITodoDocument>({
       user: userId,
-      text: {
-        $regex: search,
-        $options: 'i',
-      },
+    });
+
+    const filteredTodos = await todosModel.find<ITodoDocument>({
+      user: userId,
+      ...getTodoFilterQuery(queryParams),
+    });
+
+    return {
+      todos: filteredTodos.map<ITodo>((todo) => new TodoDto(todo)).reverse(),
+      totals: getTodoTotals(todos),
     };
-
-    const todos = await todosModel.find<ITodoDocument>(todoParams);
-
-    return todos.map<ITodo>((todo) => new TodoDto(todo)).reverse();
   }
 
   async create(userId: UserId, todoInput: UserTodoInput['body']) {

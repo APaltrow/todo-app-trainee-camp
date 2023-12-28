@@ -1,6 +1,7 @@
 import 'dotenv/config';
 
 import { DefaultAppConfig } from './defaultAppConfig';
+import { MODE_DEV } from './common';
 
 const {
   PORT = DefaultAppConfig.PORT,
@@ -12,7 +13,7 @@ const {
   NODE_ENV,
 } = process.env;
 
-const isDev = NODE_ENV?.trim() === 'dev';
+const isDev = NODE_ENV?.trim() === MODE_DEV;
 
 export const appConfig = {
   HOST: DefaultAppConfig.HOST,

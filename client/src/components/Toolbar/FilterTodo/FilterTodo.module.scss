@@ -18,6 +18,12 @@
   box-shadow: $box_shadow_main;
 }
 
+.btn {
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}
+
 @include mobile {
   .container {
     padding: 15px 5px 10px;

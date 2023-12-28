@@ -18,7 +18,7 @@ export interface ITodoDocument extends Document {
   user: UserId;
 }
 
-export type QueryParams = Record<string, string | boolean>;
+export type QueryParams = Record<string, string>;
 
 export interface ParamsWithId {
   id: string;

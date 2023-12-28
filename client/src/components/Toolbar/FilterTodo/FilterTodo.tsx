@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { useAppSelector } from '@redux';
-import { useAlert, useFilter, useTodoTotals } from '@hooks';
+import { useAlert, useFilter } from '@hooks';
 import { FILTER_OPTIONS } from '@constants';
 import { AlertMessages, ButtonVariants } from '@types';
 import { Alert, CustomButton, Tooltip } from '@components';
@@ -9,9 +9,9 @@ import { Alert, CustomButton, Tooltip } from '@components';
 import style from './FilterTodo.module.scss';
 
 export const FilterTodo: FC = () => {
-  const { isLoading } = useAppSelector((state) => state.todo);
-
-  const todoTotals = useTodoTotals();
+  const { isLoading, totals: todoTotals } = useAppSelector(
+    (state) => state.todo,
+  );
 
   const { alert, onAlertCall, onAlertCancel } = useAlert();
 
@@ -51,7 +51,7 @@ export const FilterTodo: FC = () => {
                   onClick={() => onSetFilter(option)}
                   isDisabled={isSelected}
                 >
-                  {option}
+                  <span className={style.btn}>{option}</span>
                 </CustomButton>
               </Tooltip>
             </li>
@@ -62,7 +62,7 @@ export const FilterTodo: FC = () => {
       <CustomButton
         variant={ButtonVariants.SECONDARY}
         onClick={handleClearCompleted}
-        isDisabled={isLoading || !todoTotals.Completed}
+        isDisabled={isLoading || !todoTotals.completed}
       >
         Clear completed
       </CustomButton>

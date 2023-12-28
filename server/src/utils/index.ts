@@ -2,4 +2,5 @@ export * from './apiErrors.utils';
 export * from './tokens.utils';
 export * from './password.utils';
 export * from './bd.utils';
-export * from './getQueryParams.utils';
+export * from './queries.utils';
+export * from './todoTotals.utils';
