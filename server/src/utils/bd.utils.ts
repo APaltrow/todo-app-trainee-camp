@@ -1,19 +1,19 @@
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 
-import { LogMessages } from '@constants';
+import { DBEvents, DBLogMessages, LogMessages } from '@constants';
 
 export const connectMongoDB = async (dbUri: string) => {
-  mongoose.connection.on('connected', () => {
-    console.log(`${LogMessages.MONGO_BD} Connected successfully`);
+  mongoose.connection.on(DBEvents.ON_CONNECTED, () => {
+    console.log(`${LogMessages.MONGO_BD} ${DBLogMessages.CONNECTED}`);
   });
 
-  mongoose.connection.on('error', (error) => {
-    console.log(`${LogMessages.MONGO_BD} Error while connecting`, error);
+  mongoose.connection.on(DBEvents.ON_ERROR, (error) => {
+    console.log(`${LogMessages.MONGO_BD} ${DBLogMessages.ERROR}`, error);
   });
 
-  mongoose.connection.on('disconnected', () => {
-    console.log(`${LogMessages.MONGO_BD} Connection closed successfully`);
+  mongoose.connection.on(DBEvents.ON_DISCONNECT, () => {
+    console.log(`${LogMessages.MONGO_BD} ${DBLogMessages.DISCONNECT}`);
   });
 
   await mongoose.connect(dbUri);
@@ -31,8 +31,8 @@ export const connectMongoMemoryServer = async () => {
 
     await mongoose.connect(uri);
 
-    console.log('Mongo memory server is running');
+    console.log(DBLogMessages.MS_CONNECTED);
   } catch (error) {
-    console.log('Mongo memory server: ', error);
+    console.log(DBLogMessages.MS, error);
   }
 };

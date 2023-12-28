@@ -1,13 +1,10 @@
 import { COMPLETED_CATEGORY } from '@constants';
 import { QueryParams } from '@interfaces';
 
-export const getQueryParams = (query: QueryParams) => {
-  const search = (query.search as string) || '';
-  const category = (query.category as string) || '';
-
+export const getQueryParams = ({ search, category }: QueryParams) => {
   return {
-    search,
-    category,
+    search: search || '',
+    category: category || '',
   };
 };
 
