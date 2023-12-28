@@ -1,12 +1,13 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
-import { useActions } from '@redux';
+import { useActions, useAppSelector } from '@redux';
 import { DEFAULT_DAYS_GAP } from '@constants';
 import {
   checkForSpecialCharacters,
   checkIfDateBigger,
   checkIsEmptyString,
   getCreationExpirationDates,
+  getQueryParams,
 } from '@helpers';
 import { ErrorMessages, FilterOptions, ITodo } from '@types';
 import { useTodoTotals } from '@hooks';
@@ -19,16 +20,18 @@ const DEFAULT_TODO = {
 } as ITodo;
 
 export const useTodoTask = () => {
+  const { searchValue, filterValue } = useAppSelector((state) => state.todo);
+
   const {
     setTodoTotals,
     setFilterTodo,
+    fetchTodosThunk,
     createTodoThunk,
     updateTodoThunk,
     deleteTodoThunk,
   } = useActions();
 
-  const { getTotalsOnCreate, getTotalsOnUpdate, getTotalsOnDeleteOne } =
-    useTodoTotals();
+  const { getTotalsOnCreate, getTotalsOnDeleteOne } = useTodoTotals();
 
   const [todo, setTodo] = useState<ITodo>(DEFAULT_TODO);
 
@@ -105,15 +108,14 @@ export const useTodoTask = () => {
   };
 
   const onSetDone = async (todoToEdit: ITodo) => {
-    const isDoneEdit = todoToEdit.isDone;
-    const isSuccess = await updateTodoThunk({
+    await updateTodoThunk({
       ...todoToEdit,
       isDone: !todoToEdit.isDone,
     });
 
-    if (!isSuccess) return;
-
-    setTodoTotals(getTotalsOnUpdate(isDoneEdit));
+    await fetchTodosThunk(
+      getQueryParams({ search: searchValue, category: filterValue }),
+    );
   };
 
   const onDeleteTodo = async (todoId: string, isDone: boolean) => {
