@@ -9,6 +9,8 @@ const {
   CLIENT_URI = DefaultAppConfig.CLIENT_URI,
   JWT_ACCESS_SECRET = '',
   JWT_ACCESS_EXP = '',
+  JWT_REFRESH_SECRET = '',
+  JWT_REFRESH_EXP = '',
   SALT_ROUNDS = DefaultAppConfig.SALT_ROUNDS,
   NODE_ENV,
 } = process.env;
@@ -21,6 +23,8 @@ export const appConfig = {
   DB_URI,
   PORT,
   JWT_ACCESS_SECRET,
-  SALT_ROUNDS,
   JWT_ACCESS_EXP,
+  JWT_REFRESH_SECRET,
+  JWT_REFRESH_EXP,
+  SALT_ROUNDS,
 };

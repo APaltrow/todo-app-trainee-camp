@@ -1,4 +1,4 @@
-import { ApiError } from '@utils';
+import { ApiError, jwtToken } from '@utils';
 import { AuthErrors } from '@constants';
 
 import { userModel } from './user.model';
@@ -19,6 +19,32 @@ class AuthService {
     }
 
     return new UserDto(user);
+  }
+
+  async logout(refreshToken: string) {
+    const token = await jwtToken.removeToken(refreshToken);
+
+    return token;
+  }
+
+  async refresh(refreshToken: string) {
+    if (!refreshToken) {
+      throw ApiError.Unauthorized();
+    }
+
+    const id = jwtToken.verifyRefreshToken(refreshToken);
+
+    const tokenFromDB = await jwtToken.findToken(refreshToken);
+
+    if (!id || !tokenFromDB) {
+      throw ApiError.Unauthorized();
+    }
+
+    const tokens = jwtToken.generateTokens({ id });
+
+    await jwtToken.saveToken(id, tokens.refreshToken);
+
+    return tokens;
   }
 }
 
