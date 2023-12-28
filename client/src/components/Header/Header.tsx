@@ -4,23 +4,21 @@ import { NavLink } from 'react-router-dom';
 import { useActions, useAppSelector } from '@redux';
 import { useTheme } from '@hooks';
 import { RoutesPaths } from '@constants';
-import { removeAccessToken } from '@helpers';
 import { ButtonSizes, ButtonVariants, IconsTypes, Theme } from '@types';
 import { CustomButton, Icon } from '@components';
 
 import style from './Header.module.scss';
 
 export const Header: FC = () => {
-  const { isAuth } = useAppSelector((state) => state.auth);
+  const { isAuth, isLoading } = useAppSelector((state) => state.auth);
 
-  const { logoutUser } = useActions();
+  const { logoutThunk } = useActions();
   const { theme, onThemeChange } = useTheme();
 
   const iconName = theme === Theme.LIGHT ? IconsTypes.MOON : IconsTypes.SUN;
 
   const handleLogout = () => {
-    logoutUser();
-    removeAccessToken();
+    logoutThunk();
   };
 
   return (
@@ -34,6 +32,8 @@ export const Header: FC = () => {
       <div className={style.btns}>
         {isAuth && (
           <CustomButton
+            withLoader
+            isLoading={isLoading}
             onClick={handleLogout}
             size={ButtonSizes.SMALL}
             variant={ButtonVariants.PRIMARY}

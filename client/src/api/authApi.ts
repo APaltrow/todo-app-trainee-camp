@@ -11,3 +11,15 @@ export const login = async (loginCredentials: ILoginCredentials) => {
 
   return data;
 };
+
+export const logout = async () => {
+  const { data } = await $api.post<IAuthResponse>(ApiPaths.LOGOUT);
+
+  return data;
+};
+
+export const checkAuth = async () => {
+  const { data } = await $api.get<IAuthResponse>(ApiPaths.REFRESH);
+
+  return data;
+};

@@ -14,9 +14,9 @@ class AuthController {
     res: Response,
     next: NextFunction,
   ) {
-    const { email, password } = req.body;
-
     try {
+      const { email, password } = req.body;
+
       const { id, ...userData } = await authService.login(email, password);
 
       const { accessToken, refreshToken } = jwtToken.generateTokens({ id });
@@ -50,7 +50,7 @@ class AuthController {
 
   async refresh(req: Request, res: Response, next: NextFunction) {
     try {
-      const { refreshToken, accessToken } = await authService.refresh(
+      const { refreshToken, accessToken, email } = await authService.refresh(
         req.cookies.refreshToken,
       );
 
@@ -59,7 +59,7 @@ class AuthController {
         httpOnly: true,
       });
 
-      return res.json({ accessToken });
+      return res.json({ accessToken, email });
     } catch (error) {
       next(error);
     }

@@ -28,6 +28,8 @@ class AuthService {
   }
 
   async refresh(refreshToken: string) {
+    console.log(refreshToken);
+
     if (!refreshToken) {
       throw ApiError.Unauthorized();
     }
@@ -36,7 +38,9 @@ class AuthService {
 
     const tokenFromDB = await jwtToken.findToken(refreshToken);
 
-    if (!id || !tokenFromDB) {
+    const user = await userModel.findById(id);
+
+    if (!id || !tokenFromDB || !user) {
       throw ApiError.Unauthorized();
     }
 
@@ -44,7 +48,7 @@ class AuthService {
 
     await jwtToken.saveToken(id, tokens.refreshToken);
 
-    return tokens;
+    return { ...tokens, email: user.email };
   }
 }
 
