@@ -1,8 +1,8 @@
-const TOKEN_KEY = 'token';
+import { TOKEN_KEY, TOKEN_PREFIX } from '@constants';
 
 export const getAccessToken = () => {
   const token = localStorage.getItem(TOKEN_KEY);
-  return token ? `Bearer ${token}` : '';
+  return token ? `${TOKEN_PREFIX} ${token}` : '';
 };
 
 export const setAccessToken = (token: string) => {

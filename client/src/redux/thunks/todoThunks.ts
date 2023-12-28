@@ -1,5 +1,4 @@
 import { Dispatch } from 'react';
-import { AxiosError } from 'axios';
 
 import {
   fetchAllTodos,
@@ -7,15 +6,14 @@ import {
   fetchDeleteTodo,
   fetchUpdateTodo,
 } from '@api';
-import { ALL_COMPLETED, ApiResStatuses } from '@constants';
+import { ALL_COMPLETED } from '@constants';
 import { handleResponseError } from '@helpers';
-import { AuthActions, ErrorsAlt, ITodo, TodoAction } from '@types';
+import { ErrorsAlt, ITodo, TodoAction } from '@types';
 
 import {
   fetchTodos,
   fetchTodosSuccess,
   fetchTodosError,
-  logoutUser,
   createTodo,
   createTodoSuccess,
   createTodoError,
@@ -29,7 +27,7 @@ import {
 } from '../actions';
 
 export const fetchTodosThunk = (params: string) => {
-  return async (dispatch: Dispatch<TodoAction | AuthActions>) => {
+  return async (dispatch: Dispatch<TodoAction>) => {
     try {
       dispatch(fetchTodos());
 
@@ -37,12 +35,6 @@ export const fetchTodosThunk = (params: string) => {
 
       dispatch(fetchTodosSuccess(todos));
     } catch (error) {
-      const resStatus = (error as AxiosError)?.response?.status;
-
-      if (resStatus && resStatus === ApiResStatuses.UNAUTHORIZED) {
-        dispatch(logoutUser());
-      }
-
       dispatch(
         fetchTodosError(
           handleResponseError(error, ErrorsAlt.FAILED_FETCH_TODOS),
@@ -53,7 +45,7 @@ export const fetchTodosThunk = (params: string) => {
 };
 
 export const createTodoThunk = (todoDraft: Omit<ITodo, 'id'>) => {
-  return async (dispatch: Dispatch<TodoAction | AuthActions>) => {
+  return async (dispatch: Dispatch<TodoAction>) => {
     try {
       dispatch(createTodo());
 
@@ -63,12 +55,6 @@ export const createTodoThunk = (todoDraft: Omit<ITodo, 'id'>) => {
 
       return true;
     } catch (error) {
-      const resStatus = (error as AxiosError)?.response?.status;
-
-      if (resStatus && resStatus === ApiResStatuses.UNAUTHORIZED) {
-        dispatch(logoutUser());
-      }
-
       dispatch(
         createTodoError(
           handleResponseError(error, ErrorsAlt.FAILED_CREATE_TODO),
@@ -81,7 +67,7 @@ export const createTodoThunk = (todoDraft: Omit<ITodo, 'id'>) => {
 };
 
 export const updateTodoThunk = (todo: ITodo) => {
-  return async (dispatch: Dispatch<TodoAction | AuthActions>) => {
+  return async (dispatch: Dispatch<TodoAction>) => {
     try {
       dispatch(updateTodo());
 
@@ -91,12 +77,6 @@ export const updateTodoThunk = (todo: ITodo) => {
 
       return true;
     } catch (error) {
-      const resStatus = (error as AxiosError)?.response?.status;
-
-      if (resStatus && resStatus === ApiResStatuses.UNAUTHORIZED) {
-        dispatch(logoutUser());
-      }
-
       dispatch(
         updateTodoError(
           handleResponseError(error, ErrorsAlt.FAILED_UPDATE_TODO),
@@ -109,7 +89,7 @@ export const updateTodoThunk = (todo: ITodo) => {
 };
 
 export const deleteTodoThunk = (todoId: string) => {
-  return async (dispatch: Dispatch<TodoAction | AuthActions>) => {
+  return async (dispatch: Dispatch<TodoAction>) => {
     try {
       dispatch(deleteTodo());
 
@@ -123,12 +103,6 @@ export const deleteTodoThunk = (todoId: string) => {
 
       return true;
     } catch (error) {
-      const resStatus = (error as AxiosError)?.response?.status;
-
-      if (resStatus && resStatus === ApiResStatuses.UNAUTHORIZED) {
-        dispatch(logoutUser());
-      }
-
       dispatch(
         deleteTodoError(
           handleResponseError(error, ErrorsAlt.FAILED_UPDATE_TODO),
