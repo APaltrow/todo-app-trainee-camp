@@ -19,3 +19,7 @@ export interface ITodoDocument extends Document {
 }
 
 export type QueryParams = Record<string, string>;
+
+export interface ParamsWithId {
+  id: string;
+}
