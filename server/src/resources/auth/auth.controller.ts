@@ -4,11 +4,11 @@ import { jwtToken } from '@utils';
 import { COOKIE_MAX_AGE, REFRESH_TOKEN } from '@constants';
 
 import { authService } from './auth.service';
-import { UserInput } from './user.schema';
+import { UserLoginInput, UserRegistrationInput } from './user.schema';
 
 class AuthController {
   async login(
-    req: Request<{}, {}, UserInput['body']>,
+    req: Request<{}, {}, UserLoginInput['body']>,
     res: Response,
     next: NextFunction,
   ) {
@@ -27,6 +27,29 @@ class AuthController {
       });
 
       return res.json({ ...userData, accessToken });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async register(
+    req: Request<{}, {}, UserRegistrationInput['body']>,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const { email, password } = req.body;
+      const { refreshToken, ...userData } = await authService.register(
+        email,
+        password,
+      );
+
+      res.cookie(REFRESH_TOKEN, refreshToken, {
+        maxAge: COOKIE_MAX_AGE,
+        httpOnly: true,
+      });
+
+      return res.json(userData);
     } catch (error) {
       next(error);
     }

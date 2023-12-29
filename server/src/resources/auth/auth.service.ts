@@ -21,6 +21,24 @@ class AuthService {
     return new UserDto(user);
   }
 
+  async register(email: string, password: string) {
+    try {
+      const newUser = await userModel.create({ email, passwordHash: password });
+
+      newUser.save();
+
+      const { id, ...userData } = new UserDto(newUser);
+
+      const tokens = jwtToken.generateTokens({ id });
+
+      await jwtToken.saveToken(id, tokens.refreshToken);
+
+      return { ...userData, ...tokens };
+    } catch (error) {
+      throw ApiError.BadRequest(AuthErrors.INVATID_CREDENTIALS);
+    }
+  }
+
   async logout(refreshToken: string) {
     const token = await jwtToken.removeToken(refreshToken);
 

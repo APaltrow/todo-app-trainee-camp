@@ -1,22 +1,24 @@
 import { TypeOf, boolean, object, string } from 'zod';
 
+import { EMTY_STR_REGEXP, TEXT_MIN_LENG, ValidationErrors } from '@constants';
+
 export const TodoSchema = object({
   body: object({
     id: string().optional(),
     text: string({
-      required_error: 'Todo text is required',
+      required_error: ValidationErrors.TODO_TEXT_REQUIRED,
     })
-      .min(1, 'Text should not be empty')
-      .regex(/\S/, 'Invalid todo text value'),
+      .min(TEXT_MIN_LENG, ValidationErrors.TODO_TEXT_EMPTY)
+      .regex(EMTY_STR_REGEXP, ValidationErrors.TODO_TEXT_INVALID),
     isDone: boolean({
-      required_error: 'Todo isDone is required',
+      required_error: ValidationErrors.TODO_ISDONE_REQUIRED,
     }),
     creationDate: string({
-      required_error: 'Todo creation date is required',
-    }).datetime('Invalid creation date'),
+      required_error: ValidationErrors.TODO_CREATION_DATE_REQUIRED,
+    }).datetime(ValidationErrors.TODO_CREATION_DATE_INVALID),
     expirationDate: string({
-      required_error: 'Todo expiration date is required',
-    }).datetime('Invalid expiration date'),
+      required_error: ValidationErrors.TODO_EXP_DATE_REQUIRED,
+    }).datetime(ValidationErrors.TODO_EXP_DATE_INVALID),
   }),
 });
 
