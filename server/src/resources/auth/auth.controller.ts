@@ -1,12 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 
 import { jwtToken } from '@utils';
+import { COOKIE_MAX_AGE, REFRESH_TOKEN } from '@constants';
 
 import { authService } from './auth.service';
 import { UserInput } from './user.schema';
-
-const COOKIE_MAX_AGE = 30 * 24 * 60 * 60 * 1000;
-const REFRESH_TOKEN = 'refreshToken';
 
 class AuthController {
   async login(

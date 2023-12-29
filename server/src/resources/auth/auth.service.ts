@@ -28,8 +28,6 @@ class AuthService {
   }
 
   async refresh(refreshToken: string) {
-    console.log(refreshToken);
-
     if (!refreshToken) {
       throw ApiError.Unauthorized();
     }
