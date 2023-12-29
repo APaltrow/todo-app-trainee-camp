@@ -1,2 +1,2 @@
 export * from './store';
-export { logoutUser } from './actions';
+export { logoutUserSuccess } from './actions';

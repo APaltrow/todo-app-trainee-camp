@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import { IAuthResponse } from '@types';
 import { API_URL, ApiPaths, ApiResStatuses } from '@constants';
 import { getAccessToken, removeAccessToken, setAccessToken } from '@helpers';
-import { store, logoutUser } from '@redux';
+import { store, logoutUserSuccess } from '@redux';
 
 const $api = axios.create({
   withCredentials: true,
@@ -23,12 +23,12 @@ $api.interceptors.response.use(
 
     const originalRequest = config;
 
-    const isValidRequest =
+    const isAuthRefreshNeeded =
       response.status === ApiResStatuses.UNAUTHORIZED &&
       config &&
       !config._isRetry;
 
-    if (isValidRequest) {
+    if (isAuthRefreshNeeded) {
       originalRequest._isRetry = true;
 
       try {
@@ -41,6 +41,13 @@ $api.interceptors.response.use(
 
         return $api.request(originalRequest);
       } catch (e) {
+        const status = (e as AxiosError).response?.status;
+
+        if (status === ApiResStatuses.UNAUTHORIZED) {
+          removeAccessToken();
+          store.dispatch(logoutUserSuccess());
+        }
+
         return Promise.reject(e);
       }
     }

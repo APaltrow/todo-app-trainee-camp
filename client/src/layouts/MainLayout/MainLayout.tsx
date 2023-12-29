@@ -15,7 +15,7 @@ export const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   useEffect(() => {
     checkUserThunk();
   }, []);
-  console.log('asdasdasdsadsad');
+
   return (
     <>
       <Header />
