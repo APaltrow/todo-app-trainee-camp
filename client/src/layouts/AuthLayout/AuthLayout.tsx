@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
 import { RoutesPaths } from '@constants';
-import { useAppSelector } from '@/redux';
+import { useAppSelector } from '@redux';
 
 interface AuthLayoutProps {
   children: ReactNode;

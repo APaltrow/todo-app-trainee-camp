@@ -57,7 +57,16 @@ export const LoginForm: FC = () => {
             Reset
           </CustomButton>
 
-          <NavLink to={`../${RoutesPaths.REGISTRATION}`}>Registration</NavLink>
+          <NavLink to={`../${RoutesPaths.REGISTRATION}`}>
+            <CustomButton
+              onClick={() => {}}
+              variant={ButtonVariants.DEFAULT}
+              size={ButtonSizes.MID}
+              isDisabled={isLoading}
+            >
+              Registration
+            </CustomButton>
+          </NavLink>
 
           <CustomButton
             onClick={handleLogin}
