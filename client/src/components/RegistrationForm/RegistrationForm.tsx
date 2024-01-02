@@ -1,22 +1,24 @@
 import { ChangeEvent, FC, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { ButtonSizes, ButtonVariants, ILoginCredentials } from '@types';
 import { useActions, useAppSelector } from '@redux';
-import { useDelayedResetError, useValidations } from '@hooks';
-import { CustomButton, CustomInput, CustomForm } from '@components';
 import {
-  LOGIN_FORM_INITIAL_VALUES as initialValues,
-  LOGIN_FORM_INITIAL__ERRORS as initialErrors,
-  LOGIN_FORM_VALIDATIONS as validations,
-  LOGIN_INPUTS as inputs,
+  REGISTRATION_FORM_INITIAL_VALUES as initialValues,
+  REGISTRATION_FORM_INITIAL__ERRORS as initialErrors,
+  REGISTRATION_FORM_VALIDATIONS as validations,
+  REGISTRATION_INPUTS as inputs,
+  ValidationsErrors,
   RoutesPaths,
 } from '@constants';
+import { ButtonSizes, ButtonVariants, IRegistrationCredentials } from '@types';
+import { useDelayedResetError, useValidations } from '@hooks';
 
-export const LoginForm: FC = () => {
+import { CustomButton, CustomForm, CustomInput } from '@components';
+
+export const RegistrationForm: FC = () => {
   const { isLoading, error } = useAppSelector((state) => state.auth);
 
-  const { loginThunk, resetUserError } = useActions();
+  const { registerThunk, resetUserError } = useActions();
 
   useDelayedResetError(resetUserError, error);
 
@@ -48,19 +50,25 @@ export const LoginForm: FC = () => {
     resetUserError();
   };
 
-  const handleLogin = () => {
-    const credentials = formValues as unknown as ILoginCredentials;
-    loginThunk(credentials);
+  const handleRegistration = () => {
+    const credentials = formValues as unknown as IRegistrationCredentials;
+    registerThunk(credentials);
   };
 
-  const isValidForm =
-    isLoading || !!Object.values(errors).find((error) => !!error);
+  const isSamePass = formValues.password === formValues.passwordConfirm;
+
+  const isValidationError = !!Object.values(errors).find((error) => !!error);
+
+  const passwordErrors =
+    isValidationError || isSamePass ? '' : ValidationsErrors.PASSWORD_MISMATCH;
+
+  const isValidForm = isLoading || isSamePass || isValidationError;
 
   return (
     <CustomForm
-      formTitle="Please sign in"
+      formTitle="Registration"
       isLoading={isLoading}
-      error={error}
+      error={error || passwordErrors}
       buttons={
         <>
           <CustomButton
@@ -72,15 +80,15 @@ export const LoginForm: FC = () => {
             Reset
           </CustomButton>
 
-          <NavLink to={`../${RoutesPaths.REGISTRATION}`}>Registration</NavLink>
+          <NavLink to={`../${RoutesPaths.LOGIN}`}>Login</NavLink>
 
           <CustomButton
-            onClick={handleLogin}
+            onClick={handleRegistration}
             isDisabled={isValidForm}
             variant={ButtonVariants.PRIMARY}
             size={ButtonSizes.MID}
           >
-            Login
+            Register
           </CustomButton>
         </>
       }

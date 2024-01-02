@@ -1,4 +1,8 @@
-import { ILoginCredentials, IAuthResponse } from '@types';
+import {
+  ILoginCredentials,
+  IAuthResponse,
+  IRegistrationCredentials,
+} from '@types';
 import { ApiPaths } from '@constants';
 
 import $api from './api';
@@ -20,6 +24,17 @@ export const logout = async () => {
 
 export const checkAuth = async () => {
   const { data } = await $api.get<IAuthResponse>(ApiPaths.REFRESH);
+
+  return data;
+};
+
+export const register = async (
+  registerCredentials: IRegistrationCredentials,
+) => {
+  const { data } = await $api.post<IAuthResponse>(
+    ApiPaths.REGISTER,
+    registerCredentials,
+  );
 
   return data;
 };
