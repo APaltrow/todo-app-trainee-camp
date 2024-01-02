@@ -1,9 +1,9 @@
-import { ChangeEvent, FC, useState } from 'react';
+import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { ButtonSizes, ButtonVariants, ILoginCredentials } from '@types';
 import { useActions, useAppSelector } from '@redux';
-import { useDelayedResetError, useValidations } from '@hooks';
+import { useDelayedResetError, useForm } from '@hooks';
 import { CustomButton, CustomInput, CustomForm } from '@components';
 import {
   LOGIN_FORM_INITIAL_VALUES as initialValues,
@@ -20,31 +20,16 @@ export const LoginForm: FC = () => {
 
   useDelayedResetError(resetUserError, error);
 
-  const [formValues, setFormValues] =
-    useState<Record<string, string>>(initialValues);
-
   const {
+    formValues,
     errors,
 
-    validateInput,
-    revalidate,
-  } = useValidations(initialErrors);
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    const inputValue = value.trim();
-
-    const inputValidations = validations[name];
-
-    validateInput(name, inputValue, inputValidations);
-
-    setFormValues((prev) => ({ ...prev, [name]: inputValue }));
-  };
+    handleInputChange,
+    onResetForm,
+  } = useForm(initialValues, initialErrors, validations);
 
   const handleReset = () => {
-    setFormValues(initialValues);
-
-    revalidate(initialValues, validations);
+    onResetForm();
     resetUserError();
   };
 

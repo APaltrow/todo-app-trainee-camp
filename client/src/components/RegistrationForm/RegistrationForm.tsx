@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react';
+import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { useActions, useAppSelector } from '@redux';
@@ -11,7 +11,7 @@ import {
   RoutesPaths,
 } from '@constants';
 import { ButtonSizes, ButtonVariants, IRegistrationCredentials } from '@types';
-import { useDelayedResetError, useValidations } from '@hooks';
+import { useDelayedResetError, useForm } from '@hooks';
 
 import { CustomButton, CustomForm, CustomInput } from '@components';
 
@@ -22,31 +22,16 @@ export const RegistrationForm: FC = () => {
 
   useDelayedResetError(resetUserError, error);
 
-  const [formValues, setFormValues] =
-    useState<Record<string, string>>(initialValues);
-
   const {
+    formValues,
     errors,
 
-    validateInput,
-    revalidate,
-  } = useValidations(initialErrors);
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    const inputValue = value.trim();
-
-    const inputValidations = validations[name];
-
-    validateInput(name, inputValue, inputValidations);
-
-    setFormValues((prev) => ({ ...prev, [name]: inputValue }));
-  };
+    handleInputChange,
+    onResetForm,
+  } = useForm(initialValues, initialErrors, validations);
 
   const handleReset = () => {
-    setFormValues(initialValues);
-
-    revalidate(initialValues, validations);
+    onResetForm();
     resetUserError();
   };
 
@@ -62,7 +47,7 @@ export const RegistrationForm: FC = () => {
   const passwordErrors =
     isValidationError || isSamePass ? '' : ValidationsErrors.PASSWORD_MISMATCH;
 
-  const isValidForm = isLoading || isSamePass || isValidationError;
+  const isValidForm = isLoading || !isSamePass || isValidationError;
 
   return (
     <CustomForm
