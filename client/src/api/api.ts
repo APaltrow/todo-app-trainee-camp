@@ -3,7 +3,9 @@ import axios, { AxiosError } from 'axios';
 import { IAuthResponse } from '@types';
 import { API_URL, ApiPaths, ApiResStatuses } from '@constants';
 import { getAccessToken, removeAccessToken, setAccessToken } from '@helpers';
-import { store, logoutUserSuccess } from '@redux';
+
+import { store, logoutUserSuccess, setSearchTodo, setFilterTodo } from '@redux';
+import { FilterOptions } from '@types';
 
 const $api = axios.create({
   withCredentials: true,
@@ -44,6 +46,8 @@ $api.interceptors.response.use(
         const status = (e as AxiosError).response?.status;
 
         if (status === ApiResStatuses.UNAUTHORIZED) {
+          setFilterTodo(FilterOptions.ALL);
+          setSearchTodo('');
           removeAccessToken();
           store.dispatch(logoutUserSuccess());
         }
@@ -51,8 +55,6 @@ $api.interceptors.response.use(
         return Promise.reject(e);
       }
     }
-
-    return Promise.reject(error);
   },
 );
 

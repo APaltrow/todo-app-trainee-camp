@@ -12,22 +12,6 @@ export const useTodoTotals = () => {
     };
   };
 
-  const getTotalsOnUpdate = (isDone: boolean) => {
-    const { active, completed } = totals;
-
-    if (isDone) {
-      return {
-        active: active + ONE_TODO_ITEM,
-        completed: completed - ONE_TODO_ITEM,
-      };
-    }
-
-    return {
-      active: active - ONE_TODO_ITEM,
-      completed: completed + ONE_TODO_ITEM,
-    };
-  };
-
   const getTotalsOnDeleteOne = (isDone: boolean): Record<string, number> => {
     const { all, active, completed } = totals;
 
@@ -55,7 +39,6 @@ export const useTodoTotals = () => {
 
   return {
     getTotalsOnCreate,
-    getTotalsOnUpdate,
     getTotalsOnDeleteOne,
     getTotalsOnDeleteAll,
   };

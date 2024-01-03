@@ -34,9 +34,7 @@ class TodosService {
     return new TodoDto(newTodo) as ITodo;
   }
 
-  async update(todoInput: UserTodoInput['body']) {
-    const { id, ...updateTodoDraft } = todoInput;
-
+  async update(todoInput: Omit<UserTodoInput['body'], 'id'>, id: string) {
     if (!id) {
       throw ApiError.BadRequest(ValidationErrors.INVALID_TODO_ID);
     }
@@ -44,7 +42,7 @@ class TodosService {
     try {
       const updatedTodo = await todosModel.findByIdAndUpdate<ITodoDocument>(
         id,
-        updateTodoDraft,
+        todoInput,
         {
           new: true,
         },

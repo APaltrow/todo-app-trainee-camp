@@ -17,9 +17,7 @@ export const Header: FC = () => {
 
   const iconName = theme === Theme.LIGHT ? IconsTypes.MOON : IconsTypes.SUN;
 
-  const handleLogout = () => {
-    logoutThunk();
-  };
+  const handleLogout = () => logoutThunk();
 
   return (
     <header className={style.header}>

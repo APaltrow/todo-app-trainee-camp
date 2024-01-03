@@ -1,7 +1,13 @@
 import { Dispatch } from 'react';
 
 import { checkAuth, login, logout } from '@api';
-import { AuthActions, ErrorsAlt, ILoginCredentials } from '@types';
+import {
+  AuthActions,
+  ErrorsAlt,
+  FilterOptions,
+  ILoginCredentials,
+  TodoAction,
+} from '@types';
 import {
   handleResponseError,
   removeAccessToken,
@@ -18,6 +24,8 @@ import {
   checkUser,
   checkUserSuccess,
   checkUserError,
+  setFilterTodo,
+  setSearchTodo,
 } from '../actions';
 
 export const loginThunk = (loginCredentials: ILoginCredentials) => {
@@ -39,12 +47,14 @@ export const loginThunk = (loginCredentials: ILoginCredentials) => {
 };
 
 export const logoutThunk = () => {
-  return async (dispatch: Dispatch<AuthActions>) => {
+  return async (dispatch: Dispatch<AuthActions | TodoAction>) => {
     try {
       dispatch(logoutUser());
 
       await logout();
 
+      dispatch(setFilterTodo(FilterOptions.ALL));
+      dispatch(setSearchTodo(''));
       removeAccessToken();
       dispatch(logoutUserSuccess());
     } catch (error) {
