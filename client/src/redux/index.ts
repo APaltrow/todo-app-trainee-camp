@@ -1,2 +1,2 @@
 export * from './store';
-export { logoutUser } from './actions';
+export { logoutUser, setSearchTodo, setFilterTodo } from './actions';

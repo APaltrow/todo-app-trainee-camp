@@ -2,7 +2,8 @@ import axios from 'axios';
 
 import { API_URL, ApiResStatuses } from '@constants';
 import { getAccessToken, removeAccessToken } from '@helpers';
-import { store, logoutUser } from '@redux';
+import { store, logoutUser, setSearchTodo, setFilterTodo } from '@redux';
+import { FilterOptions } from '@types';
 
 const $api = axios.create({
   withCredentials: true,
@@ -21,6 +22,8 @@ $api.interceptors.response.use(
     const { status } = error.response;
 
     if (status === ApiResStatuses.UNAUTHORIZED) {
+      setFilterTodo(FilterOptions.ALL);
+      setSearchTodo('');
       store.dispatch(logoutUser());
       removeAccessToken();
     }

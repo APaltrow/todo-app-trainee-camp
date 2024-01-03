@@ -5,7 +5,13 @@ import { useActions, useAppSelector } from '@redux';
 import { useTheme } from '@hooks';
 import { RoutesPaths } from '@constants';
 import { removeAccessToken } from '@helpers';
-import { ButtonSizes, ButtonVariants, IconsTypes, Theme } from '@types';
+import {
+  ButtonSizes,
+  ButtonVariants,
+  FilterOptions,
+  IconsTypes,
+  Theme,
+} from '@types';
 import { CustomButton, Icon } from '@components';
 
 import style from './Header.module.scss';
@@ -13,12 +19,14 @@ import style from './Header.module.scss';
 export const Header: FC = () => {
   const { isAuth } = useAppSelector((state) => state.auth);
 
-  const { logoutUser } = useActions();
+  const { logoutUser, setFilterTodo, setSearchTodo } = useActions();
   const { theme, onThemeChange } = useTheme();
 
   const iconName = theme === Theme.LIGHT ? IconsTypes.MOON : IconsTypes.SUN;
 
   const handleLogout = () => {
+    setFilterTodo(FilterOptions.ALL);
+    setSearchTodo('');
     logoutUser();
     removeAccessToken();
   };
