@@ -4,7 +4,7 @@ import { IAuthResponse } from '@types';
 import { API_URL, ApiPaths, ApiResStatuses } from '@constants';
 import { getAccessToken, removeAccessToken, setAccessToken } from '@helpers';
 
-import { store, logoutUserSuccess, setSearchTodo, setFilterTodo } from '@redux';
+import { store, setSearchTodo, setFilterTodo, logoutUserSuccess } from '@redux';
 import { FilterOptions } from '@types';
 
 const $api = axios.create({
@@ -55,6 +55,8 @@ $api.interceptors.response.use(
         return Promise.reject(e);
       }
     }
+
+    return Promise.reject(error);
   },
 );
 
