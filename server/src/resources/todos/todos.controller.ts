@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 import { ApiError, getQueryParams } from '@utils';
-import { QueryParams, UserId } from '@interfaces';
+import { ParamsWithId, QueryParams, UserId } from '@interfaces';
 
 import { todosService } from './todos.service';
 import { UserTodoInput } from './todos.schema';
@@ -45,12 +45,15 @@ class TodosController {
   }
 
   async updateTodo(
-    req: Request<{}, {}, UserTodoInput['body']>,
+    req: Request<{}, {}, Omit<UserTodoInput['body'], 'id'>>,
     res: Response,
     next: NextFunction,
   ) {
+    const { params, body: userInput } = req;
+    const { id: todoId } = params as ParamsWithId;
+
     try {
-      const updatedTodo = await todosService.update(req.body);
+      const updatedTodo = await todosService.update(userInput, todoId);
 
       return res.json(updatedTodo);
     } catch (error) {

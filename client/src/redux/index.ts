@@ -1,2 +1,7 @@
 export * from './store';
-export { logoutUserSuccess } from './actions';
+export {
+  logoutUser,
+  setSearchTodo,
+  setFilterTodo,
+  logoutUserSuccess,
+} from './actions';

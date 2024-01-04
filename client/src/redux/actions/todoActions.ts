@@ -6,11 +6,11 @@ import {
   TodoActions,
 } from '@types';
 
-export const setFilterTodo = (filterValue: FilterOptions) => {
+export const setFilterTodo = (filterValue: FilterOptions): TodoAction => {
   return { type: TodoActions.SET_FILTER_TODO, payload: filterValue };
 };
 
-export const setSearchTodo = (searchValue: string) => {
+export const setSearchTodo = (searchValue: string): TodoAction => {
   return { type: TodoActions.SET_SEARCH_TODO, payload: searchValue };
 };
 

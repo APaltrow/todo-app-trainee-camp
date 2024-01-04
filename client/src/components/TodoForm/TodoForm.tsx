@@ -57,6 +57,7 @@ export const TodoForm: FC<TodoFormProps> = ({
         onSubmit={(e) => e.preventDefault()}
       >
         <TaskInput
+          isDisabled={isLoading}
           value={todo.text}
           error={todoInputError}
           placeholder="Enter your task..."

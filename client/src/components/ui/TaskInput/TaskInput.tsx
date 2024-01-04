@@ -10,6 +10,7 @@ interface TaskInputProps {
   value: string;
   error: string;
   placeholder: string;
+  isDisabled?: boolean;
 
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -19,6 +20,7 @@ export const TaskInput: FC<TaskInputProps> = ({
   value,
   error,
   placeholder,
+  isDisabled = false,
 
   onChange,
   onKeyUp,
@@ -30,6 +32,7 @@ export const TaskInput: FC<TaskInputProps> = ({
         value={value}
         onChange={onChange}
         onKeyUp={onKeyUp}
+        readOnly={isDisabled}
         type="text"
         placeholder={placeholder}
       />

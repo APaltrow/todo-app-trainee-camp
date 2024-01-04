@@ -17,8 +17,13 @@ class AuthService {
     if (!isSamePass) {
       throw ApiError.BadRequest(AuthErrors.INCORRECT_CREDENTIALS);
     }
+    const { id, ...userData } = new UserDto(user);
 
-    return new UserDto(user);
+    const tokens = jwtToken.generateTokens({ id });
+
+    await jwtToken.saveToken(id, tokens.refreshToken);
+
+    return { ...userData, ...tokens };
   }
 
   async register(email: string, password: string) {

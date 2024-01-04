@@ -1,8 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { jwtToken } from '@utils';
-import { COOKIE_MAX_AGE, REFRESH_TOKEN } from '@constants';
-
 import { authService } from './auth.service';
 import { UserLoginInput, UserRegistrationInput } from './user.schema';
 
@@ -15,18 +12,9 @@ class AuthController {
     try {
       const { email, password } = req.body;
 
-      const { id, ...userData } = await authService.login(email, password);
+      const userData = await authService.login(email, password);
 
-      const { accessToken, refreshToken } = jwtToken.generateTokens({ id });
-
-      await jwtToken.saveToken(id, refreshToken);
-
-      res.cookie(REFRESH_TOKEN, refreshToken, {
-        maxAge: COOKIE_MAX_AGE,
-        httpOnly: true,
-      });
-
-      return res.json({ ...userData, accessToken });
+      return res.json(userData);
     } catch (error) {
       next(error);
     }
@@ -39,15 +27,7 @@ class AuthController {
   ) {
     try {
       const { email, password } = req.body;
-      const { refreshToken, ...userData } = await authService.register(
-        email,
-        password,
-      );
-
-      res.cookie(REFRESH_TOKEN, refreshToken, {
-        maxAge: COOKIE_MAX_AGE,
-        httpOnly: true,
-      });
+      const userData = await authService.register(email, password);
 
       return res.json(userData);
     } catch (error) {
@@ -57,11 +37,9 @@ class AuthController {
 
   async logout(req: Request, res: Response, next: NextFunction) {
     try {
-      const { refreshToken } = req.cookies;
+      const refreshToken = req.headers.authorization || '';
 
       await authService.logout(refreshToken);
-
-      res.clearCookie(REFRESH_TOKEN);
 
       return res.json({ message: 'success' });
     } catch (error) {
@@ -71,16 +49,11 @@ class AuthController {
 
   async refresh(req: Request, res: Response, next: NextFunction) {
     try {
-      const { refreshToken, accessToken, email } = await authService.refresh(
-        req.cookies.refreshToken,
-      );
+      const refreshToken = req.headers.authorization || '';
 
-      res.cookie(REFRESH_TOKEN, refreshToken, {
-        maxAge: COOKIE_MAX_AGE,
-        httpOnly: true,
-      });
+      const userData = await authService.refresh(refreshToken);
 
-      return res.json({ accessToken, email });
+      return res.json(userData);
     } catch (error) {
       next(error);
     }

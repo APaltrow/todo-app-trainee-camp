@@ -2,8 +2,10 @@ import axios, { AxiosError } from 'axios';
 
 import { IAuthResponse } from '@types';
 import { API_URL, ApiPaths, ApiResStatuses } from '@constants';
-import { getAccessToken, removeAccessToken, setAccessToken } from '@helpers';
-import { store, logoutUserSuccess } from '@redux';
+import { getTokens, removeTokens, setTokens } from '@helpers';
+
+import { store, setSearchTodo, setFilterTodo, logoutUserSuccess } from '@redux';
+import { FilterOptions } from '@types';
 
 const $api = axios.create({
   withCredentials: true,
@@ -11,7 +13,9 @@ const $api = axios.create({
 });
 
 $api.interceptors.request.use((config) => {
-  config.headers.Authorization = getAccessToken();
+  const { accessToken } = getTokens();
+
+  config.headers.Authorization = accessToken;
 
   return config;
 });
@@ -32,19 +36,27 @@ $api.interceptors.response.use(
       originalRequest._isRetry = true;
 
       try {
+        const { refreshToken } = getTokens();
+
         const { data } = await axios.get<IAuthResponse>(
           `${API_URL}${ApiPaths.REFRESH}`,
-          { withCredentials: true },
+          {
+            headers: {
+              Authorization: refreshToken,
+            },
+          },
         );
 
-        setAccessToken(data.accessToken);
+        setTokens(data.accessToken, data.refreshToken);
 
         return $api.request(originalRequest);
       } catch (e) {
         const status = (e as AxiosError).response?.status;
 
         if (status === ApiResStatuses.UNAUTHORIZED) {
-          removeAccessToken();
+          setFilterTodo(FilterOptions.ALL);
+          setSearchTodo('');
+          removeTokens();
           store.dispatch(logoutUserSuccess());
         }
 

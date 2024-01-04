@@ -4,15 +4,12 @@ import { checkAuth, login, logout, register } from '@api';
 import {
   AuthActions,
   ErrorsAlt,
+  FilterOptions,
   ILoginCredentials,
+  TodoAction,
   IRegistrationCredentials,
 } from '@types';
-import {
-  handleResponseError,
-  removeAccessToken,
-  setAccessToken,
-} from '@helpers';
-
+import { handleResponseError, removeTokens, setTokens } from '@helpers';
 import {
   loginUser,
   loginUserSuccess,
@@ -23,6 +20,8 @@ import {
   checkUser,
   checkUserSuccess,
   checkUserError,
+  setFilterTodo,
+  setSearchTodo,
 } from '../actions';
 
 export const loginThunk = (loginCredentials: ILoginCredentials) => {
@@ -30,9 +29,10 @@ export const loginThunk = (loginCredentials: ILoginCredentials) => {
     try {
       dispatch(loginUser());
 
-      const { accessToken, ...userData } = await login(loginCredentials);
+      const { accessToken, refreshToken, ...userData } =
+        await login(loginCredentials);
 
-      setAccessToken(accessToken);
+      setTokens(accessToken, refreshToken);
 
       dispatch(loginUserSuccess(userData));
     } catch (error) {
@@ -44,13 +44,15 @@ export const loginThunk = (loginCredentials: ILoginCredentials) => {
 };
 
 export const logoutThunk = () => {
-  return async (dispatch: Dispatch<AuthActions>) => {
+  return async (dispatch: Dispatch<AuthActions | TodoAction>) => {
     try {
       dispatch(logoutUser());
 
       await logout();
 
-      removeAccessToken();
+      dispatch(setFilterTodo(FilterOptions.ALL));
+      dispatch(setSearchTodo(''));
+      removeTokens();
       dispatch(logoutUserSuccess());
     } catch (error) {
       dispatch(
@@ -65,9 +67,9 @@ export const checkUserThunk = () => {
     try {
       dispatch(checkUser());
 
-      const { accessToken, ...userData } = await checkAuth();
+      const { accessToken, refreshToken, ...userData } = await checkAuth();
 
-      setAccessToken(accessToken);
+      setTokens(accessToken, refreshToken);
 
       dispatch(checkUserSuccess(userData));
     } catch (error) {
@@ -85,9 +87,10 @@ export const registerThunk = (
     try {
       dispatch(loginUser());
 
-      const { accessToken, ...userData } = await register(registerCredentials);
+      const { accessToken, refreshToken, ...userData } =
+        await register(registerCredentials);
 
-      setAccessToken(accessToken);
+      setTokens(accessToken, refreshToken);
 
       dispatch(loginUserSuccess(userData));
     } catch (error) {

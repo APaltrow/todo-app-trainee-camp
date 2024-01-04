@@ -1,9 +1,12 @@
+import axios from 'axios';
+
 import {
   ILoginCredentials,
   IAuthResponse,
   IRegistrationCredentials,
 } from '@types';
-import { ApiPaths } from '@constants';
+import { API_URL, ApiPaths } from '@constants';
+import { getTokens } from '@helpers';
 
 import $api from './api';
 
@@ -17,13 +20,28 @@ export const login = async (loginCredentials: ILoginCredentials) => {
 };
 
 export const logout = async () => {
-  const { data } = await $api.post<IAuthResponse>(ApiPaths.LOGOUT);
+  const { refreshToken } = getTokens();
+
+  const { data } = await $api.post<IAuthResponse>(ApiPaths.LOGOUT, {
+    headers: {
+      Authorization: refreshToken,
+    },
+  });
 
   return data;
 };
 
 export const checkAuth = async () => {
-  const { data } = await $api.get<IAuthResponse>(ApiPaths.REFRESH);
+  const { refreshToken } = getTokens();
+
+  const { data } = await axios.get<IAuthResponse>(
+    `${API_URL}${ApiPaths.REFRESH}`,
+    {
+      headers: {
+        Authorization: refreshToken,
+      },
+    },
+  );
 
   return data;
 };
