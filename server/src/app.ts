@@ -22,7 +22,6 @@ export const createServer = () => {
       origin: CLIENT_URI,
     }),
   );
-  server.set('trust proxy', 1);
   server.use(AppPaths.BASE, apiRouter);
   server.use(AppPaths.NOT_FOUND, notFoundMiddleware);
   server.use(errorMiddleware);

@@ -1,5 +1,6 @@
 import { ILoginCredentials, IAuthResponse } from '@types';
 import { ApiPaths } from '@constants';
+import { getTokens } from '@helpers';
 
 import $api from './api';
 
@@ -13,13 +14,25 @@ export const login = async (loginCredentials: ILoginCredentials) => {
 };
 
 export const logout = async () => {
-  const { data } = await $api.post<IAuthResponse>(ApiPaths.LOGOUT);
+  const { refreshToken } = getTokens();
+
+  const { data } = await $api.post<IAuthResponse>(ApiPaths.LOGOUT, {
+    headers: {
+      Authorization: refreshToken,
+    },
+  });
 
   return data;
 };
 
 export const checkAuth = async () => {
-  const { data } = await $api.get<IAuthResponse>(ApiPaths.REFRESH);
+  const { refreshToken } = getTokens();
+
+  const { data } = await $api.get<IAuthResponse>(ApiPaths.REFRESH, {
+    headers: {
+      Authorization: refreshToken,
+    },
+  });
 
   return data;
 };
