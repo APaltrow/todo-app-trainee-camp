@@ -1,6 +1,10 @@
 import axios from 'axios';
 
-import { ILoginCredentials, IAuthResponse } from '@types';
+import {
+  ILoginCredentials,
+  IAuthResponse,
+  IRegistrationCredentials,
+} from '@types';
 import { API_URL, ApiPaths } from '@constants';
 import { getTokens } from '@helpers';
 
@@ -37,6 +41,17 @@ export const checkAuth = async () => {
         Authorization: refreshToken,
       },
     },
+  );
+
+  return data;
+};
+
+export const register = async (
+  registerCredentials: IRegistrationCredentials,
+) => {
+  const { data } = await $api.post<IAuthResponse>(
+    ApiPaths.REGISTER,
+    registerCredentials,
   );
 
   return data;

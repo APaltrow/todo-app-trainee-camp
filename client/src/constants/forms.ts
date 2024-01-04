@@ -5,9 +5,21 @@ export const LOGIN_FORM_INITIAL_VALUES = {
   password: '',
 };
 
+export const REGISTRATION_FORM_INITIAL_VALUES = {
+  email: '',
+  password: '',
+  passwordConfirm: '',
+};
+
 export const LOGIN_FORM_INITIAL__ERRORS = {
   email: 'Field cannot be empty',
   password: 'Field cannot be empty',
+};
+
+export const REGISTRATION_FORM_INITIAL__ERRORS = {
+  email: 'Field cannot be empty',
+  password: 'Field cannot be empty',
+  passwordConfirm: 'Field cannot be empty',
 };
 
 export const LOGIN_FORM_VALIDATIONS: Record<string, Validations> = {
@@ -16,6 +28,21 @@ export const LOGIN_FORM_VALIDATIONS: Record<string, Validations> = {
     isEmail: true,
   },
   password: {
+    isEmpty: true,
+    minLength: 6,
+  },
+};
+
+export const REGISTRATION_FORM_VALIDATIONS: Record<string, Validations> = {
+  email: {
+    isEmpty: true,
+    isEmail: true,
+  },
+  password: {
+    isEmpty: true,
+    minLength: 6,
+  },
+  passwordConfirm: {
     isEmpty: true,
     minLength: 6,
   },
@@ -31,6 +58,27 @@ export const LOGIN_INPUTS = [
   {
     name: 'password',
     placeholder: 'Password',
+    icon: IconsTypes.PASSWORD,
+    type: 'password',
+  },
+];
+
+export const REGISTRATION_INPUTS = [
+  {
+    name: 'email',
+    placeholder: 'Email',
+    icon: IconsTypes.EMAIL,
+    type: 'text',
+  },
+  {
+    name: 'password',
+    placeholder: 'Password',
+    icon: IconsTypes.PASSWORD,
+    type: 'password',
+  },
+  {
+    name: 'passwordConfirm',
+    placeholder: 'Confirm password',
     icon: IconsTypes.PASSWORD,
     type: 'password',
   },

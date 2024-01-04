@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 
 import { authService } from './auth.service';
-import { UserInput } from './user.schema';
+import { UserLoginInput, UserRegistrationInput } from './user.schema';
 
 class AuthController {
   async login(
-    req: Request<{}, {}, UserInput['body']>,
+    req: Request<{}, {}, UserLoginInput['body']>,
     res: Response,
     next: NextFunction,
   ) {
@@ -13,6 +13,21 @@ class AuthController {
       const { email, password } = req.body;
 
       const userData = await authService.login(email, password);
+
+      return res.json(userData);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async register(
+    req: Request<{}, {}, UserRegistrationInput['body']>,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const { email, password } = req.body;
+      const userData = await authService.register(email, password);
 
       return res.json(userData);
     } catch (error) {
