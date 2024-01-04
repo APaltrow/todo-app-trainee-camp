@@ -10,4 +10,6 @@ export enum AppPaths {
 
 export enum AuthPaths {
   LOGIN = '/login',
+  LOGOUT = '/logout',
+  REFRESH = '/refresh',
 }

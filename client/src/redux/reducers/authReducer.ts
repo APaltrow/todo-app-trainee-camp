@@ -35,10 +35,42 @@ export const authReducer = (
       };
     case AuthActionTypes.LOGOUT_USER:
       return {
+        ...state,
+        isLoading: true,
+        error: '',
+      };
+    case AuthActionTypes.LOGOUT_USER_SUCCESS:
+      return {
         user: null,
         isAuth: false,
         isLoading: false,
         error: '',
+      };
+    case AuthActionTypes.LOGOUT_USER_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+      };
+    case AuthActionTypes.CHECK_USER:
+      return {
+        ...state,
+        isLoading: true,
+        error: '',
+      };
+    case AuthActionTypes.CHECK_USER_SUCCESS:
+      return {
+        user: action.payload,
+        isAuth: true,
+        isLoading: false,
+        error: '',
+      };
+    case AuthActionTypes.CHECK_USER_ERROR:
+      return {
+        user: null,
+        isAuth: false,
+        isLoading: false,
+        error: action.payload,
       };
     case AuthActionTypes.RESET_ERROR:
       return {

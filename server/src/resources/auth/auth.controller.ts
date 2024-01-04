@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { jwtToken } from '@utils';
-
 import { authService } from './auth.service';
 import { UserInput } from './user.schema';
 
@@ -11,14 +9,36 @@ class AuthController {
     res: Response,
     next: NextFunction,
   ) {
-    const { email, password } = req.body;
-
     try {
-      const { id, ...userData } = await authService.login(email, password);
+      const { email, password } = req.body;
 
-      const accessDto = jwtToken.generateTokens({ id });
+      const userData = await authService.login(email, password);
 
-      return res.json({ ...userData, ...accessDto });
+      return res.json(userData);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async logout(req: Request, res: Response, next: NextFunction) {
+    try {
+      const refreshToken = req.headers.authorization || '';
+
+      await authService.logout(refreshToken);
+
+      return res.json({ message: 'success' });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async refresh(req: Request, res: Response, next: NextFunction) {
+    try {
+      const refreshToken = req.headers.authorization || '';
+
+      const userData = await authService.refresh(refreshToken);
+
+      return res.json(userData);
     } catch (error) {
       next(error);
     }

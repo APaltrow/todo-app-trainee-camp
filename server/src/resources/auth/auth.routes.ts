@@ -13,3 +13,5 @@ authRouter.post(
   validateResource(UserSchema),
   authController.login,
 );
+authRouter.post(AuthPaths.LOGOUT, authController.logout);
+authRouter.get(AuthPaths.REFRESH, authController.refresh);

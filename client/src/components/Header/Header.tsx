@@ -4,32 +4,20 @@ import { NavLink } from 'react-router-dom';
 import { useActions, useAppSelector } from '@redux';
 import { useTheme } from '@hooks';
 import { RoutesPaths } from '@constants';
-import { removeAccessToken } from '@helpers';
-import {
-  ButtonSizes,
-  ButtonVariants,
-  FilterOptions,
-  IconsTypes,
-  Theme,
-} from '@types';
+import { ButtonSizes, ButtonVariants, IconsTypes, Theme } from '@types';
 import { CustomButton, Icon } from '@components';
 
 import style from './Header.module.scss';
 
 export const Header: FC = () => {
-  const { isAuth } = useAppSelector((state) => state.auth);
+  const { isAuth, isLoading } = useAppSelector((state) => state.auth);
 
-  const { logoutUser, setFilterTodo, setSearchTodo } = useActions();
+  const { logoutThunk } = useActions();
   const { theme, onThemeChange } = useTheme();
 
   const iconName = theme === Theme.LIGHT ? IconsTypes.MOON : IconsTypes.SUN;
 
-  const handleLogout = () => {
-    setFilterTodo(FilterOptions.ALL);
-    setSearchTodo('');
-    logoutUser();
-    removeAccessToken();
-  };
+  const handleLogout = () => logoutThunk();
 
   return (
     <header className={style.header}>
@@ -42,6 +30,8 @@ export const Header: FC = () => {
       <div className={style.btns}>
         {isAuth && (
           <CustomButton
+            withLoader
+            isLoading={isLoading}
             onClick={handleLogout}
             size={ButtonSizes.SMALL}
             variant={ButtonVariants.PRIMARY}

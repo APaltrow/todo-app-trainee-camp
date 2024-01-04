@@ -1,4 +1,4 @@
-import { ApiError } from '@utils';
+import { ApiError, jwtToken } from '@utils';
 import { AuthErrors } from '@constants';
 
 import { userModel } from './user.model';
@@ -17,8 +17,41 @@ class AuthService {
     if (!isSamePass) {
       throw ApiError.BadRequest(AuthErrors.INCORRECT_CREDENTIALS);
     }
+    const { id, ...userData } = new UserDto(user);
 
-    return new UserDto(user);
+    const tokens = jwtToken.generateTokens({ id });
+
+    await jwtToken.saveToken(id, tokens.refreshToken);
+
+    return { ...userData, ...tokens };
+  }
+
+  async logout(refreshToken: string) {
+    const token = await jwtToken.removeToken(refreshToken);
+
+    return token;
+  }
+
+  async refresh(refreshToken: string) {
+    if (!refreshToken) {
+      throw ApiError.Unauthorized();
+    }
+
+    const id = jwtToken.verifyRefreshToken(refreshToken);
+
+    const tokenFromDB = await jwtToken.findToken(refreshToken);
+
+    const user = await userModel.findById(id);
+
+    if (!id || !tokenFromDB || !user) {
+      throw ApiError.Unauthorized();
+    }
+
+    const tokens = jwtToken.generateTokens({ id });
+
+    await jwtToken.saveToken(id, tokens.refreshToken);
+
+    return { ...tokens, email: user.email };
   }
 }
 
