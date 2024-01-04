@@ -1,5 +1,7 @@
+import axios from 'axios';
+
 import { ILoginCredentials, IAuthResponse } from '@types';
-import { ApiPaths } from '@constants';
+import { API_URL, ApiPaths } from '@constants';
 import { getTokens } from '@helpers';
 
 import $api from './api';
@@ -28,11 +30,20 @@ export const logout = async () => {
 export const checkAuth = async () => {
   const { refreshToken } = getTokens();
 
-  const { data } = await $api.get<IAuthResponse>(ApiPaths.REFRESH, {
-    headers: {
-      Authorization: refreshToken,
+  // const { data } = await $api.get<IAuthResponse>(ApiPaths.REFRESH, {
+  //   headers: {
+  //     Authorization: refreshToken,
+  //   },
+  // });
+
+  const { data } = await axios.get<IAuthResponse>(
+    `${API_URL}${ApiPaths.REFRESH}`,
+    {
+      headers: {
+        Authorization: refreshToken,
+      },
     },
-  });
+  );
 
   return data;
 };
