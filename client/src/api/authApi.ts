@@ -30,12 +30,6 @@ export const logout = async () => {
 export const checkAuth = async () => {
   const { refreshToken } = getTokens();
 
-  // const { data } = await $api.get<IAuthResponse>(ApiPaths.REFRESH, {
-  //   headers: {
-  //     Authorization: refreshToken,
-  //   },
-  // });
-
   const { data } = await axios.get<IAuthResponse>(
     `${API_URL}${ApiPaths.REFRESH}`,
     {
