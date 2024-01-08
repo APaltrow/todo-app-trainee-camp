@@ -70,7 +70,7 @@ export const authReducer = (
         user: null,
         isAuth: false,
         isLoading: false,
-        error: action.payload,
+        error: '',
       };
     case AuthActionTypes.RESET_ERROR:
       return {
