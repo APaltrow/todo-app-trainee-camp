@@ -9,7 +9,12 @@ import {
   TodoAction,
   IRegistrationCredentials,
 } from '@types';
-import { handleResponseError, removeTokens, setTokens } from '@helpers';
+import {
+  getTokens,
+  handleResponseError,
+  removeTokens,
+  setTokens,
+} from '@helpers';
 import {
   loginUser,
   loginUserSuccess,
@@ -64,10 +69,15 @@ export const logoutThunk = () => {
 
 export const checkUserThunk = () => {
   return async (dispatch: Dispatch<AuthActions>) => {
+    const { refreshToken: oldToken } = getTokens();
+
+    if (!oldToken) return;
+
     try {
       dispatch(checkUser());
 
-      const { accessToken, refreshToken, ...userData } = await checkAuth();
+      const { accessToken, refreshToken, ...userData } =
+        await checkAuth(oldToken);
 
       setTokens(accessToken, refreshToken);
 
