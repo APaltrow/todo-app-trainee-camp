@@ -40,7 +40,7 @@ class AuthService {
 
       return { ...userData, ...tokens };
     } catch (error) {
-      throw ApiError.BadRequest(AuthErrors.INVATID_CREDENTIALS);
+      throw ApiError.BadRequest(AuthErrors.DUPLICATED_EMAIL);
     }
   }
 

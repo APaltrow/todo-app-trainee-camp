@@ -7,6 +7,7 @@ export enum ResponseErrors {
 export enum AuthErrors {
   INCORRECT_CREDENTIALS = 'Incorrect email or password',
   INVATID_CREDENTIALS = 'Invalid credentials',
+  DUPLICATED_EMAIL = 'Email already exists',
 }
 
 export enum ValidationErrors {

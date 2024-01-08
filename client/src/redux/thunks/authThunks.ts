@@ -27,6 +27,7 @@ import {
   checkUserError,
   setFilterTodo,
   setSearchTodo,
+  resetTodos,
 } from '../actions';
 
 export const loginThunk = (loginCredentials: ILoginCredentials) => {
@@ -57,6 +58,7 @@ export const logoutThunk = () => {
 
       dispatch(setFilterTodo(FilterOptions.ALL));
       dispatch(setSearchTodo(''));
+      dispatch(resetTodos());
       removeTokens();
       dispatch(logoutUserSuccess());
     } catch (error) {

@@ -27,10 +27,16 @@ export const CustomInput: FC<CustomInputProps> = ({
   onChange,
 }) => {
   const [isTouched, setTouched] = useState(false);
+  const [isShowPass, setShowPass] = useState(false);
 
   const handleBlur = () => {
     setTouched(true);
   };
+
+  const handleShowPass = () => setShowPass((prev) => !prev);
+
+  const showPassIcon = isShowPass ? IconsTypes.EYE_OFF : IconsTypes.EYE_ON;
+  const inputType = isShowPass && value ? 'text' : type;
 
   return (
     <div className={style.container}>
@@ -42,7 +48,7 @@ export const CustomInput: FC<CustomInputProps> = ({
         onChange={onChange}
         onBlur={handleBlur}
         autoComplete="off"
-        type={type}
+        type={inputType}
       />
 
       {!!icon && (
@@ -52,6 +58,15 @@ export const CustomInput: FC<CustomInputProps> = ({
       )}
 
       {!!error && isTouched && <Error message={error} />}
+
+      {type === 'password' && value && (
+        <button
+          className={style.icon_pass}
+          onClick={handleShowPass}
+        >
+          <Icon iconName={showPassIcon} />
+        </button>
+      )}
     </div>
   );
 };

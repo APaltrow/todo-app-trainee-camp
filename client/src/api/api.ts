@@ -4,7 +4,13 @@ import { IAuthResponse } from '@types';
 import { API_URL, ApiPaths, ApiResStatuses } from '@constants';
 import { getTokens, removeTokens, setTokens } from '@helpers';
 
-import { store, setSearchTodo, setFilterTodo, logoutUserSuccess } from '@redux';
+import {
+  store,
+  setSearchTodo,
+  setFilterTodo,
+  logoutUserSuccess,
+  resetTodos,
+} from '@redux';
 import { FilterOptions } from '@types';
 
 const $api = axios.create({
@@ -57,6 +63,7 @@ $api.interceptors.response.use(
           setFilterTodo(FilterOptions.ALL);
           setSearchTodo('');
           removeTokens();
+          store.dispatch(resetTodos());
           store.dispatch(logoutUserSuccess());
         }
 
