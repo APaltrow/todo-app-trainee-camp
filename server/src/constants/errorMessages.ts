@@ -22,6 +22,7 @@ export enum ValidationErrors {
   PASS_INVALID = 'Invalid password value',
   PASS_CONFIRMATION = 'Password confirmation is required',
   PASS_MISMATCH = 'Passwords do not match',
+  PASS_OLD_IS_SAME = 'New password cannot be same as old one',
 
   TODO_TEXT_REQUIRED = 'Todo text is required',
   TODO_TEXT_EMPTY = 'Text should not be empty',

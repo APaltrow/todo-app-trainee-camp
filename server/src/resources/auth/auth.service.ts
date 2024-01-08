@@ -71,6 +71,29 @@ class AuthService {
 
     return { ...tokens, email: user.email };
   }
+
+  async changePassword(
+    userId: string,
+    oldPassword: string,
+    newPassword: string,
+  ) {
+    const user = await userModel.findById(userId);
+
+    if (!user) {
+      throw ApiError.BadRequest(AuthErrors.INVATID_CREDENTIALS);
+    }
+
+    const isOldPassSame = await user.comparePassword(oldPassword);
+
+    if (!isOldPassSame) {
+      throw ApiError.BadRequest(AuthErrors.INVATID_CREDENTIALS);
+    }
+
+    user.passwordHash = newPassword;
+    user.save();
+
+    return user;
+  }
 }
 
 export const authService = new AuthService();

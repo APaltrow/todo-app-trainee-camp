@@ -44,3 +44,16 @@ export const checkUserError = (errorMessage: string): AuthActions => ({
 export const resetUserError = (): AuthActions => ({
   type: AuthActionTypes.RESET_ERROR,
 });
+
+export const onRequest = (): AuthActions => ({
+  type: AuthActionTypes.ON_SUCCESS,
+});
+
+export const onSuccess = (): AuthActions => ({
+  type: AuthActionTypes.ON_SUCCESS,
+});
+
+export const onError = (message: string): AuthActions => ({
+  type: AuthActionTypes.ON_ERROR,
+  payload: message,
+});

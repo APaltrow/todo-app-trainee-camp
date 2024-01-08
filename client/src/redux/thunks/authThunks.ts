@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
 
-import { checkAuth, login, logout, register } from '@api';
+import { changePassword, checkAuth, login, logout, register } from '@api';
 import {
   AuthActions,
   ErrorsAlt,
@@ -8,6 +8,7 @@ import {
   ILoginCredentials,
   TodoAction,
   IRegistrationCredentials,
+  IChangePassCredentials,
 } from '@types';
 import { handleResponseError, removeTokens, setTokens } from '@helpers';
 import {
@@ -22,6 +23,9 @@ import {
   checkUserError,
   setFilterTodo,
   setSearchTodo,
+  onSuccess,
+  onError,
+  onRequest,
 } from '../actions';
 
 export const loginThunk = (loginCredentials: ILoginCredentials) => {
@@ -99,6 +103,26 @@ export const registerThunk = (
           handleResponseError(error, ErrorsAlt.FAILED_REGISTRATION),
         ),
       );
+    }
+  };
+};
+
+export const changePasswordThunk = (credentials: IChangePassCredentials) => {
+  return async (dispatch: Dispatch<AuthActions>) => {
+    try {
+      dispatch(onRequest());
+
+      await changePassword(credentials);
+
+      dispatch(onSuccess());
+
+      return true;
+    } catch (error) {
+      dispatch(
+        onError(handleResponseError(error, ErrorsAlt.FAILED_CHANGE_PASSWORD)),
+      );
+
+      return false;
     }
   };
 };

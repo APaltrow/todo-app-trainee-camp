@@ -13,4 +13,7 @@ export enum IconsTypes {
   EMAIL = 'email',
   PASSWORD = 'password',
   SPINNER = 'spinner',
+  PROFILE = 'profile',
+  EYE_ON = 'eye-on',
+  EYE_OFF = 'eye-off',
 }

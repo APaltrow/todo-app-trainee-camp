@@ -20,6 +20,9 @@ export enum AuthActionTypes {
   CHECK_USER_SUCCESS = 'CHECK_USER_SUCCESS',
   CHECK_USER_ERROR = 'CHECK_USER_ERROR',
   RESET_ERROR = 'RESET_ERROR',
+  ON_SUCCESS = 'ON_SUCCESS',
+  ON_ERROR = 'ON_ERROR',
+  ON_REQUEST = 'ON_REQUEST',
 }
 
 interface LoginAction {
@@ -67,6 +70,19 @@ interface ResetErrorAction {
   type: AuthActionTypes.RESET_ERROR;
 }
 
+interface SuccessAction {
+  type: AuthActionTypes.ON_SUCCESS;
+}
+
+interface ErrorAction {
+  type: AuthActionTypes.ON_ERROR;
+  payload: string;
+}
+
+interface RequestAction {
+  type: AuthActionTypes.ON_REQUEST;
+}
+
 export type AuthActions =
   | LoginAction
   | LoginSuccessAction
@@ -77,4 +93,7 @@ export type AuthActions =
   | CheckUserAction
   | CheckUserSuccessAction
   | CheckUserErrorAction
-  | ResetErrorAction;
+  | ResetErrorAction
+  | SuccessAction
+  | ErrorAction
+  | RequestAction;

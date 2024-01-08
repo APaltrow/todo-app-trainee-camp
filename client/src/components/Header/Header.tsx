@@ -29,15 +29,26 @@ export const Header: FC = () => {
 
       <div className={style.btns}>
         {isAuth && (
-          <CustomButton
-            withLoader
-            isLoading={isLoading}
-            onClick={handleLogout}
-            size={ButtonSizes.SMALL}
-            variant={ButtonVariants.PRIMARY}
-          >
-            Logout
-          </CustomButton>
+          <>
+            <CustomButton
+              withLoader
+              isLoading={isLoading}
+              onClick={handleLogout}
+              size={ButtonSizes.SMALL}
+              variant={ButtonVariants.PRIMARY}
+            >
+              Logout
+            </CustomButton>
+
+            <NavLink to={RoutesPaths.PROFILE}>
+              <CustomButton
+                onClick={() => {}}
+                size={ButtonSizes.SMALL}
+              >
+                <Icon iconName={IconsTypes.PROFILE} />
+              </CustomButton>
+            </NavLink>
+          </>
         )}
 
         <CustomButton

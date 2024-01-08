@@ -1,10 +1,14 @@
 import { Router } from 'express';
 
 import { AuthPaths } from '@constants';
-import { validateResource } from '@middlewares';
+import { authMiddleware, validateResource } from '@middlewares';
 
 import { authController } from './auth.controller';
-import { UserLoginSchema, UserRegistrationSchema } from './user.schema';
+import {
+  UserChangePasswordSchema,
+  UserLoginSchema,
+  UserRegistrationSchema,
+} from './user.schema';
 
 export const authRouter = Router();
 
@@ -20,3 +24,9 @@ authRouter.post(
 );
 authRouter.post(AuthPaths.LOGOUT, authController.logout);
 authRouter.get(AuthPaths.REFRESH, authController.refresh);
+authRouter.put(
+  AuthPaths.CHANGE_PASSWORD,
+  authMiddleware,
+  validateResource(UserChangePasswordSchema),
+  authController.changePassword,
+);

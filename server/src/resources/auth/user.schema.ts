@@ -32,5 +32,32 @@ export const UserRegistrationSchema = object({
   }),
 });
 
+export const UserChangePasswordSchema = object({
+  body: object({
+    oldPassword: string({
+      required_error: ValidationErrors.PASS_REQUIRED,
+    })
+      .min(PASS_MIN_LENG, ValidationErrors.PASS_MIN_LENG)
+      .regex(EMTY_STR_REGEXP, ValidationErrors.PASS_INVALID),
+    newPassword: string({
+      required_error: ValidationErrors.PASS_REQUIRED,
+    })
+      .min(PASS_MIN_LENG, ValidationErrors.PASS_MIN_LENG)
+      .regex(EMTY_STR_REGEXP, ValidationErrors.PASS_INVALID),
+    newPasswordConfirm: string({
+      required_error: ValidationErrors.PASS_CONFIRMATION,
+    }),
+  })
+    .refine((data) => data.newPassword === data.newPasswordConfirm, {
+      message: ValidationErrors.PASS_MISMATCH,
+      path: ['newPasswordConfirm'],
+    })
+    .refine((data) => data.oldPassword !== data.newPasswordConfirm, {
+      message: ValidationErrors.PASS_OLD_IS_SAME,
+      path: ['newPassword'],
+    }),
+});
+
 export type UserLoginInput = TypeOf<typeof UserLoginSchema>;
 export type UserRegistrationInput = TypeOf<typeof UserRegistrationSchema>;
+export type UserChangePasswordInput = TypeOf<typeof UserChangePasswordSchema>;

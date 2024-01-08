@@ -15,4 +15,5 @@ export enum ErrorsAlt {
   FAILED_FETCH_TODOS = 'Could not fetch todos ...',
   FAILED_CREATE_TODO = 'Could not create todo ...',
   FAILED_UPDATE_TODO = 'Could not edit todo ...',
+  FAILED_CHANGE_PASSWORD = 'Failed to change password ...',
 }

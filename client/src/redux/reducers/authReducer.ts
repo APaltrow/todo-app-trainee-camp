@@ -77,6 +77,24 @@ export const authReducer = (
         ...state,
         error: '',
       };
+    case AuthActionTypes.ON_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        error: '',
+      };
+    case AuthActionTypes.ON_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: '',
+      };
+    case AuthActionTypes.ON_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+      };
 
     default:
       return state;

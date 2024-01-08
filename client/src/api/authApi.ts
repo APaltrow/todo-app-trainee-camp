@@ -4,6 +4,7 @@ import {
   ILoginCredentials,
   IAuthResponse,
   IRegistrationCredentials,
+  IChangePassCredentials,
 } from '@types';
 import { API_URL, ApiPaths } from '@constants';
 import { getTokens } from '@helpers';
@@ -53,6 +54,12 @@ export const register = async (
     ApiPaths.REGISTER,
     registerCredentials,
   );
+
+  return data;
+};
+
+export const changePassword = async (credentials: IChangePassCredentials) => {
+  const { data } = await $api.put(ApiPaths.CHANGE_PASS, credentials);
 
   return data;
 };

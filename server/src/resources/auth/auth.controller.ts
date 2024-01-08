@@ -58,6 +58,19 @@ class AuthController {
       next(error);
     }
   }
+
+  async changePassword(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = req.headers.authorization || '';
+      const { oldPassword, newPassword } = req.body;
+
+      await authService.changePassword(userId, oldPassword, newPassword);
+
+      return res.json({ message: 'success' });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export const authController = new AuthController();
