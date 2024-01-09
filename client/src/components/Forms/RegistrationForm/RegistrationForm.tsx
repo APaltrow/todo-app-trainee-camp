@@ -54,6 +54,7 @@ export const RegistrationForm: FC = () => {
       formTitle="Registration"
       isLoading={isLoading}
       error={error || passwordErrors}
+      onSubmit={handleRegistration}
       buttons={
         <>
           <CustomButton

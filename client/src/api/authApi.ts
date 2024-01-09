@@ -32,9 +32,7 @@ export const logout = async () => {
   return data;
 };
 
-export const checkAuth = async () => {
-  const { refreshToken } = getTokens();
-
+export const checkAuth = async (refreshToken: string) => {
   const { data } = await axios.get<IAuthResponse>(
     `${API_URL}${ApiPaths.REFRESH}`,
     {

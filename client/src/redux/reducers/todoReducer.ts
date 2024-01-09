@@ -174,6 +174,18 @@ export const todoReducer = (
       };
     }
 
+    case TodoActions.RESET_TODOS: {
+      return {
+        ...state,
+        todoList: [],
+        totals: {
+          all: 0,
+          active: 0,
+          completed: 0,
+        },
+      };
+    }
+
     default:
       return state;
   }

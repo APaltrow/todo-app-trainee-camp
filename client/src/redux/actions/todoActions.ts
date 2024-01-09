@@ -73,3 +73,7 @@ export const clearDoneTodo = (): TodoAction => {
 export const setTodoTotals = (totals: Record<string, number>): TodoAction => {
   return { type: TodoActions.SET_TOTALS, payload: totals };
 };
+
+export const resetTodos = (): TodoAction => {
+  return { type: TodoActions.RESET_TODOS };
+};

@@ -39,7 +39,7 @@ export const ChangePassForm: FC = () => {
     resetUserError();
   };
 
-  const handleRegistration = async () => {
+  const handleChangePass = async () => {
     const credentials = formValues as unknown as IChangePassCredentials;
 
     const isSuccess = await changePasswordThunk(credentials);
@@ -68,6 +68,7 @@ export const ChangePassForm: FC = () => {
       formTitle="Change password"
       isLoading={isLoading}
       error={error || passwordErrors}
+      onSubmit={handleChangePass}
       buttons={
         <>
           <CustomButton
@@ -80,7 +81,7 @@ export const ChangePassForm: FC = () => {
           </CustomButton>
 
           <CustomButton
-            onClick={handleRegistration}
+            onClick={handleChangePass}
             isDisabled={isValidForm}
             variant={ButtonVariants.PRIMARY}
             size={ButtonSizes.MID}

@@ -63,6 +63,7 @@ export const CustomInput: FC<CustomInputProps> = ({
         <button
           className={style.icon_pass}
           onClick={handleShowPass}
+          type="button"
         >
           <Icon iconName={showPassIcon} />
         </button>
