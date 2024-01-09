@@ -9,6 +9,7 @@ export interface IResponseError {
 
 export enum ErrorsAlt {
   FAILED_LOGIN = 'Login failed',
+  FAILED_REGISTRATION = 'Registration failed',
   FAILED_LOGOUT = 'Failed to log out',
   FAILED_CHECK = 'Could not find such user',
   FAILED_FETCH_TODOS = 'Could not fetch todos ...',

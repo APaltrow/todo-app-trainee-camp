@@ -4,4 +4,5 @@ export {
   setSearchTodo,
   setFilterTodo,
   logoutUserSuccess,
+  resetTodos,
 } from './actions';

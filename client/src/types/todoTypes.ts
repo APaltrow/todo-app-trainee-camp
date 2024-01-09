@@ -29,6 +29,7 @@ export enum TodoActions {
   DELETE_TODO_SUCCESS = 'DELETE_TODO_SUCCESS',
   DELETE_TODO_ERROR = 'DELETE_TODO_ERROR',
   SET_TOTALS = 'SET_TOTALS',
+  RESET_TODOS = 'RESET_TODOS',
 }
 
 export enum FilterOptions {
@@ -126,6 +127,10 @@ interface ISetTotalsAction {
   payload: Record<string, number>;
 }
 
+interface IResetTodosAction {
+  type: TodoActions.RESET_TODOS;
+}
+
 export type TodoAction =
   | IClearDoneTodoAction
   | ISetFilterTodoAction
@@ -143,4 +148,5 @@ export type TodoAction =
   | IDeleteTodoAction
   | IDeleteTodoSuccessAction
   | IDeleteTodoErrorAction
-  | ISetTotalsAction;
+  | ISetTotalsAction
+  | IResetTodosAction;

@@ -1,6 +1,6 @@
 import { RoutesPaths } from '@constants';
 
-import { LoginPage, HomePage } from '@pages';
+import { LoginPage, HomePage, RegistrationPage } from '@pages';
 
 export const AppRoutes = [
   {
@@ -10,5 +10,9 @@ export const AppRoutes = [
   {
     path: RoutesPaths.LOGIN,
     element: <LoginPage />,
+  },
+  {
+    path: RoutesPaths.REGISTRATION,
+    element: <RegistrationPage />,
   },
 ];

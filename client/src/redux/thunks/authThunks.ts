@@ -1,15 +1,20 @@
 import { Dispatch } from 'react';
 
-import { checkAuth, login, logout } from '@api';
+import { checkAuth, login, logout, register } from '@api';
 import {
   AuthActions,
   ErrorsAlt,
   FilterOptions,
   ILoginCredentials,
   TodoAction,
+  IRegistrationCredentials,
 } from '@types';
-import { handleResponseError, removeTokens, setTokens } from '@helpers';
-
+import {
+  getTokens,
+  handleResponseError,
+  removeTokens,
+  setTokens,
+} from '@helpers';
 import {
   loginUser,
   loginUserSuccess,
@@ -22,6 +27,7 @@ import {
   checkUserError,
   setFilterTodo,
   setSearchTodo,
+  resetTodos,
 } from '../actions';
 
 export const loginThunk = (loginCredentials: ILoginCredentials) => {
@@ -52,6 +58,7 @@ export const logoutThunk = () => {
 
       dispatch(setFilterTodo(FilterOptions.ALL));
       dispatch(setSearchTodo(''));
+      dispatch(resetTodos());
       removeTokens();
       dispatch(logoutUserSuccess());
     } catch (error) {
@@ -64,10 +71,15 @@ export const logoutThunk = () => {
 
 export const checkUserThunk = () => {
   return async (dispatch: Dispatch<AuthActions>) => {
+    const { refreshToken: oldToken } = getTokens();
+
+    if (!oldToken) return;
+
     try {
       dispatch(checkUser());
 
-      const { accessToken, refreshToken, ...userData } = await checkAuth();
+      const { accessToken, refreshToken, ...userData } =
+        await checkAuth(oldToken);
 
       setTokens(accessToken, refreshToken);
 
@@ -75,6 +87,29 @@ export const checkUserThunk = () => {
     } catch (error) {
       dispatch(
         checkUserError(handleResponseError(error, ErrorsAlt.FAILED_CHECK)),
+      );
+    }
+  };
+};
+
+export const registerThunk = (
+  registerCredentials: IRegistrationCredentials,
+) => {
+  return async (dispatch: Dispatch<AuthActions>) => {
+    try {
+      dispatch(loginUser());
+
+      const { accessToken, refreshToken, ...userData } =
+        await register(registerCredentials);
+
+      setTokens(accessToken, refreshToken);
+
+      dispatch(loginUserSuccess(userData));
+    } catch (error) {
+      dispatch(
+        loginUserError(
+          handleResponseError(error, ErrorsAlt.FAILED_REGISTRATION),
+        ),
       );
     }
   };

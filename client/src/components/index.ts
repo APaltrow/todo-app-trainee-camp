@@ -5,6 +5,7 @@ export * from './Toolbar';
 export * from './Header';
 export * from './Footer';
 export * from './LoginForm';
+export * from './RegistrationForm';
 
 /* UI components */
 export * from './ui/TaskInput';
@@ -21,3 +22,4 @@ export * from './ui/Alert';
 export * from './ui/CustomInput';
 export * from './ui/Loader';
 export * from './ui/Error';
+export * from './ui/CustomForm';

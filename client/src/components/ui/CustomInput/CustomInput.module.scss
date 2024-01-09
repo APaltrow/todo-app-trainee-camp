@@ -32,3 +32,20 @@
     height: 25px;
   }
 }
+
+.icon_pass {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+
+  height: 100%;
+
+  display: flex;
+
+  background: none;
+  fill: var(--text-strong);
+
+  &:hover {
+    cursor: pointer;
+  }
+}
