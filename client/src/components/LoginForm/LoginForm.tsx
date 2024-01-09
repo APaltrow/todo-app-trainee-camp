@@ -46,6 +46,7 @@ export const LoginForm: FC = () => {
       formTitle="Please sign in"
       isLoading={isLoading}
       error={error}
+      onSubmit={handleLogin}
       buttons={
         <>
           <CustomButton
