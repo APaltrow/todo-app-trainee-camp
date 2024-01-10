@@ -1,11 +1,9 @@
 /* COMMON components */
 export * from './TodoList';
-export * from './TodoForm';
 export * from './Toolbar';
 export * from './Header';
 export * from './Footer';
-export * from './LoginForm';
-export * from './RegistrationForm';
+export * from './Forms';
 
 /* UI components */
 export * from './ui/TaskInput';

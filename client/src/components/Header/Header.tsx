@@ -10,7 +10,7 @@ import { CustomButton, Icon } from '@components';
 import style from './Header.module.scss';
 
 export const Header: FC = () => {
-  const { isAuth, isLoading } = useAppSelector((state) => state.auth);
+  const { isAuth, isLogoutLoading } = useAppSelector((state) => state.auth);
 
   const { logoutThunk } = useActions();
   const { theme, onThemeChange } = useTheme();
@@ -29,15 +29,26 @@ export const Header: FC = () => {
 
       <div className={style.btns}>
         {isAuth && (
-          <CustomButton
-            withLoader
-            isLoading={isLoading}
-            onClick={handleLogout}
-            size={ButtonSizes.SMALL}
-            variant={ButtonVariants.PRIMARY}
-          >
-            Logout
-          </CustomButton>
+          <>
+            <CustomButton
+              withLoader
+              isLoading={isLogoutLoading}
+              onClick={handleLogout}
+              size={ButtonSizes.SMALL}
+              variant={ButtonVariants.PRIMARY}
+            >
+              Logout
+            </CustomButton>
+
+            <NavLink to={RoutesPaths.PROFILE}>
+              <CustomButton
+                onClick={() => {}}
+                size={ButtonSizes.SMALL}
+              >
+                <Icon iconName={IconsTypes.PROFILE} />
+              </CustomButton>
+            </NavLink>
+          </>
         )}
 
         <CustomButton

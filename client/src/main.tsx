@@ -21,5 +21,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         </ThemeProvider>
       </PersistGate>
     </Provider>
+    ,
   </React.StrictMode>,
 );

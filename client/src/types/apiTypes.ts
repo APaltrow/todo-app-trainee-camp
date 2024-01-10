@@ -12,3 +12,9 @@ export interface ILoginCredentials {
 export interface IRegistrationCredentials extends ILoginCredentials {
   passwordConfirm: string;
 }
+
+export interface IChangePassCredentials {
+  oldPassword: string;
+  newPassword: string;
+  newPasswordConfirm: string;
+}

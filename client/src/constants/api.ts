@@ -9,6 +9,7 @@ export enum ApiPaths {
   LOGOUT = '/auth/logout',
   REFRESH = '/auth/refresh',
   REGISTER = '/auth/register',
+  CHANGE_PASS = '/auth/change-password',
   TODOS = '/todos',
 }
 

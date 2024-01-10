@@ -1,6 +1,6 @@
 export * from './dateConstants';
 export * from './filterOptions';
-export * from './todoListMessages';
+export * from './messages';
 export * from './tooltip';
 export * from './api';
 export * from './paths';
