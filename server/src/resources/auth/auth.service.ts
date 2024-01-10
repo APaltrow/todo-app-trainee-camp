@@ -3,6 +3,7 @@ import { AuthErrors } from '@constants';
 
 import { userModel } from './user.model';
 import { UserDto } from './user.dto';
+import { UserRegistrationInput } from './user.schema';
 
 class AuthService {
   async login(email: string, password: string) {
@@ -26,9 +27,14 @@ class AuthService {
     return { ...userData, ...tokens };
   }
 
-  async register(email: string, password: string) {
+  async register(credentials: UserRegistrationInput['body']) {
     try {
-      const newUser = await userModel.create({ email, passwordHash: password });
+      const { password, ...userInfo } = credentials;
+
+      const newUser = await userModel.create({
+        ...userInfo,
+        passwordHash: password,
+      });
 
       newUser.save();
 
@@ -69,7 +75,9 @@ class AuthService {
 
     await jwtToken.saveToken(id, tokens.refreshToken);
 
-    return { ...tokens, email: user.email };
+    const { id: userId, ...userData } = new UserDto(user);
+
+    return { ...tokens, ...userData };
   }
 
   async changePassword(

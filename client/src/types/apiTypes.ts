@@ -10,6 +10,8 @@ export interface ILoginCredentials {
 }
 
 export interface IRegistrationCredentials extends ILoginCredentials {
+  firstName: string;
+  lastName: string;
   passwordConfirm: string;
 }
 

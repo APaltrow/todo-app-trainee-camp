@@ -26,8 +26,8 @@ class AuthController {
     next: NextFunction,
   ) {
     try {
-      const { email, password } = req.body;
-      const userData = await authService.register(email, password);
+      const credentials = req.body;
+      const userData = await authService.register(credentials);
 
       return res.json(userData);
     } catch (error) {

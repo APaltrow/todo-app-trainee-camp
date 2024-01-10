@@ -4,6 +4,7 @@ export * from './Toolbar';
 export * from './Header';
 export * from './Footer';
 export * from './Forms';
+export * from './Profile';
 
 /* UI components */
 export * from './ui/TaskInput';

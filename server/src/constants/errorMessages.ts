@@ -25,6 +25,9 @@ export enum ValidationErrors {
   PASS_MISMATCH = 'Passwords do not match',
   PASS_OLD_IS_SAME = 'New password cannot be same as old one',
 
+  NAME_FIRST_LENGTH = 'First name is required',
+  NAME_LAST_LENGTH = 'Last name is required',
+
   TODO_TEXT_REQUIRED = 'Todo text is required',
   TODO_TEXT_EMPTY = 'Text should not be empty',
   TODO_TEXT_INVALID = 'Invalid todo text value',
