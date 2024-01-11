@@ -2,6 +2,8 @@ export interface IAuthResponse {
   accessToken: string;
   refreshToken: string;
   email: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface ILoginCredentials {
