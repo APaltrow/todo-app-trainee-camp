@@ -10,16 +10,16 @@ import { ThemeProvider } from '@context';
 import { AppRouter } from '@router';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  // <React.StrictMode>
-  <Provider store={store}>
-    <PersistGate
-      loading={null}
-      persistor={persistor}
-    >
-      <ThemeProvider>
-        <RouterProvider router={AppRouter} />
-      </ThemeProvider>
-    </PersistGate>
-  </Provider>,
-  //</React.StrictMode>
+  <React.StrictMode>
+    <Provider store={store}>
+      <PersistGate
+        loading={null}
+        persistor={persistor}
+      >
+        <ThemeProvider>
+          <RouterProvider router={AppRouter} />
+        </ThemeProvider>
+      </PersistGate>
+    </Provider>
+  </React.StrictMode>,
 );
