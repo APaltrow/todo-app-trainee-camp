@@ -4,6 +4,7 @@ const initialState: IAuthState = {
   user: null,
   isAuth: false,
   isLoading: false,
+  isLogoutLoading: false,
   error: '',
 };
 
@@ -17,6 +18,7 @@ export const authReducer = (
         user: null,
         isAuth: false,
         isLoading: true,
+        isLogoutLoading: false,
         error: '',
       };
     case AuthActionTypes.LOGIN_USER_SUCCESS:
@@ -24,6 +26,7 @@ export const authReducer = (
         user: action.payload,
         isAuth: true,
         isLoading: false,
+        isLogoutLoading: false,
         error: '',
       };
     case AuthActionTypes.LOGIN_USER_ERROR:
@@ -31,12 +34,13 @@ export const authReducer = (
         user: null,
         isAuth: false,
         isLoading: false,
+        isLogoutLoading: false,
         error: action.payload,
       };
     case AuthActionTypes.LOGOUT_USER:
       return {
         ...state,
-        isLoading: true,
+        isLogoutLoading: true,
         error: '',
       };
     case AuthActionTypes.LOGOUT_USER_SUCCESS:
@@ -44,12 +48,13 @@ export const authReducer = (
         user: null,
         isAuth: false,
         isLoading: false,
+        isLogoutLoading: false,
         error: '',
       };
     case AuthActionTypes.LOGOUT_USER_ERROR:
       return {
         ...state,
-        isLoading: false,
+        isLogoutLoading: false,
         error: action.payload,
       };
     case AuthActionTypes.CHECK_USER:
@@ -63,6 +68,7 @@ export const authReducer = (
         user: action.payload,
         isAuth: true,
         isLoading: false,
+        isLogoutLoading: false,
         error: '',
       };
     case AuthActionTypes.CHECK_USER_ERROR:
@@ -70,6 +76,7 @@ export const authReducer = (
         user: null,
         isAuth: false,
         isLoading: false,
+        isLogoutLoading: false,
         error: action.payload,
       };
     case AuthActionTypes.RESET_ERROR:

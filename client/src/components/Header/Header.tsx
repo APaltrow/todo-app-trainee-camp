@@ -10,7 +10,7 @@ import { CustomButton, Icon } from '@components';
 import style from './Header.module.scss';
 
 export const Header: FC = () => {
-  const { isAuth, isLoading } = useAppSelector((state) => state.auth);
+  const { isAuth, isLogoutLoading } = useAppSelector((state) => state.auth);
 
   const { logoutThunk } = useActions();
   const { theme, onThemeChange } = useTheme();
@@ -32,7 +32,7 @@ export const Header: FC = () => {
           <>
             <CustomButton
               withLoader
-              isLoading={isLoading}
+              isLoading={isLogoutLoading}
               onClick={handleLogout}
               size={ButtonSizes.SMALL}
               variant={ButtonVariants.PRIMARY}

@@ -8,6 +8,7 @@ export interface IAuthState {
   user: IUser | null;
   isAuth: boolean;
   isLoading: boolean;
+  isLogoutLoading: boolean;
   error: string;
 }
 
