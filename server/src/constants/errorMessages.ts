@@ -18,6 +18,9 @@ export enum ValidationErrors {
   EMAIL_REQUIRED = 'Email is required',
   EMAIL_INVALID = 'Invalid email',
 
+  IMG_STR = 'Photo cannot be empty',
+  IMG_STR_LENGTH = 'Photo url cannot be empty',
+
   PASS_REQUIRED = 'Password is required',
   PASS_MIN_LENG = 'Password should be at least 6 chars',
   PASS_INVALID = 'Invalid password value',

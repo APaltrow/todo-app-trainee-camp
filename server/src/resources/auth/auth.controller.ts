@@ -1,7 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 
 import { authService } from './auth.service';
-import { UserLoginInput, UserRegistrationInput } from './user.schema';
+import {
+  UserLoginInput,
+  UserRegistrationInput,
+  UserUploadsInput,
+} from './user.schema';
 
 class AuthController {
   async login(
@@ -67,6 +71,23 @@ class AuthController {
       await authService.changePassword(userId, oldPassword, newPassword);
 
       return res.json({ message: 'success' });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async uploads(
+    req: Request<{}, {}, UserUploadsInput['body']>,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const userId = req.headers.authorization || '';
+      const { profileImg } = req.body;
+
+      const userData = await authService.uploadPhoto(userId, profileImg);
+
+      return res.json(userData);
     } catch (error) {
       next(error);
     }

@@ -14,4 +14,5 @@ export enum AuthPaths {
   LOGOUT = '/logout',
   REFRESH = '/refresh',
   CHANGE_PASSWORD = '/change-password',
+  UPLOADS = '/uploads',
 }

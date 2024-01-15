@@ -9,6 +9,7 @@ const UserSchema = new Schema(
     passwordHash: { type: String, required: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
+    profileImg: { type: String, default: '' },
   },
   {
     versionKey: false,

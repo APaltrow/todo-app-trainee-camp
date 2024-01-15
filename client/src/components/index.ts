@@ -22,3 +22,4 @@ export * from './ui/CustomInput';
 export * from './ui/Loader';
 export * from './ui/Error';
 export * from './ui/CustomForm';
+export * from './ui/PhotoUploader';

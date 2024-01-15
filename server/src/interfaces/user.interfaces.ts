@@ -5,5 +5,6 @@ export interface IUserDocument extends Document {
   passwordHash: string;
   firstName: string;
   lastName: string;
+  profileImg: string;
   comparePassword: (candidatePass: string) => Promise<boolean>;
 }

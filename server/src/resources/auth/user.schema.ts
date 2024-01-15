@@ -73,6 +73,15 @@ export const UserChangePasswordSchema = object({
     }),
 });
 
+export const UserUploadsSchema = object({
+  body: object({
+    profileImg: string({
+      required_error: ValidationErrors.IMG_STR,
+    }).min(TEXT_MIN_LENG, ValidationErrors.IMG_STR_LENGTH),
+  }),
+});
+
 export type UserLoginInput = TypeOf<typeof UserLoginSchema>;
 export type UserRegistrationInput = TypeOf<typeof UserRegistrationSchema>;
 export type UserChangePasswordInput = TypeOf<typeof UserChangePasswordSchema>;
+export type UserUploadsInput = TypeOf<typeof UserUploadsSchema>;

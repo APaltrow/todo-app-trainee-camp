@@ -9,10 +9,19 @@ export class UserDto {
 
   lastName: string;
 
-  constructor({ _id: id, email, firstName, lastName }: IUserDocument) {
+  profileImg: string;
+
+  constructor({
+    _id: id,
+    email,
+    firstName,
+    lastName,
+    profileImg,
+  }: IUserDocument) {
     this.id = id;
     this.email = email;
     this.firstName = firstName;
     this.lastName = lastName;
+    this.profileImg = profileImg;
   }
 }

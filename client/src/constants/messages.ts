@@ -6,4 +6,5 @@ export const TODO_LIST_MESSAGES: Record<string, string> = {
 
 export enum ResMessages {
   PASS_CHANGED = 'Password has been changed successfully!',
+  FILE_SIZE = 'File size is too large',
 }

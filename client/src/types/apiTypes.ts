@@ -4,6 +4,7 @@ export interface IAuthResponse {
   email: string;
   firstName: string;
   lastName: string;
+  profileImg: string;
 }
 
 export interface ILoginCredentials {

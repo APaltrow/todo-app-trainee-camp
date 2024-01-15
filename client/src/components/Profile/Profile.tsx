@@ -3,6 +3,8 @@ import { FC } from 'react';
 import { useAppSelector } from '@redux';
 import { ChangePassForm } from '@components';
 
+import { ProfilePhoto } from './ProfilePhoto';
+
 import style from './Profile.module.scss';
 
 export const Profile: FC = () => {
@@ -15,6 +17,7 @@ export const Profile: FC = () => {
   return (
     <section className={style.container}>
       <article className={style.user_info}>
+        <ProfilePhoto />
         <h2 className={style.name}>{`${firstName} ${lastName}`}</h2>
         <p className={style.email}>{email}</p>
       </article>

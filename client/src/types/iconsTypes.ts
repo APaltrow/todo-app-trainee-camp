@@ -16,4 +16,5 @@ export enum IconsTypes {
   PROFILE = 'profile',
   EYE_ON = 'eye-on',
   EYE_OFF = 'eye-off',
+  CAMERA = 'camera',
 }

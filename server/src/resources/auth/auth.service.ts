@@ -1,5 +1,6 @@
 import { ApiError, jwtToken } from '@utils';
 import { AuthErrors } from '@constants';
+import { IUserDocument } from '@interfaces';
 
 import { userModel } from './user.model';
 import { UserDto } from './user.dto';
@@ -101,6 +102,22 @@ class AuthService {
     user.save();
 
     return user;
+  }
+
+  async uploadPhoto(userId: string, profileImg: string) {
+    const updatedUser = await userModel.findByIdAndUpdate<IUserDocument>(
+      userId,
+      { profileImg },
+      {
+        new: true,
+      },
+    );
+
+    if (!updatedUser) {
+      throw ApiError.Unauthorized();
+    }
+
+    return new UserDto(updatedUser);
   }
 }
 

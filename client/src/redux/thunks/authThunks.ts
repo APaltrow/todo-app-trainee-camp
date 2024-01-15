@@ -1,6 +1,13 @@
 import { Dispatch } from 'react';
 
-import { changePassword, checkAuth, login, logout, register } from '@api';
+import {
+  changePassword,
+  checkAuth,
+  login,
+  logout,
+  register,
+  updateUserPhoto,
+} from '@api';
 import {
   AuthActions,
   ErrorsAlt,
@@ -32,6 +39,9 @@ import {
   onError,
   onRequest,
   resetTodos,
+  uploadPhoto,
+  uploadPhotoSuccess,
+  uploadPhotoError,
 } from '../actions';
 
 export const loginThunk = (loginCredentials: ILoginCredentials) => {
@@ -132,6 +142,28 @@ export const changePasswordThunk = (credentials: IChangePassCredentials) => {
     } catch (error) {
       dispatch(
         onError(handleResponseError(error, ErrorsAlt.FAILED_CHANGE_PASSWORD)),
+      );
+
+      return false;
+    }
+  };
+};
+
+export const uploadPhotoThunk = (uploads: Record<string, string>) => {
+  return async (dispatch: Dispatch<AuthActions>) => {
+    try {
+      dispatch(uploadPhoto());
+
+      const userData = await updateUserPhoto(uploads);
+
+      dispatch(uploadPhotoSuccess(userData));
+
+      return true;
+    } catch (error) {
+      dispatch(
+        uploadPhotoError(
+          handleResponseError(error, ErrorsAlt.FAILED_PHOTO_UPLOAD),
+        ),
       );
 
       return false;
