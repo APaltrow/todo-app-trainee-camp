@@ -28,18 +28,19 @@ export const LoginForm: FC = () => {
     onResetForm,
   } = useForm(initialValues, initialErrors, validations);
 
+  const isValidForm =
+    isLoading || !!Object.values(errors).find((error) => !!error);
+
   const handleReset = () => {
     onResetForm();
     resetUserError();
   };
 
   const handleLogin = () => {
+    if (isValidForm) return;
     const credentials = formValues as unknown as ILoginCredentials;
     loginThunk(credentials);
   };
-
-  const isValidForm =
-    isLoading || !!Object.values(errors).find((error) => !!error);
 
   return (
     <CustomForm
