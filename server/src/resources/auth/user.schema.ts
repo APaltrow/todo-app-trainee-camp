@@ -1,6 +1,11 @@
 import { TypeOf, object, string } from 'zod';
 
-import { EMTY_STR_REGEXP, PASS_MIN_LENG, ValidationErrors } from '@constants';
+import {
+  EMTY_STR_REGEXP,
+  PASS_MIN_LENG,
+  TEXT_MIN_LENG,
+  ValidationErrors,
+} from '@constants';
 
 export const UserLoginSchema = object({
   body: object({
@@ -23,6 +28,16 @@ export const UserRegistrationSchema = object({
     })
       .min(PASS_MIN_LENG, ValidationErrors.PASS_MIN_LENG)
       .regex(EMTY_STR_REGEXP, ValidationErrors.PASS_INVALID),
+    firstName: string({
+      required_error: ValidationErrors.NAME_FIRST_LENGTH,
+    })
+      .min(TEXT_MIN_LENG, ValidationErrors.NAME_FIRST_LENGTH)
+      .regex(EMTY_STR_REGEXP, ValidationErrors.NAME_FIRST_LENGTH),
+    lastName: string({
+      required_error: ValidationErrors.NAME_LAST_LENGTH,
+    })
+      .min(TEXT_MIN_LENG, ValidationErrors.NAME_LAST_LENGTH)
+      .regex(EMTY_STR_REGEXP, ValidationErrors.NAME_LAST_LENGTH),
     passwordConfirm: string({
       required_error: ValidationErrors.PASS_CONFIRMATION,
     }),
@@ -58,6 +73,15 @@ export const UserChangePasswordSchema = object({
     }),
 });
 
+export const UserUploadsSchema = object({
+  body: object({
+    profileImg: string({
+      required_error: ValidationErrors.IMG_STR,
+    }).min(TEXT_MIN_LENG, ValidationErrors.IMG_STR_LENGTH),
+  }),
+});
+
 export type UserLoginInput = TypeOf<typeof UserLoginSchema>;
 export type UserRegistrationInput = TypeOf<typeof UserRegistrationSchema>;
 export type UserChangePasswordInput = TypeOf<typeof UserChangePasswordSchema>;
+export type UserUploadsInput = TypeOf<typeof UserUploadsSchema>;

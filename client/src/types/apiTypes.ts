@@ -2,6 +2,9 @@ export interface IAuthResponse {
   accessToken: string;
   refreshToken: string;
   email: string;
+  firstName: string;
+  lastName: string;
+  profileImg: string;
 }
 
 export interface ILoginCredentials {
@@ -10,6 +13,8 @@ export interface ILoginCredentials {
 }
 
 export interface IRegistrationCredentials extends ILoginCredentials {
+  firstName: string;
+  lastName: string;
   passwordConfirm: string;
 }
 

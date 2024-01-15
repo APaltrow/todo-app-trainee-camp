@@ -7,6 +7,8 @@ export const LOGIN_FORM_INITIAL_VALUES = {
 
 export const REGISTRATION_FORM_INITIAL_VALUES = {
   email: '',
+  firstName: '',
+  lastName: '',
   password: '',
   passwordConfirm: '',
 };
@@ -24,6 +26,8 @@ export const LOGIN_FORM_INITIAL__ERRORS = {
 
 export const REGISTRATION_FORM_INITIAL__ERRORS = {
   email: 'Field cannot be empty',
+  firstName: 'Field cannot be empty',
+  lastName: 'Field cannot be empty',
   password: 'Field cannot be empty',
   passwordConfirm: 'Field cannot be empty',
 };
@@ -49,6 +53,12 @@ export const REGISTRATION_FORM_VALIDATIONS: Record<string, Validations> = {
   email: {
     isEmpty: true,
     isEmail: true,
+  },
+  firstName: {
+    isEmpty: true,
+  },
+  lastName: {
+    isEmpty: true,
   },
   password: {
     isEmpty: true,
@@ -95,6 +105,18 @@ export const REGISTRATION_INPUTS = [
     name: 'email',
     placeholder: 'Email',
     icon: IconsTypes.EMAIL,
+    type: 'email',
+  },
+  {
+    name: 'firstName',
+    placeholder: 'First name',
+    icon: IconsTypes.PROFILE,
+    type: 'text',
+  },
+  {
+    name: 'lastName',
+    placeholder: 'Last name',
+    icon: IconsTypes.PROFILE,
     type: 'text',
   },
   {

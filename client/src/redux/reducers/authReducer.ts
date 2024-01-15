@@ -5,7 +5,9 @@ const initialState: IAuthState = {
   isAuth: false,
   isLoading: false,
   isLogoutLoading: false,
+  isUploadLoading: false,
   error: '',
+  uploadError: '',
 };
 
 export const authReducer = (
@@ -19,7 +21,9 @@ export const authReducer = (
         isAuth: false,
         isLoading: true,
         isLogoutLoading: false,
+        isUploadLoading: false,
         error: '',
+        uploadError: '',
       };
     case AuthActionTypes.LOGIN_USER_SUCCESS:
       return {
@@ -27,7 +31,9 @@ export const authReducer = (
         isAuth: true,
         isLoading: false,
         isLogoutLoading: false,
+        isUploadLoading: false,
         error: '',
+        uploadError: '',
       };
     case AuthActionTypes.LOGIN_USER_ERROR:
       return {
@@ -35,7 +41,9 @@ export const authReducer = (
         isAuth: false,
         isLoading: false,
         isLogoutLoading: false,
+        isUploadLoading: false,
         error: action.payload,
+        uploadError: '',
       };
     case AuthActionTypes.LOGOUT_USER:
       return {
@@ -49,7 +57,9 @@ export const authReducer = (
         isAuth: false,
         isLoading: false,
         isLogoutLoading: false,
+        isUploadLoading: false,
         error: '',
+        uploadError: '',
       };
     case AuthActionTypes.LOGOUT_USER_ERROR:
       return {
@@ -69,7 +79,9 @@ export const authReducer = (
         isAuth: true,
         isLoading: false,
         isLogoutLoading: false,
+        isUploadLoading: false,
         error: '',
+        uploadError: '',
       };
     case AuthActionTypes.CHECK_USER_ERROR:
       return {
@@ -77,12 +89,15 @@ export const authReducer = (
         isAuth: false,
         isLoading: false,
         isLogoutLoading: false,
+        isUploadLoading: false,
         error: action.payload,
+        uploadError: '',
       };
     case AuthActionTypes.RESET_ERROR:
       return {
         ...state,
         error: '',
+        uploadError: '',
       };
     case AuthActionTypes.ON_REQUEST:
       return {
@@ -101,6 +116,25 @@ export const authReducer = (
         ...state,
         isLoading: false,
         error: action.payload,
+      };
+    case AuthActionTypes.UPLOAD_PHOTO:
+      return {
+        ...state,
+        isUploadLoading: true,
+        error: '',
+      };
+    case AuthActionTypes.UPLOAD_PHOTO_SUCCESS:
+      return {
+        ...state,
+        user: action.payload,
+        isUploadLoading: false,
+        error: '',
+      };
+    case AuthActionTypes.UPLOAD_PHOTO_ERROR:
+      return {
+        ...state,
+        isUploadLoading: false,
+        uploadError: action.payload,
       };
 
     default:

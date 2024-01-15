@@ -8,6 +8,7 @@ import {
   UserChangePasswordSchema,
   UserLoginSchema,
   UserRegistrationSchema,
+  UserUploadsSchema,
 } from './user.schema';
 
 export const authRouter = Router();
@@ -29,4 +30,10 @@ authRouter.put(
   authMiddleware,
   validateResource(UserChangePasswordSchema),
   authController.changePassword,
+);
+authRouter.put(
+  AuthPaths.UPLOADS,
+  authMiddleware,
+  validateResource(UserUploadsSchema),
+  authController.uploads,
 );

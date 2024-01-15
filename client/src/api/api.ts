@@ -60,8 +60,8 @@ $api.interceptors.response.use(
         const status = (e as AxiosError).response?.status;
 
         if (status === ApiResStatuses.UNAUTHORIZED) {
-          setFilterTodo(FilterOptions.ALL);
-          setSearchTodo('');
+          store.dispatch(setFilterTodo(FilterOptions.ALL));
+          store.dispatch(setSearchTodo(''));
           removeTokens();
           store.dispatch(resetTodos());
           store.dispatch(logoutUserSuccess());

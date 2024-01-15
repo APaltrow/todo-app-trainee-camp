@@ -46,7 +46,7 @@ export const resetUserError = (): AuthActions => ({
 });
 
 export const onRequest = (): AuthActions => ({
-  type: AuthActionTypes.ON_SUCCESS,
+  type: AuthActionTypes.ON_REQUEST,
 });
 
 export const onSuccess = (): AuthActions => ({
@@ -56,4 +56,18 @@ export const onSuccess = (): AuthActions => ({
 export const onError = (message: string): AuthActions => ({
   type: AuthActionTypes.ON_ERROR,
   payload: message,
+});
+
+export const uploadPhoto = (): AuthActions => ({
+  type: AuthActionTypes.UPLOAD_PHOTO,
+});
+
+export const uploadPhotoSuccess = (userData: IUser): AuthActions => ({
+  type: AuthActionTypes.UPLOAD_PHOTO_SUCCESS,
+  payload: userData,
+});
+
+export const uploadPhotoError = (errorMessage: string): AuthActions => ({
+  type: AuthActionTypes.UPLOAD_PHOTO_ERROR,
+  payload: errorMessage,
 });

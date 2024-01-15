@@ -1,5 +1,8 @@
 export interface IUser {
   email: string;
+  firstName: string;
+  lastName: string;
+  profileImg: string;
 }
 
 export interface IAuthState {
@@ -7,7 +10,9 @@ export interface IAuthState {
   isAuth: boolean;
   isLoading: boolean;
   isLogoutLoading: boolean;
+  isUploadLoading: boolean;
   error: string;
+  uploadError: string;
 }
 
 export enum AuthActionTypes {
@@ -24,6 +29,10 @@ export enum AuthActionTypes {
   ON_SUCCESS = 'ON_SUCCESS',
   ON_ERROR = 'ON_ERROR',
   ON_REQUEST = 'ON_REQUEST',
+
+  UPLOAD_PHOTO = 'UPLOAD_PHOTO',
+  UPLOAD_PHOTO_SUCCESS = 'UPLOAD_PHOTO_SUCCESS',
+  UPLOAD_PHOTO_ERROR = 'UPLOAD_PHOTO_ERROR',
 }
 
 interface LoginAction {
@@ -84,6 +93,20 @@ interface RequestAction {
   type: AuthActionTypes.ON_REQUEST;
 }
 
+interface UploadPhotoAction {
+  type: AuthActionTypes.UPLOAD_PHOTO;
+}
+
+interface UploadPhotoSuccessAction {
+  type: AuthActionTypes.UPLOAD_PHOTO_SUCCESS;
+  payload: IUser;
+}
+
+interface UploadPhotoErrorAction {
+  type: AuthActionTypes.UPLOAD_PHOTO_ERROR;
+  payload: string;
+}
+
 export type AuthActions =
   | LoginAction
   | LoginSuccessAction
@@ -97,4 +120,7 @@ export type AuthActions =
   | ResetErrorAction
   | SuccessAction
   | ErrorAction
-  | RequestAction;
+  | RequestAction
+  | UploadPhotoAction
+  | UploadPhotoSuccessAction
+  | UploadPhotoErrorAction;

@@ -4,6 +4,7 @@ export * from './getLocalTimeFromISO';
 export * from './tokenHelpers';
 export * from './handleError';
 export * from './getQueryParams';
+export * from './convertToBase64';
 /* VALIDATORS */
 export * from './validators/checkForSpecialCharacters';
 export * from './validators/checkIfDateBigger';
