@@ -30,16 +30,6 @@ export const RegistrationForm: FC = () => {
     onResetForm,
   } = useForm(initialValues, initialErrors, validations);
 
-  const handleReset = () => {
-    onResetForm();
-    resetUserError();
-  };
-
-  const handleRegistration = () => {
-    const credentials = formValues as unknown as IRegistrationCredentials;
-    registerThunk(credentials);
-  };
-
   const isSamePass = formValues.password === formValues.passwordConfirm;
 
   const isValidationError = !!Object.values(errors).find((error) => !!error);
@@ -48,6 +38,18 @@ export const RegistrationForm: FC = () => {
     isValidationError || isSamePass ? '' : ValidationsErrors.PASSWORD_MISMATCH;
 
   const isValidForm = isLoading || !isSamePass || isValidationError;
+
+  const handleReset = () => {
+    onResetForm();
+    resetUserError();
+  };
+
+  const handleRegistration = () => {
+    if (isValidForm) return;
+
+    const credentials = formValues as unknown as IRegistrationCredentials;
+    registerThunk(credentials);
+  };
 
   return (
     <CustomForm
