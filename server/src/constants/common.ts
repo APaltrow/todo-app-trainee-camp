@@ -3,7 +3,7 @@ export const LINK_EXP_TIME = 1000 * 60 * 15;
 export const RESET_LINK_DIVIDER = '-';
 export const AUTH_HEADER_DIVIDER = ' ';
 export const MODE_DEV = 'dev';
-export const RESET_PREFIX = 'todo-app-trainee-camp/#/reset-password/';
+export const RESET_PREFIX = '/todo-app-trainee-camp/#/reset-password/';
 
 export const EXPIRED_ACCESS_TOKEN =
   'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODE4NzdkODU3YWQ0MGZkMWM4MWY3MSIsImlhdCI6MTcwMzE1NjU1MywiZXhwIjoxNzAzMTU4MzUzfQ.DujN3iU1Y4hiHPQOTxDgNf166kgX42FnPgrBkqs-Jfk';
