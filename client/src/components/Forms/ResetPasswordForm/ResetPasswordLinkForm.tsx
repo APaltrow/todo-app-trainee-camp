@@ -1,22 +1,24 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { ButtonSizes, ButtonVariants, ILoginCredentials } from '@types';
-import { useActions, useAppSelector } from '@redux';
+import { CustomButton, CustomForm, CustomInput } from '@components';
 import { useDelayedResetError, useForm } from '@hooks';
-import { CustomButton, CustomInput, CustomForm } from '@components';
+import { useActions, useAppSelector } from '@redux';
+import { ButtonSizes, ButtonVariants } from '@types';
 import {
-  LOGIN_FORM_INITIAL_VALUES as initialValues,
-  LOGIN_FORM_INITIAL__ERRORS as initialErrors,
-  LOGIN_FORM_VALIDATIONS as validations,
-  LOGIN_INPUTS as inputs,
-  RoutesPaths,
+  RESET_LINK_FORM_INITIAL_VALUES as initialValues,
+  RESET_LINK_FORM_INITIAL_ERRORS as initialErrors,
+  RESET_LINK_FORM_VALIDATIONS as validations,
+  RESET_LINK_INPUTS as inputs,
+  ResMessages,
 } from '@constants';
 
-export const LoginForm: FC = () => {
+export const ResetPasswordLinkForm: FC = () => {
   const { isLoading, error } = useAppSelector((state) => state.auth);
 
-  const { loginThunk, resetUserError } = useActions();
+  const { resetUserError, getResetPasswordLinkThunk } = useActions();
+
+  const [resetMessage, setResetMessage] = useState('');
 
   useDelayedResetError(resetUserError, error);
 
@@ -31,52 +33,47 @@ export const LoginForm: FC = () => {
   const isValidForm =
     isLoading || !!Object.values(errors).find((error) => !!error);
 
-  const handleReset = () => {
+  const handleReceiveResetLink = async () => {
+    if (isValidForm) return;
+
+    const { email } = formValues;
+    const isSuccess = await getResetPasswordLinkThunk(email);
+
+    if (!isSuccess) return;
+
+    setResetMessage(ResMessages.RESET_LINK_SUCCESS);
     onResetForm();
-    resetUserError();
   };
 
-  const handleLogin = () => {
-    if (isValidForm) return;
-    const credentials = formValues as unknown as ILoginCredentials;
-    loginThunk(credentials);
-  };
+  if (resetMessage) {
+    return <h3>{resetMessage}</h3>;
+  }
 
   return (
     <CustomForm
-      formTitle="Please sign in"
+      formTitle="Reset password link"
       isLoading={isLoading}
       error={error}
-      onSubmit={handleLogin}
+      onSubmit={handleReceiveResetLink}
       buttons={
         <>
-          <CustomButton
-            onClick={handleReset}
-            variant={ButtonVariants.SECONDARY}
-            size={ButtonSizes.MID}
-            isDisabled={isLoading}
-          >
-            Reset
-          </CustomButton>
-
-          <NavLink to={`../${RoutesPaths.REGISTRATION}`}>
+          <NavLink to="../">
             <CustomButton
               onClick={() => {}}
               variant={ButtonVariants.DEFAULT}
               size={ButtonSizes.MID}
-              isDisabled={isLoading}
             >
-              Registration
+              Go back
             </CustomButton>
           </NavLink>
 
           <CustomButton
-            onClick={handleLogin}
+            onClick={handleReceiveResetLink}
             isDisabled={isValidForm}
             variant={ButtonVariants.PRIMARY}
             size={ButtonSizes.MID}
           >
-            Login
+            Send reset link
           </CustomButton>
         </>
       }
@@ -97,9 +94,6 @@ export const LoginForm: FC = () => {
           />
         );
       })}
-      <NavLink to={`../${RoutesPaths.RESET_PASSWORD}`}>
-        Forgot password? Reset!
-      </NavLink>
     </CustomForm>
   );
 };

@@ -4,3 +4,6 @@ export * from './password.utils';
 export * from './bd.utils';
 export * from './queries.utils';
 export * from './todoTotals.utils';
+export * from './mailingService.utils';
+export * from './getResetLink.utils';
+export * from './checkResetLinkExpiration.utils';

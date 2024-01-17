@@ -3,7 +3,9 @@ import { Request, Response, NextFunction } from 'express';
 import { authService } from './auth.service';
 import {
   UserLoginInput,
+  UserPesetPasswordInput,
   UserRegistrationInput,
+  UserResetPasswordLinkInput,
   UserUploadsInput,
 } from './user.schema';
 
@@ -88,6 +90,38 @@ class AuthController {
       const userData = await authService.uploadPhoto(userId, profileImg);
 
       return res.json(userData);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async resetPasswordLink(
+    req: Request<{}, {}, UserResetPasswordLinkInput['body']>,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const { email } = req.body;
+
+      await authService.generateResetPasswordLink(email);
+
+      return res.json({ message: 'success' });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async resetPassword(
+    req: Request<{}, {}, UserPesetPasswordInput['body']>,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const { newPassword, resetLink } = req.body;
+
+      await authService.resetPassword(newPassword, resetLink);
+
+      return res.json({ message: 'success' });
     } catch (error) {
       next(error);
     }

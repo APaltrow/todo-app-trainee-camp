@@ -81,7 +81,38 @@ export const UserUploadsSchema = object({
   }),
 });
 
+export const UserResetPasswordLinkSchema = object({
+  body: object({
+    email: string({
+      required_error: ValidationErrors.EMAIL_REQUIRED,
+    }).email(ValidationErrors.EMAIL_INVALID),
+  }),
+});
+
+export const UserResetPasswordSchema = object({
+  body: object({
+    newPassword: string({
+      required_error: ValidationErrors.PASS_REQUIRED,
+    })
+      .min(PASS_MIN_LENG, ValidationErrors.PASS_MIN_LENG)
+      .regex(EMTY_STR_REGEXP, ValidationErrors.PASS_INVALID),
+    newPasswordConfirm: string({
+      required_error: ValidationErrors.PASS_CONFIRMATION,
+    }),
+    resetLink: string({
+      required_error: ValidationErrors.RESET_LINK_REQUIRED,
+    }),
+  }).refine((data) => data.newPassword === data.newPasswordConfirm, {
+    message: ValidationErrors.PASS_MISMATCH,
+    path: ['newPasswordConfirm'],
+  }),
+});
+
 export type UserLoginInput = TypeOf<typeof UserLoginSchema>;
 export type UserRegistrationInput = TypeOf<typeof UserRegistrationSchema>;
 export type UserChangePasswordInput = TypeOf<typeof UserChangePasswordSchema>;
 export type UserUploadsInput = TypeOf<typeof UserUploadsSchema>;
+export type UserResetPasswordLinkInput = TypeOf<
+  typeof UserResetPasswordLinkSchema
+>;
+export type UserPesetPasswordInput = TypeOf<typeof UserResetPasswordSchema>;

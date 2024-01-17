@@ -8,6 +8,8 @@ import {
   UserChangePasswordSchema,
   UserLoginSchema,
   UserRegistrationSchema,
+  UserResetPasswordLinkSchema,
+  UserResetPasswordSchema,
   UserUploadsSchema,
 } from './user.schema';
 
@@ -36,4 +38,14 @@ authRouter.put(
   authMiddleware,
   validateResource(UserUploadsSchema),
   authController.uploads,
+);
+authRouter.post(
+  AuthPaths.RESET_PASS_LINK,
+  validateResource(UserResetPasswordLinkSchema),
+  authController.resetPasswordLink,
+);
+authRouter.put(
+  AuthPaths.RESET_PASS,
+  validateResource(UserResetPasswordSchema),
+  authController.resetPassword,
 );

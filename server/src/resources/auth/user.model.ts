@@ -10,6 +10,7 @@ const UserSchema = new Schema(
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     profileImg: { type: String, default: '' },
+    resetPasswordId: { type: String, default: '' },
   },
   {
     versionKey: false,

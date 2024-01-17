@@ -23,3 +23,9 @@ export interface IChangePassCredentials {
   newPassword: string;
   newPasswordConfirm: string;
 }
+
+export interface IResetPasswordCredentials {
+  newPassword: string;
+  newPasswordConfirm: string;
+  resetLink: string;
+}

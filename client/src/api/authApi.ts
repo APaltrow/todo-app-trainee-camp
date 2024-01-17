@@ -6,6 +6,7 @@ import {
   IRegistrationCredentials,
   IChangePassCredentials,
   IUser,
+  IResetPasswordCredentials,
 } from '@types';
 import { API_URL, ApiPaths } from '@constants';
 import { getTokens } from '@helpers';
@@ -65,6 +66,20 @@ export const changePassword = async (credentials: IChangePassCredentials) => {
 
 export const updateUserPhoto = async (updates: Record<string, string>) => {
   const { data } = await $api.put<IUser>(ApiPaths.UPLOADS, updates);
+
+  return data;
+};
+
+export const getResetPasswordLink = async (email: string) => {
+  const { data } = await $api.post(ApiPaths.RESET_PASS_LINK, { email });
+
+  return data;
+};
+
+export const resetPassword = async (
+  resetCredentials: IResetPasswordCredentials,
+) => {
+  const { data } = await $api.put(ApiPaths.RESET_PASS, resetCredentials);
 
   return data;
 };

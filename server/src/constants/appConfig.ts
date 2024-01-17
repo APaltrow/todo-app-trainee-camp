@@ -13,6 +13,10 @@ const {
   JWT_REFRESH_EXP = '',
   SALT_ROUNDS = DefaultAppConfig.SALT_ROUNDS,
   NODE_ENV,
+  SMTP_PASS = '',
+  SMTP_USER = '',
+  SMTP_SERVICE = '',
+  SMTP_HOST = '',
 } = process.env;
 
 const isDev = NODE_ENV?.trim() === MODE_DEV;
@@ -27,4 +31,8 @@ export const appConfig = {
   JWT_REFRESH_SECRET,
   JWT_REFRESH_EXP,
   SALT_ROUNDS,
+  SMTP_PASS,
+  SMTP_USER,
+  SMTP_SERVICE,
+  SMTP_HOST,
 };
