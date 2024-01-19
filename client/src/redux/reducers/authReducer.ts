@@ -8,6 +8,8 @@ const initialState: IAuthState = {
   isUploadLoading: false,
   error: '',
   uploadError: '',
+  resetLinkError: '',
+  resetPasswordError: '',
 };
 
 export const authReducer = (
@@ -17,33 +19,26 @@ export const authReducer = (
   switch (action.type) {
     case AuthActionTypes.LOGIN_USER:
       return {
+        ...state,
         user: null,
         isAuth: false,
         isLoading: true,
-        isLogoutLoading: false,
-        isUploadLoading: false,
         error: '',
-        uploadError: '',
       };
     case AuthActionTypes.LOGIN_USER_SUCCESS:
       return {
+        ...state,
         user: action.payload,
         isAuth: true,
         isLoading: false,
-        isLogoutLoading: false,
-        isUploadLoading: false,
-        error: '',
-        uploadError: '',
       };
     case AuthActionTypes.LOGIN_USER_ERROR:
       return {
+        ...state,
         user: null,
         isAuth: false,
         isLoading: false,
-        isLogoutLoading: false,
-        isUploadLoading: false,
         error: action.payload,
-        uploadError: '',
       };
     case AuthActionTypes.LOGOUT_USER:
       return {
@@ -53,13 +48,10 @@ export const authReducer = (
       };
     case AuthActionTypes.LOGOUT_USER_SUCCESS:
       return {
+        ...state,
         user: null,
         isAuth: false,
-        isLoading: false,
         isLogoutLoading: false,
-        isUploadLoading: false,
-        error: '',
-        uploadError: '',
       };
     case AuthActionTypes.LOGOUT_USER_ERROR:
       return {
@@ -75,29 +67,26 @@ export const authReducer = (
       };
     case AuthActionTypes.CHECK_USER_SUCCESS:
       return {
+        ...state,
         user: action.payload,
         isAuth: true,
         isLoading: false,
-        isLogoutLoading: false,
-        isUploadLoading: false,
-        error: '',
-        uploadError: '',
       };
     case AuthActionTypes.CHECK_USER_ERROR:
       return {
+        ...state,
         user: null,
         isAuth: false,
         isLoading: false,
-        isLogoutLoading: false,
-        isUploadLoading: false,
         error: action.payload,
-        uploadError: '',
       };
     case AuthActionTypes.RESET_ERROR:
       return {
         ...state,
         error: '',
         uploadError: '',
+        resetLinkError: '',
+        resetPasswordError: '',
       };
     case AuthActionTypes.ON_REQUEST:
       return {
@@ -109,7 +98,6 @@ export const authReducer = (
       return {
         ...state,
         isLoading: false,
-        error: '',
       };
     case AuthActionTypes.ON_ERROR:
       return {
@@ -128,13 +116,24 @@ export const authReducer = (
         ...state,
         user: action.payload,
         isUploadLoading: false,
-        error: '',
       };
     case AuthActionTypes.UPLOAD_PHOTO_ERROR:
       return {
         ...state,
         isUploadLoading: false,
         uploadError: action.payload,
+      };
+    case AuthActionTypes.RESET_LINK_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        resetLinkError: action.payload,
+      };
+    case AuthActionTypes.RESET_PASS_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        resetPasswordError: action.payload,
       };
 
     default:

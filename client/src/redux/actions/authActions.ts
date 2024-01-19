@@ -71,3 +71,13 @@ export const uploadPhotoError = (errorMessage: string): AuthActions => ({
   type: AuthActionTypes.UPLOAD_PHOTO_ERROR,
   payload: errorMessage,
 });
+
+export const resetLinkError = (errorMessage: string): AuthActions => ({
+  type: AuthActionTypes.RESET_LINK_ERROR,
+  payload: errorMessage,
+});
+
+export const resetPasswordError = (errorMessage: string): AuthActions => ({
+  type: AuthActionTypes.RESET_PASS_ERROR,
+  payload: errorMessage,
+});

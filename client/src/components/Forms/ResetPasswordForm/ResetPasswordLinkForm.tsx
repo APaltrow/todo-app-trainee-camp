@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { CustomButton, CustomForm, CustomInput } from '@components';
+import { CustomButton, CustomForm, CustomInput, Info } from '@components';
 import { useDelayedResetError, useForm } from '@hooks';
 import { useActions, useAppSelector } from '@redux';
 import { ButtonSizes, ButtonVariants } from '@types';
@@ -14,7 +14,9 @@ import {
 } from '@constants';
 
 export const ResetPasswordLinkForm: FC = () => {
-  const { isLoading, error } = useAppSelector((state) => state.auth);
+  const { isLoading, resetLinkError: error } = useAppSelector(
+    (state) => state.auth,
+  );
 
   const { resetUserError, getResetPasswordLinkThunk } = useActions();
 
@@ -46,7 +48,7 @@ export const ResetPasswordLinkForm: FC = () => {
   };
 
   if (resetMessage) {
-    return <h3>{resetMessage}</h3>;
+    return <Info message={resetMessage} />;
   }
 
   return (

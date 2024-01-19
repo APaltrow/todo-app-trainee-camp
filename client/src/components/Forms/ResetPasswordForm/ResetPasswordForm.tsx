@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 
-import { CustomButton, CustomForm, CustomInput } from '@components';
+import { CustomButton, CustomForm, CustomInput, Info } from '@components';
 import { useDebounce, useDelayedResetError, useForm } from '@hooks';
 import { useActions, useAppSelector } from '@redux';
 import { ButtonSizes, ButtonVariants, IResetPasswordCredentials } from '@types';
@@ -17,7 +17,9 @@ import {
 } from '@constants';
 
 export const ResetPasswordForm: FC = () => {
-  const { isLoading, error } = useAppSelector((state) => state.auth);
+  const { isLoading, resetPasswordError: error } = useAppSelector(
+    (state) => state.auth,
+  );
 
   const { resetUserError, resetPasswordThunk } = useActions();
 
@@ -37,14 +39,16 @@ export const ResetPasswordForm: FC = () => {
     onResetForm,
   } = useForm(initialValues, initialErrors, validations);
 
-  const isSamePass = formValues.newPassword === formValues.newPasswordConfirm;
+  const { newPassword, newPasswordConfirm } = formValues;
+  const isSamePass =
+    newPassword === newPasswordConfirm
+      ? ''
+      : ValidationsErrors.PASSWORD_MISMATCH;
 
-  const isValidationError = !!Object.values(errors).find((error) => !!error);
+  const isValidationError =
+    !!Object.values(errors).find((error) => !!error) || !!isSamePass;
 
-  const passwordErrors =
-    isValidationError || isSamePass ? '' : ValidationsErrors.PASSWORD_MISMATCH;
-
-  const isValidForm = isLoading || !isSamePass || isValidationError;
+  const isValidForm = isLoading || isValidationError;
 
   const redirectToLogin = useDebounce(
     () => navigate(`../${RoutesPaths.LOGIN}`),
@@ -72,14 +76,14 @@ export const ResetPasswordForm: FC = () => {
   };
 
   if (resetMessage) {
-    return <h3>{resetMessage}</h3>;
+    return <Info message={resetMessage} />;
   }
 
   return (
     <CustomForm
       formTitle="Reset password"
       isLoading={isLoading}
-      error={error || passwordErrors}
+      error={error || isSamePass}
       onSubmit={handleReceiveResetLink}
       buttons={
         <>

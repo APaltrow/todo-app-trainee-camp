@@ -45,6 +45,8 @@ import {
   uploadPhoto,
   uploadPhotoSuccess,
   uploadPhotoError,
+  resetLinkError,
+  resetPasswordError,
 } from '../actions';
 
 export const loginThunk = (loginCredentials: ILoginCredentials) => {
@@ -186,7 +188,9 @@ export const getResetPasswordLinkThunk = (email: string) => {
       return true;
     } catch (error) {
       dispatch(
-        onError(handleResponseError(error, ErrorsAlt.FAILED_PHOTO_UPLOAD)),
+        resetLinkError(
+          handleResponseError(error, ErrorsAlt.FAILED_PHOTO_UPLOAD),
+        ),
       );
 
       return false;
@@ -208,7 +212,9 @@ export const resetPasswordThunk = (
       return true;
     } catch (error) {
       dispatch(
-        onError(handleResponseError(error, ErrorsAlt.FAILED_RESET_PASS)),
+        resetPasswordError(
+          handleResponseError(error, ErrorsAlt.FAILED_RESET_PASS),
+        ),
       );
 
       return false;

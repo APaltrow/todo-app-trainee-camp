@@ -12,9 +12,7 @@ import {
   ResMessages,
 } from '@constants';
 
-import { CustomButton, CustomForm, CustomInput } from '@components';
-
-import style from './ChangePassForm.module.scss';
+import { CustomButton, CustomForm, CustomInput, Info } from '@components';
 
 export const ChangePassForm: FC = () => {
   const { isLoading, error } = useAppSelector((state) => state.auth);
@@ -62,7 +60,7 @@ export const ChangePassForm: FC = () => {
   };
 
   if (successRes) {
-    return <h3 className={style.success_msg}>{successRes}</h3>;
+    return <Info message={successRes} />;
   }
 
   return (

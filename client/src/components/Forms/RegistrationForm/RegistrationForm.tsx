@@ -30,14 +30,14 @@ export const RegistrationForm: FC = () => {
     onResetForm,
   } = useForm(initialValues, initialErrors, validations);
 
-  const isSamePass = formValues.password === formValues.passwordConfirm;
+  const { password, passwordConfirm } = formValues;
+  const isSamePass =
+    password === passwordConfirm ? '' : ValidationsErrors.PASSWORD_MISMATCH;
 
-  const isValidationError = !!Object.values(errors).find((error) => !!error);
+  const isValidationError =
+    !!Object.values(errors).find((error) => !!error) || !!isSamePass;
 
-  const passwordErrors =
-    isValidationError || isSamePass ? '' : ValidationsErrors.PASSWORD_MISMATCH;
-
-  const isValidForm = isLoading || !isSamePass || isValidationError;
+  const isValidForm = isLoading || isValidationError;
 
   const handleReset = () => {
     onResetForm();
@@ -55,7 +55,7 @@ export const RegistrationForm: FC = () => {
     <CustomForm
       formTitle="Registration"
       isLoading={isLoading}
-      error={error || passwordErrors}
+      error={error || isSamePass}
       onSubmit={handleRegistration}
       buttons={
         <>
