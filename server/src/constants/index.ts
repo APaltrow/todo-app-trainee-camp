@@ -8,3 +8,4 @@ export * from './todoConstants';
 export * from './dbConstants';
 export * from './auth';
 export * from './validations';
+export * from './smtpConfig';

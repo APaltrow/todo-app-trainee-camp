@@ -12,9 +12,7 @@ import {
   ResMessages,
 } from '@constants';
 
-import { CustomButton, CustomForm, CustomInput } from '@components';
-
-import style from './ChangePassForm.module.scss';
+import { CustomButton, CustomForm, CustomInput, Info } from '@components';
 
 export const ChangePassForm: FC = () => {
   const { isLoading, error } = useAppSelector((state) => state.auth);
@@ -34,12 +32,23 @@ export const ChangePassForm: FC = () => {
     onResetForm,
   } = useForm(initialValues, initialErrors, validations);
 
+  const isSamePass = formValues.newPassword === formValues.newPasswordConfirm;
+
+  const isValidationError = !!Object.values(errors).find((error) => !!error);
+
+  const passwordErrors =
+    isValidationError || isSamePass ? '' : ValidationsErrors.PASSWORD_MISMATCH;
+
+  const isValidForm = isLoading || !isSamePass || isValidationError;
+
   const handleReset = () => {
     onResetForm();
     resetUserError();
   };
 
   const handleChangePass = async () => {
+    if (isValidForm) return;
+
     const credentials = formValues as unknown as IChangePassCredentials;
 
     const isSuccess = await changePasswordThunk(credentials);
@@ -50,17 +59,8 @@ export const ChangePassForm: FC = () => {
     handleReset();
   };
 
-  const isSamePass = formValues.newPassword === formValues.newPasswordConfirm;
-
-  const isValidationError = !!Object.values(errors).find((error) => !!error);
-
-  const passwordErrors =
-    isValidationError || isSamePass ? '' : ValidationsErrors.PASSWORD_MISMATCH;
-
-  const isValidForm = isLoading || !isSamePass || isValidationError;
-
   if (successRes) {
-    return <h3 className={style.success_msg}>{successRes}</h3>;
+    return <Info message={successRes} />;
   }
 
   return (

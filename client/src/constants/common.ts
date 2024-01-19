@@ -6,3 +6,4 @@ export const ZERO_TODOS = 0;
 export const SUBMIT_BTNS = ['NumpadEnter', 'Enter'];
 
 export const FILE_MAX_SIZE = 100000;
+export const SUCCESS_MSG_DELAY = 2000;

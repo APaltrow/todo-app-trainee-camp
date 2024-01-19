@@ -1,24 +1,33 @@
-import { FC } from 'react';
-import { NavLink } from 'react-router-dom';
+import { FC, useState } from 'react';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 
+import { CustomButton, CustomForm, CustomInput, Info } from '@components';
+import { useDebounce, useDelayedResetError, useForm } from '@hooks';
 import { useActions, useAppSelector } from '@redux';
+import { ButtonSizes, ButtonVariants, IResetPasswordCredentials } from '@types';
 import {
-  REGISTRATION_FORM_INITIAL_VALUES as initialValues,
-  REGISTRATION_FORM_INITIAL__ERRORS as initialErrors,
-  REGISTRATION_FORM_VALIDATIONS as validations,
-  REGISTRATION_INPUTS as inputs,
-  ValidationsErrors,
+  RESET_PASS_FORM_INITIAL_VALUES as initialValues,
+  RESET_PASS_FORM_INITIAL_ERRORS as initialErrors,
+  RESET_PASS_FORM_VALIDATIONS as validations,
+  RESET_PASS_INPUTS as inputs,
   RoutesPaths,
+  ResMessages,
+  SUCCESS_MSG_DELAY,
+  ValidationsErrors,
 } from '@constants';
-import { ButtonSizes, ButtonVariants, IRegistrationCredentials } from '@types';
-import { useDelayedResetError, useForm } from '@hooks';
 
-import { CustomButton, CustomForm, CustomInput } from '@components';
+export const ResetPasswordForm: FC = () => {
+  const { isLoading, resetPasswordError: error } = useAppSelector(
+    (state) => state.auth,
+  );
 
-export const RegistrationForm: FC = () => {
-  const { isLoading, error } = useAppSelector((state) => state.auth);
+  const { resetUserError, resetPasswordThunk } = useActions();
 
-  const { registerThunk, resetUserError } = useActions();
+  const [resetMessage, setResetMessage] = useState('');
+
+  const navigate = useNavigate();
+
+  const { id: resetLink } = useParams();
 
   useDelayedResetError(resetUserError, error);
 
@@ -30,40 +39,58 @@ export const RegistrationForm: FC = () => {
     onResetForm,
   } = useForm(initialValues, initialErrors, validations);
 
-  const { password, passwordConfirm } = formValues;
+  const { newPassword, newPasswordConfirm } = formValues;
   const isSamePass =
-    password === passwordConfirm ? '' : ValidationsErrors.PASSWORD_MISMATCH;
+    newPassword === newPasswordConfirm
+      ? ''
+      : ValidationsErrors.PASSWORD_MISMATCH;
 
   const isValidationError =
     !!Object.values(errors).find((error) => !!error) || !!isSamePass;
 
   const isValidForm = isLoading || isValidationError;
 
+  const redirectToLogin = useDebounce(
+    () => navigate(`../${RoutesPaths.LOGIN}`),
+    SUCCESS_MSG_DELAY,
+  );
+
+  const handleReceiveResetLink = async () => {
+    if (isValidForm || !resetLink) return;
+
+    const isSuccess = await resetPasswordThunk({
+      ...formValues,
+      resetLink,
+    } as IResetPasswordCredentials);
+
+    if (!isSuccess) return;
+
+    onResetForm();
+    setResetMessage(ResMessages.RESET_PASS_SUCCESS);
+    redirectToLogin();
+  };
+
   const handleReset = () => {
     onResetForm();
     resetUserError();
   };
 
-  const handleRegistration = () => {
-    if (isValidForm) return;
-
-    const credentials = formValues as unknown as IRegistrationCredentials;
-    registerThunk(credentials);
-  };
+  if (resetMessage) {
+    return <Info message={resetMessage} />;
+  }
 
   return (
     <CustomForm
-      formTitle="Registration"
+      formTitle="Reset password"
       isLoading={isLoading}
       error={error || isSamePass}
-      onSubmit={handleRegistration}
+      onSubmit={handleReceiveResetLink}
       buttons={
         <>
           <CustomButton
             onClick={handleReset}
             variant={ButtonVariants.SECONDARY}
             size={ButtonSizes.MID}
-            isDisabled={isLoading}
           >
             Reset
           </CustomButton>
@@ -80,12 +107,12 @@ export const RegistrationForm: FC = () => {
           </NavLink>
 
           <CustomButton
-            onClick={handleRegistration}
+            onClick={handleReceiveResetLink}
             isDisabled={isValidForm}
             variant={ButtonVariants.PRIMARY}
             size={ButtonSizes.MID}
           >
-            Register
+            Confirm
           </CustomButton>
         </>
       }

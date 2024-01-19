@@ -11,6 +11,8 @@ export enum ApiPaths {
   REGISTER = '/auth/register',
   UPLOADS = '/auth/uploads',
   CHANGE_PASS = '/auth/change-password',
+  RESET_PASS_LINK = '/auth/reset-password-link',
+  RESET_PASS = '/auth/reset-password',
   TODOS = '/todos',
 }
 

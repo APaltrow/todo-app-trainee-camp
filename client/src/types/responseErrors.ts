@@ -17,4 +17,5 @@ export enum ErrorsAlt {
   FAILED_UPDATE_TODO = 'Could not edit todo ...',
   FAILED_CHANGE_PASSWORD = 'Failed to change password ...',
   FAILED_PHOTO_UPLOAD = 'Failed to upload the photo',
+  FAILED_RESET_PASS = 'Failed to reset the password ...',
 }

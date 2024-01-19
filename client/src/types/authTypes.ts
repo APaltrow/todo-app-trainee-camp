@@ -13,6 +13,8 @@ export interface IAuthState {
   isUploadLoading: boolean;
   error: string;
   uploadError: string;
+  resetLinkError: string;
+  resetPasswordError: string;
 }
 
 export enum AuthActionTypes {
@@ -33,6 +35,9 @@ export enum AuthActionTypes {
   UPLOAD_PHOTO = 'UPLOAD_PHOTO',
   UPLOAD_PHOTO_SUCCESS = 'UPLOAD_PHOTO_SUCCESS',
   UPLOAD_PHOTO_ERROR = 'UPLOAD_PHOTO_ERROR',
+
+  RESET_LINK_ERROR = 'RESET_LINK_ERROR',
+  RESET_PASS_ERROR = 'RESET_PASS_ERROR',
 }
 
 interface LoginAction {
@@ -107,6 +112,16 @@ interface UploadPhotoErrorAction {
   payload: string;
 }
 
+interface ResetLinkErrorAction {
+  type: AuthActionTypes.RESET_LINK_ERROR;
+  payload: string;
+}
+
+interface ResetPasswordErrorAction {
+  type: AuthActionTypes.RESET_PASS_ERROR;
+  payload: string;
+}
+
 export type AuthActions =
   | LoginAction
   | LoginSuccessAction
@@ -123,4 +138,6 @@ export type AuthActions =
   | RequestAction
   | UploadPhotoAction
   | UploadPhotoSuccessAction
-  | UploadPhotoErrorAction;
+  | UploadPhotoErrorAction
+  | ResetLinkErrorAction
+  | ResetPasswordErrorAction;

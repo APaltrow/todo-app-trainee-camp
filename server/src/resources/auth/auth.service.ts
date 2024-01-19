@@ -1,5 +1,16 @@
-import { ApiError, jwtToken } from '@utils';
-import { AuthErrors } from '@constants';
+import {
+  ApiError,
+  checkResetLinkExpiration,
+  getResetLink,
+  jwtToken,
+  mailer,
+} from '@utils';
+import {
+  AuthErrors,
+  FIRST_ARR_INDEX,
+  RESET_LINK_DIVIDER,
+  appConfig,
+} from '@constants';
 import { IUserDocument } from '@interfaces';
 
 import { userModel } from './user.model';
@@ -118,6 +129,38 @@ class AuthService {
     }
 
     return new UserDto(updatedUser);
+  }
+
+  async generateResetPasswordLink(email: string) {
+    const user = await userModel.findOne<IUserDocument>({ email });
+
+    if (!user) {
+      throw ApiError.BadRequest(AuthErrors.INCORRECT_EMAIL);
+    }
+
+    const { _id: userId } = user;
+    const { resetId, resetPassLink } = getResetLink(userId);
+
+    user.resetPasswordId = resetId;
+    await user.save();
+
+    await mailer.sendResetPasswordLink(email, resetPassLink);
+  }
+
+  async resetPassword(newPassword: string, resetLink: string) {
+    const user = await userModel.findOne({ resetPasswordId: resetLink });
+
+    const isValidLink = checkResetLinkExpiration(resetLink);
+
+    if (!user || !isValidLink) {
+      throw ApiError.BadRequest(AuthErrors.INVALID_RESET_LINK);
+    }
+
+    user.passwordHash = newPassword;
+    user.resetPasswordId = '';
+    user.save();
+
+    return user;
   }
 }
 

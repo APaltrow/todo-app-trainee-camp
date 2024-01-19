@@ -3,9 +3,11 @@ import { Dispatch } from 'react';
 import {
   changePassword,
   checkAuth,
+  getResetPasswordLink,
   login,
   logout,
   register,
+  resetPassword,
   updateUserPhoto,
 } from '@api';
 import {
@@ -16,6 +18,7 @@ import {
   TodoAction,
   IRegistrationCredentials,
   IChangePassCredentials,
+  IResetPasswordCredentials,
 } from '@types';
 import {
   getTokens,
@@ -42,6 +45,8 @@ import {
   uploadPhoto,
   uploadPhotoSuccess,
   uploadPhotoError,
+  resetLinkError,
+  resetPasswordError,
 } from '../actions';
 
 export const loginThunk = (loginCredentials: ILoginCredentials) => {
@@ -163,6 +168,52 @@ export const uploadPhotoThunk = (uploads: Record<string, string>) => {
       dispatch(
         uploadPhotoError(
           handleResponseError(error, ErrorsAlt.FAILED_PHOTO_UPLOAD),
+        ),
+      );
+
+      return false;
+    }
+  };
+};
+
+export const getResetPasswordLinkThunk = (email: string) => {
+  return async (dispatch: Dispatch<AuthActions>) => {
+    try {
+      dispatch(onRequest());
+
+      await getResetPasswordLink(email);
+
+      dispatch(onSuccess());
+
+      return true;
+    } catch (error) {
+      dispatch(
+        resetLinkError(
+          handleResponseError(error, ErrorsAlt.FAILED_PHOTO_UPLOAD),
+        ),
+      );
+
+      return false;
+    }
+  };
+};
+
+export const resetPasswordThunk = (
+  resetCredentials: IResetPasswordCredentials,
+) => {
+  return async (dispatch: Dispatch<AuthActions>) => {
+    try {
+      dispatch(onRequest());
+
+      await resetPassword(resetCredentials);
+
+      dispatch(onSuccess());
+
+      return true;
+    } catch (error) {
+      dispatch(
+        resetPasswordError(
+          handleResponseError(error, ErrorsAlt.FAILED_RESET_PASS),
         ),
       );
 

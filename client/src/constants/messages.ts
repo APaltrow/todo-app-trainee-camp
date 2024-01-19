@@ -7,4 +7,6 @@ export const TODO_LIST_MESSAGES: Record<string, string> = {
 export enum ResMessages {
   PASS_CHANGED = 'Password has been changed successfully!',
   FILE_SIZE = 'File size is too large',
+  RESET_LINK_SUCCESS = 'Reset password link has been sent successfully. Please check your mailbox to proceed.',
+  RESET_PASS_SUCCESS = 'Password has been reset successfully!',
 }

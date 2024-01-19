@@ -15,4 +15,6 @@ export enum AuthPaths {
   REFRESH = '/refresh',
   CHANGE_PASSWORD = '/change-password',
   UPLOADS = '/uploads',
+  RESET_PASS_LINK = '/reset-password-link',
+  RESET_PASS = '/reset-password',
 }

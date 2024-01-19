@@ -8,6 +8,8 @@ export enum AuthErrors {
   INCORRECT_CREDENTIALS = 'Incorrect email or password',
   INVATID_CREDENTIALS = 'Invalid credentials',
   DUPLICATED_EMAIL = 'Email already exists',
+  INCORRECT_EMAIL = 'Incorrect email',
+  INVALID_RESET_LINK = 'Reset link is invalid',
 }
 
 export enum ValidationErrors {
@@ -39,4 +41,6 @@ export enum ValidationErrors {
   TODO_CREATION_DATE_INVALID = 'Invalid creation date',
   TODO_EXP_DATE_REQUIRED = 'Todo expiration date is required',
   TODO_EXP_DATE_INVALID = 'Invalid expiration date',
+
+  RESET_LINK_REQUIRED = 'Reset link is required',
 }
